@@ -1,0 +1,7 @@
+example_id                    | status | run_time        |
+----------------------------- | ------ | --------------- |
+./spec/board_spec.rb[1:1:1:1] | passed | 0.00148 seconds |
+./spec/board_spec.rb[1:1:2:1] | passed | 0.00007 seconds |
+./spec/board_spec.rb[1:1:2:2] | passed | 0.00016 seconds |
+./spec/board_spec.rb[1:2:1:1] | passed | 0.00012 seconds |
+./spec/board_spec.rb[1:2:2:1] | passed | 0.0027 seconds  |
