@@ -10,8 +10,6 @@ class Square
   end
 
   def add_content(content)
-    return nil unless @content.nil?
-
     @content = content
   end
 end
