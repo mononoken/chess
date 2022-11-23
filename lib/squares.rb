@@ -18,6 +18,11 @@ class Squares
     squares.map(&:coordinate)
   end
 
+  # FIX TESTS AND THEN FIX THIS
+  def colors
+    [:black, :white] * 32
+  end
+
   private
 
   def chess_squares
