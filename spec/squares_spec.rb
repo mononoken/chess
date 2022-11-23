@@ -5,28 +5,6 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
-  describe '#to_position' do
-    subject(:squares) { described_class.new }
-
-    context 'when coordinate is [0, 0]' do
-      it 'returns position :a1 as a symbol' do
-        coordinate = [0, 0]
-        position = :a1
-
-        expect(squares.to_position(coordinate)).to eq(position)
-      end
-    end
-
-    context 'when coordinate is [4, 7]' do
-      it 'returns position :e8 as a symbol' do
-        coordinate = [4, 7]
-        position = :e8
-
-        expect(squares.to_position(coordinate)).to eq(position)
-      end
-    end
-  end
-
   describe '#chess_positions' do
     subject(:squares) { described_class.new }
     let(:all_positions) do
