@@ -5,7 +5,7 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
-  describe '#chess_positions' do
+  describe '#positions' do
     subject(:squares) { described_class.new }
     let(:all_positions) do
       [
@@ -20,11 +20,11 @@ RSpec.describe Squares do
       ]
     end
     it 'returns an array of chess positions as symbols' do
-      expect(squares.chess_positions).to match_array(all_positions)
+      expect(squares.positions).to match_array(all_positions)
     end
   end
 
-  describe '#chess_coordinates' do
+  describe '#coordinates' do
     subject(:squares) { described_class.new }
     let(:all_combos) do
       [
@@ -39,7 +39,7 @@ RSpec.describe Squares do
       ]
     end
     it 'returns an array of all [x, y] combos for a chess board' do
-      expect(squares.chess_coordinates).to match_array(all_combos)
+      expect(squares.coordinates).to match_array(all_combos)
     end
   end
 end

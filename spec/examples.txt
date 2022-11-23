@@ -9,5 +9,5 @@ example_id                     | status | run_time        |
 ./spec/square_spec.rb[1:1:2:1] | passed | 0.00004 seconds |
 ./spec/square_spec.rb[1:2:1:1] | passed | 0.00006 seconds |
 ./spec/square_spec.rb[1:2:2:1] | passed | 0.0008 seconds  |
-./spec/squares_spec.rb[1:1:1]  | passed | 0.00078 seconds |
-./spec/squares_spec.rb[1:2:1]  | passed | 0.00017 seconds |
+./spec/squares_spec.rb[1:1:1]  | passed | 0.00014 seconds |
+./spec/squares_spec.rb[1:2:1]  | passed | 0.00111 seconds |
