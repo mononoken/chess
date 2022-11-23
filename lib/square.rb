@@ -2,7 +2,8 @@
 
 # A square on a chess board.
 class Square
-  attr_reader :coordinate, :content
+  attr_reader :coordinate
+  attr_accessor :content
 
   def initialize(coordinate:, content: nil)
     @coordinate = coordinate
@@ -11,10 +12,6 @@ class Square
 
   def position
     "#{to_file(coordinate[0])}#{to_rank(coordinate[1])}".to_sym
-  end
-
-  def add_content(content)
-    @content = content
   end
 
   private
