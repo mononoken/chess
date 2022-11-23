@@ -18,15 +18,24 @@ class Squares
     squares.map(&:coordinate)
   end
 
-  # FIX TESTS AND THEN FIX THIS
   def colors
-    [:black, :white] * 32
+    squares.map(&:color)
   end
 
   private
 
+  # lol
   def chess_squares
-    grid_permutation(0, 7).map { |coordinate| Square.new(coordinate:) }
+    white_and_black = %i[white black]
+
+    chess_coordinates.map do |coordinate|
+      white_and_black.reverse!
+      Square.new(coordinate:, color: white_and_black[0])
+    end
+  end
+
+  def chess_coordinates
+    grid_permutation(0, 7)
   end
 
   def grid_permutation(min, max)

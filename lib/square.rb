@@ -2,12 +2,13 @@
 
 # A square on a chess board.
 class Square
-  attr_reader :coordinate
+  attr_reader :coordinate, :color
   attr_accessor :content
 
-  def initialize(coordinate:, content: nil)
+  def initialize(coordinate:, content: nil, color: nil)
     @coordinate = coordinate
     @content = content
+    @color = color
   end
 
   def position
