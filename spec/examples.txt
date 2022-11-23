@@ -5,8 +5,10 @@ example_id                      | status | run_time        |
 ./spec/board_spec.rb[1:1:2:2]   | passed | 0.00028 seconds |
 ./spec/board_spec.rb[1:2:1:1]   | passed | 0.00011 seconds |
 ./spec/board_spec.rb[1:2:2:1]   | passed | 0.00356 seconds |
-./spec/square_spec.rb[1:1:1:1]  | passed | 0.00005 seconds |
-./spec/square_spec.rb[1:1:2:1]  | passed | 0.0009 seconds  |
+./spec/square_spec.rb[1:1:1:1]  | passed | 0.00004 seconds |
+./spec/square_spec.rb[1:1:2:1]  | passed | 0.0002 seconds  |
+./spec/square_spec.rb[1:2:1:1]  | passed | 0.00075 seconds |
+./spec/square_spec.rb[1:2:2:1]  | passed | 0.00011 seconds |
 ./spec/squares_spec.rb[1:1:1:1] | passed | 0.00005 seconds |
 ./spec/squares_spec.rb[1:1:2:1] | passed | 0.0003 seconds  |
 ./spec/squares_spec.rb[1:2:1]   | passed | 0.00012 seconds |
