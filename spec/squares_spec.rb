@@ -5,6 +5,24 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
+  xdescribe '#piece' do
+    context 'when designated square position has content' do
+      subject(:squares) { described_class.new(squares: [square]) }
+      let(:square) { instance_double(Square) }
+      let(:piece) { instance_double(Piece) }
+      let(:position) { :xy }
+
+      before do
+        allow(square).to receive(:position).and_return(position)
+        allow(square).to receive(:content).and_return(piece)
+      end
+
+      it 'returns object in content' do
+        expect(squares.piece(position)).to eq(piece)
+      end
+    end
+  end
+
   describe '#colors' do
     context 'when three squares have different colors' do
       subject(:rgb_squares) do
@@ -29,7 +47,7 @@ RSpec.describe Squares do
 end
 
 RSpec.describe Squares do
-  context 'when squares is chess squares' do
+  xcontext 'when squares is chess squares' do
     subject(:chess_squares) { described_class.new }
     describe '#colors' do
       it 'returns an array of alternating black/white colors' do

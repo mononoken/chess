@@ -5,7 +5,7 @@ require_relative '../lib/square'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Square do
-  describe '#position' do
+  xdescribe '#position' do
     subject(:square) { described_class.new(coordinate: coordinate) }
 
     context 'when coordinate is [0, 0]' do
@@ -23,6 +23,13 @@ RSpec.describe Square do
         position = :e8
 
         expect(square.position).to eq(position)
+      end
+    end
+
+    context 'when coordinate is [99, 99]' do
+      let(:coordinate) { [99, 99] }
+      it 'returns nil' do
+        expect(square.position).to be_nil
       end
     end
   end
