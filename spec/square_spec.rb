@@ -2,7 +2,34 @@
 
 require_relative '../lib/square'
 
+# rubocop:disable Metrics/BlockLength
+
 RSpec.describe Square do
+  describe '#moves' do
+    context 'when square has a piece in content' do
+      subject(:square) { described_class.new(content: some_piece) }
+      let(:some_piece) { instance_double(Piece) }
+      let(:valid_moves) { %i[there over_there] }
+
+      before do
+        allow(some_piece).to receive(:moves)
+          .and_return(valid_moves)
+      end
+
+      it 'returns array of valid moves for piece' do
+        expect(square.moves).to eq(valid_moves)
+      end
+    end
+
+    context 'when square is empty' do
+      subject(:square) { described_class.new(content: nil) }
+
+      it 'returns nil' do
+        expect(square.moves).to be_nil
+      end
+    end
+  end
+
   describe '#simple_display' do
     context 'when square has a position and content' do
       subject(:filled_square) do
@@ -29,3 +56,5 @@ RSpec.describe Square do
     end
   end
 end
+
+# rubocop:enable Metrics/BlockLength
