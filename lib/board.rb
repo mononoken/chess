@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './squares'
-
 # Display board of squares with pieces.
 class Board
   attr_reader :squares

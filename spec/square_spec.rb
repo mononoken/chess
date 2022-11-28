@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../lib/square'
+require_relative '../lib/piece'
 
 # rubocop:disable Metrics/BlockLength
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './piece'
-
 # A square on a chess board.
 class Square
   attr_reader :position, :content
