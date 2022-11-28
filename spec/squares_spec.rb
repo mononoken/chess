@@ -5,6 +5,91 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
+  describe '#moves' do
+    context 'when selected position has a piece' do
+      let(:squares) { described_class.new(occupied_square) }
+      let(:occupied_square) { instance_double(Square) }
+      let(:selected_position) { :some_position }
+      let(:valid_moves) { %i[here there over_there] }
+
+      before do
+        allow(squares).to receive(:find_square)
+          .with(selected_position)
+          .and_return(occupied_square)
+
+        allow(occupied_square).to receive(:moves)
+          .and_return(valid_moves)
+      end
+
+      it 'returns array of valid moves for piece in selected square' do
+        expect(squares.moves(selected_position)).to eq(valid_moves)
+      end
+    end
+
+    context 'when a different selected position has a piece' do
+      let(:squares) { described_class.new(occupied_square) }
+      let(:occupied_square) { instance_double(Square) }
+      let(:different_position) { :some_position }
+      let(:valid_moves) { %i[different_move another_move] }
+
+      before do
+        allow(squares).to receive(:find_square)
+          .with(different_position)
+          .and_return(occupied_square)
+
+        allow(occupied_square).to receive(:moves)
+          .and_return(valid_moves)
+      end
+
+      it 'returns array of valid moves for piece in selected square' do
+        expect(squares.moves(different_position)).to eq(valid_moves)
+      end
+    end
+  end
+
+  describe '#find_square' do
+    context 'when a square matches the selected position' do
+      subject(:squares) { described_class.new(other_square, selected_square) }
+      let(:other_square) { instance_double(Square) }
+      let(:selected_square) { instance_double(Square) }
+      let(:other_position) { :houston }
+      let(:selected_position) { :seattle }
+
+      before do
+        allow(other_square).to receive(:position)
+          .and_return(other_position)
+        allow(selected_square).to receive(:position)
+          .and_return(selected_position)
+      end
+
+      it 'returns square object' do
+        found = squares.find_square(selected_position)
+        expect(found).to eq(selected_square)
+      end
+    end
+
+    context 'when no square has the selected position' do
+      subject(:squares) { described_class.new(other_square, another_square) }
+      let(:other_square) { instance_double(Square) }
+      let(:another_square) { instance_double(Square) }
+      let(:other_position) { :houston }
+      let(:another_position) { :miami }
+      let(:selected_position) { :seattle }
+
+      before do
+        allow(other_square).to receive(:position)
+          .and_return(other_position)
+        allow(another_square).to receive(:position)
+          .and_return(another_position)
+      end
+
+      it 'returns nil' do
+        not_found = squares.find_square(selected_position)
+        expect(not_found).to be_nil
+      end
+    end
+  end
+
   describe '#simple_display' do
     context 'when squares contains one entry with content' do
       subject(:solo_squares) { described_class.new(one_square) }

@@ -7,7 +7,15 @@ class Squares
   attr_reader :squares
 
   def initialize(*squares)
-    @squares = squares
+    @squares = Array.new(squares)
+  end
+
+  def moves(position)
+    find_square(position).moves
+  end
+
+  def find_square(position)
+    squares.find { |square| square.position == position }
   end
 
   def simple_display

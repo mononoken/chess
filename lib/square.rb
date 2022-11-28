@@ -9,6 +9,9 @@ class Square
     @content = content
   end
 
+  def moves
+  end
+
   def simple_display
     "#{position}: #{content}".strip
   end

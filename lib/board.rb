@@ -10,6 +10,10 @@ class Board
     @squares = squares
   end
 
+  def moves(position)
+    squares.moves(position)
+  end
+
   def simple_display
     "Board simple display:\n#{squares.simple_display}"
   end
