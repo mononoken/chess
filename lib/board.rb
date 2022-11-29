@@ -8,6 +8,11 @@ class Board
     @squares = squares
   end
 
+  # from bishop_spec
+  def valid_coords
+    # foo
+  end
+
   def moves(position)
     squares.moves(position)
   end
