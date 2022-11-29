@@ -14,6 +14,7 @@ class Squares
     find_square(position).moves
   end
 
+  # Rename find_position ?
   def find_square(position)
     squares.find { |square| square.position == position }
   end
