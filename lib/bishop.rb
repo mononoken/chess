@@ -19,14 +19,6 @@ class Bishop
   #   end
   # end
 
-  # def valid_move?(move, board)
-  #   is_free?(move, board) || is_capture?(move, board)
-  # end
-
-  # def movement(board)
-  #   [left_diagonal_moves, right_diagonal_moves].flatten(1)
-  # end
-
   # Should board just be valid_coords ?
   def movement(board)
     [
@@ -40,39 +32,27 @@ class Bishop
   private
 
   def top_left_diag(coord, valid_coords)
-    step = [-1, 1]
-    next_step = coord_step(coord, step)
-
-    return [] unless valid_coord?(next_step, valid_coords)
-
-    [next_step] + top_left_diag(next_step, valid_coords)
+    line(coord, valid_coords, [-1, 1])
   end
 
   def top_right_diag(coord, valid_coords)
-    step = [1, 1]
-    next_step = coord_step(coord, step)
-
-    return [] unless valid_coord?(next_step, valid_coords)
-
-    [next_step] + top_right_diag(next_step, valid_coords)
+    line(coord, valid_coords, [1, 1])
   end
 
   def bot_left_diag(coord, valid_coords)
-    step = [-1, -1]
-    next_step = coord_step(coord, step)
-
-    return [] unless valid_coord?(next_step, valid_coords)
-
-    [next_step] + bot_left_diag(next_step, valid_coords)
+    line(coord, valid_coords, [-1, -1])
   end
 
   def bot_right_diag(coord, valid_coords)
-    step = [1, -1]
+    line(coord, valid_coords, [1, -1])
+  end
+
+  def line(coord, valid_coords, step)
     next_step = coord_step(coord, step)
 
     return [] unless valid_coord?(next_step, valid_coords)
 
-    [next_step] + bot_right_diag(next_step, valid_coords)
+    [next_step] + line(next_step, valid_coords, step)
   end
 
   def coord_step(coord, step)
