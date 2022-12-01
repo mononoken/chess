@@ -6,17 +6,19 @@ class Bishop
   attr_reader :coordinate, :board
 
   # Should coordinate be queried from board?
-  def initialize(coordinate:, board:)
+  def initialize(coordinate: nil, board: nil)
     @coordinate = coordinate
     @board = board
     # @color = color
   end
 
   # NOTE: Also cannot move if it will put king in check.
-  # def valid_moves(obstructions = board.same_color & board.diff_color_beyond)
-  #   movement - obstructions
-  #   Enumerate over each entry in movement and check for obstructions
-  # end
+  def valid_moves
+    movement.reject { |move| obstructed_coords.any?(move) }
+  end
+
+  def obstructed_coords
+  end
 
   def movement
     top_left_diag + top_right_diag + bot_left_diag + bot_right_diag

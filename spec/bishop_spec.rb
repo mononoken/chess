@@ -10,43 +10,37 @@ end
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Bishop do
-  xdescribe '#valid_moves' do
-    subject(:bishop) do
-      described_class.new(coordinate: center_coordinate, board: board_3x3,
-                          color: bishop_color)
-    end
-    let(:board_3x3) { instance_double(Board) }
-    let(:center_coordinate) { [1, 1] }
-    let(:bishop_color) { :black }
+  describe '#valid_moves' do
+    subject(:bishop) { described_class.new }
+    let(:unobstructed_moves) { [[0, 0], [0, 2], [2, 0], [2, 2]] }
 
-    context 'when board is empty except for bishop' do
+    context 'when there are no obstructions' do
       before do
-        coords_same_color = []
-        allow(board_3x3).to receive(:coords_color)
-          .with(bishop_color)
-          .and_return(coords_same_color)
-
-        coords_diff_color = []
-        allow(board_3x3).to receive(:coords_opp_color)
-          .with(bishop_color)
-          .and_return(coords_diff_color)
+        allow(bishop).to receive(:movement)
+          .and_return(unobstructed_moves)
+        allow(bishop).to receive(:obstructed_coords)
+          .and_return([])
       end
 
       it 'returns array of only valid moves' do
-        valid_moves = [[0, 0], [0, 2], [2, 0], [2, 2]]
+        valid_moves = unobstructed_moves
 
         expect(bishop.valid_moves).to match_array(valid_moves)
       end
     end
 
-    xcontext 'when board has obstructions that limit bishop movement' do
+    context 'when obstructed coordinates exist' do
       before do
+        allow(bishop).to receive(:movement)
+          .and_return(unobstructed_moves)
+        allow(bishop).to receive(:obstructed_coords)
+          .and_return([[0, 0], [2, 2]])
       end
 
       it 'returns array of only valid moves' do
-        unobstructed_moves = [[0, 0], [0, 2], [2, 0]]
+        valid_moves = [[0, 2], [2, 0]]
 
-        expect(bishop.valid_moves).to match_array(unobstructed_moves)
+        expect(bishop.valid_moves).to match_array(valid_moves)
       end
     end
   end
