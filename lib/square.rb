@@ -9,8 +9,8 @@ class Square
     @content = content
   end
 
-  # Squares#piece_color test
   def piece_color
+    content&.color
   end
 
   def moves

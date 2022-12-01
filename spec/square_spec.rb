@@ -6,6 +6,30 @@ require_relative '../lib/piece'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Square do
+  describe '#piece_color' do
+    context 'when square is empty' do
+      subject(:empty_square) { described_class.new(content: nil) }
+
+      it 'returns nil' do
+        expect(empty_square.piece_color).to be_nil
+      end
+    end
+
+    context 'when square has content with color property :red' do
+      subject(:occupied_square) { described_class.new(content: colorful_thing) }
+      let(:colorful_thing) { double }
+
+      before do
+        allow(colorful_thing).to receive(:color)
+          .and_return(:red)
+      end
+
+      it 'returns :red' do
+        expect(occupied_square.piece_color).to eq(:red)
+      end
+    end
+  end
+
   describe '#moves' do
     context 'when square has a piece in content' do
       subject(:square) { described_class.new(content: some_piece) }
