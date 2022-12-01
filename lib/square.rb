@@ -9,6 +9,10 @@ class Square
     @content = content
   end
 
+  # Squares#piece_color test
+  def piece_color
+  end
+
   def moves
     content.moves unless empty?
   end

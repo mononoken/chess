@@ -10,6 +10,10 @@ class Squares
     @squares = Array.new(squares)
   end
 
+  def piece_color(color)
+    squares.select { |square| square.piece_color == color }
+  end
+
   def moves(position)
     find_square(position).moves
   end

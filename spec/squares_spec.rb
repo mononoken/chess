@@ -5,6 +5,39 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
+  describe '#piece_color' do
+    context 'when three pieces match the selected color' do
+      subject(:squares) do
+        described_class.new(sq1_black, sq2_black, sq3_white, sq4_black,
+                            sq5_white)
+      end
+      let(:sq1_black) { instance_double(Square) }
+      let(:sq2_black) { instance_double(Square) }
+      let(:sq3_white) { instance_double(Square) }
+      let(:sq4_black) { instance_double(Square) }
+      let(:sq5_white) { instance_double(Square) }
+
+      before do
+        allow(sq1_black).to receive(:piece_color)
+          .and_return(:black)
+        allow(sq2_black).to receive(:piece_color)
+          .and_return(:black)
+        allow(sq3_white).to receive(:piece_color)
+          .and_return(:white)
+        allow(sq4_black).to receive(:piece_color)
+          .and_return(:black)
+        allow(sq5_white).to receive(:piece_color)
+          .and_return(:white)
+      end
+
+      it 'returns array of Square objects containing those pieces' do
+        black_sqs = [sq1_black, sq2_black, sq4_black]
+
+        expect(squares.piece_color(:black)).to match_array(black_sqs)
+      end
+    end
+  end
+
   describe '#moves' do
     context 'when selected position has a piece' do
       let(:squares) { described_class.new(occupied_square) }
