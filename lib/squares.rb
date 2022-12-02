@@ -14,15 +14,6 @@ class Squares
     find_square(position).moves
   end
 
-  def unobstructed_squares(path)
-    path.reduce([]) do |unobstructed_path, square|
-      unobstructed_path << square if square.empty?
-      break unobstructed_path unless square.empty?
-
-      unobstructed_path
-    end
-  end
-
   def piece_color(color)
     squares.select { |square| square.piece_color == color }
   end

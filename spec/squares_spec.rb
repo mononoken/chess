@@ -6,37 +6,6 @@ require_relative '../lib/piece'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
-  describe '#unobstructed_squares' do
-    subject(:squares) { described_class.new }
-    context 'when path has square that has content' do
-      5.times do |num|
-        let("sq#{num}".to_sym) { instance_double(Square) }
-      end
-      let(:path) { [sq0, sq1, sq2, sq3, sq4] }
-
-      before do
-        allow(sq0).to receive(:empty?)
-          .and_return(true)
-        allow(sq1).to receive(:empty?)
-          .and_return(true)
-        allow(sq2).to receive(:empty?)
-          .and_return(true)
-        allow(sq4).to receive(:empty?)
-          .and_return(true)
-
-        allow(sq3).to receive(:empty?)
-          .and_return(false)
-      end
-
-      it 'returns array of only squares before square with content' do
-        unobstructed_path = [sq0, sq1, sq2]
-
-        expect(squares.unobstructed_squares(path))
-          .to match_array(unobstructed_path)
-      end
-    end
-  end
-
   describe '#piece_color' do
     context 'when three pieces match the selected color' do
       subject(:squares) do

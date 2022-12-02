@@ -16,14 +16,13 @@ class Bishop
     movement - board.obstructed_coords(paths)
   end
 
-  # Keep paths in separate groups/arrays
-  # REFACTOR
   def movement
     paths.flatten(1)
   end
 
   private
 
+  # Make public and create specs?
   def paths
     [top_left_diag, top_right_diag, bot_left_diag, bot_right_diag]
   end
