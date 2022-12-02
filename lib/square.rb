@@ -9,12 +9,12 @@ class Square
     @content = content
   end
 
-  def piece_color
-    content&.color
-  end
-
   def moves
     content.moves unless empty?
+  end
+
+  def piece_color
+    content&.color
   end
 
   def simple_display

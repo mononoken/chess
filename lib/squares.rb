@@ -10,6 +10,10 @@ class Squares
     @squares = Array.new(squares)
   end
 
+  def moves(position)
+    find_square(position).moves
+  end
+
   def unobstructed_squares(path)
     path.reduce([]) do |unobstructed_path, square|
       unobstructed_path << square if square.empty?
@@ -21,10 +25,6 @@ class Squares
 
   def piece_color(color)
     squares.select { |square| square.piece_color == color }
-  end
-
-  def moves(position)
-    find_square(position).moves
   end
 
   # Rename find_position ?

@@ -12,13 +12,8 @@ class Bishop
     # @color = color
   end
 
-  # NOTE: Also cannot move if it will put king in check.
-  def valid_moves
-    movement.reject { |move| obstructed_coords.any?(move) }
-  end
-
-  def obstructed_coords
-    # Send self to a board method and expect array of coordinates
+  def moves
+    movement - board.obstructed_coords(paths)
   end
 
   # Keep paths in separate groups/arrays
