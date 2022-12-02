@@ -18,36 +18,43 @@ class Bishop
   end
 
   def obstructed_coords
+    # Send self to a board method and expect array of coordinates
   end
 
+  # Keep paths in separate groups/arrays
+  # REFACTOR
   def movement
-    top_left_diag + top_right_diag + bot_left_diag + bot_right_diag
+    paths.flatten(1)
   end
 
   private
 
+  def paths
+    [top_left_diag, top_right_diag, bot_left_diag, bot_right_diag]
+  end
+
   def top_left_diag
-    line(coordinate, [-1, 1])
+    path(coordinate, [-1, 1])
   end
 
   def top_right_diag
-    line(coordinate, [1, 1])
+    path(coordinate, [1, 1])
   end
 
   def bot_left_diag
-    line(coordinate, [-1, -1])
+    path(coordinate, [-1, -1])
   end
 
   def bot_right_diag
-    line(coordinate, [1, -1])
+    path(coordinate, [1, -1])
   end
 
-  def line(coord, step)
+  def path(coord, step)
     next_coord = coord_step(coord, step)
 
     return [] unless valid_coord?(next_coord)
 
-    [next_coord] + line(next_coord, step)
+    [next_coord] + path(next_coord, step)
   end
 
   def coord_step(coord, step)

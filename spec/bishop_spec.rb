@@ -45,6 +45,10 @@ RSpec.describe Bishop do
     end
   end
 
+  describe '#obstructed_coords' do
+    # Send self to a board method and expect array of coordinates
+  end
+
   # Should #valid_coords stubs be for Bishop?
   describe '#movement' do
     context 'when board is 3x3 and bishop has coordinate [2, 0]' do
