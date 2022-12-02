@@ -80,6 +80,24 @@ RSpec.describe Square do
       end
     end
   end
+
+  describe '#empty?' do
+    context 'when square content is nil' do
+      subject(:empty_square) { described_class.new(content: nil) }
+
+      it 'returns true' do
+        expect(empty_square.empty?).to be(true)
+      end
+    end
+
+    context 'when square content is not nil' do
+      subject(:occupied_square) { described_class.new(content: :anything) }
+
+      it 'returns false' do
+        expect(occupied_square.empty?).to be(false)
+      end
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength

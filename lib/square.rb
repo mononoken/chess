@@ -21,10 +21,7 @@ class Square
     "#{position}: #{content}".strip
   end
 
-  # Need tests
   def empty?
     content.nil?
   end
-
-  private
 end
