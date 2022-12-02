@@ -2,12 +2,21 @@
 
 require_relative './square'
 
-# Create Squares for Chess Board.
+# Manage all Square objects as an array.
 class Squares
   attr_reader :squares
 
   def initialize(*squares)
     @squares = Array.new(squares)
+  end
+
+  def unobstructed_squares(path)
+    path.reduce([]) do |unobstructed_path, square|
+      unobstructed_path << square if square.empty?
+      break unobstructed_path unless square.empty?
+
+      unobstructed_path
+    end
   end
 
   def piece_color(color)
