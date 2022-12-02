@@ -6,6 +6,47 @@ require_relative '../lib/piece'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
+  describe '#valid_coords' do
+    context 'when squares coordinates include [0, 0] [42, 42], [0, 99]' do
+      subject(:squares) { described_class.new(sq0, sq1, sq2) }
+      let(:sq0) { instance_double(Square) }
+      let(:sq1) { instance_double(Square) }
+      let(:sq2) { instance_double(Square) }
+
+      before do
+        allow(sq0).to receive(:coordinates)
+          .and_return([0, 0])
+        allow(sq1).to receive(:coordinates)
+          .and_return([42, 42])
+        allow(sq2).to receive(:coordinates)
+          .and_return([0, 99])
+      end
+      it 'returns array of unique integers [0, 42, 99]' do
+        existing_coord_values = [0, 42, 99]
+
+        expect(squares.valid_coords).to match_array(existing_coord_values)
+      end
+    end
+
+    context 'when squares coordinates include [11, 1] [23, 7]' do
+      subject(:squares) { described_class.new(sq0, sq1) }
+      let(:sq0) { instance_double(Square) }
+      let(:sq1) { instance_double(Square) }
+
+      before do
+        allow(sq0).to receive(:coordinates)
+          .and_return([11, 1])
+        allow(sq1).to receive(:coordinates)
+          .and_return([23, 7])
+      end
+      it 'returns array of unique integers [1, 7, 11, 23]' do
+        existing_coord_values = [1, 7, 11, 23]
+
+        expect(squares.valid_coords).to match_array(existing_coord_values)
+      end
+    end
+  end
+
   describe '#piece_color' do
     context 'when three pieces match the selected color' do
       subject(:squares) do

@@ -13,6 +13,10 @@ class Square
     content.moves unless empty?
   end
 
+  def coordinates
+    
+  end
+
   def piece_color
     content&.color
   end
