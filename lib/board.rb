@@ -1,11 +1,18 @@
 # frozen_string_literal: true
 
+require_relative './squares'
+
 # Display board of squares with pieces.
 class Board
   attr_reader :squares
 
-  def initialize(squares:)
+  def initialize(squares: Squares.new)
     @squares = squares
+  end
+
+  # From Chess#move spec
+  def move(origin, destination)
+
   end
 
   def moves(position)

@@ -13,6 +13,7 @@ class Bishop
     # @color = color
   end
 
+  # Dependency
   def moves
     movement - squares.obstructed_coords(paths)
   end
