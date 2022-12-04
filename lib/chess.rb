@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
 require_relative './board'
-require_relative './player'
 
 Move = Struct.new(:origin, :destination)
 
 class Chess
-  attr_reader :board, :player
+  attr_reader :board
 
-  def initialize(board: Board.new, player: Player.new)
+  def initialize(board: Board.new)
     @board = board
-    @player = player
   end
 
   # Dependency (as well as test)
@@ -24,15 +22,20 @@ class Chess
     board.move(origin, destination)
   end
 
+  # Broken
   def query_move
-    pick_move(player)
+    loop do
+      move = pick_move
+      break move if valid_move?(move)
+    end
   end
 
-  def pick_move(player)
-
+  def pick_move
+    Move.new(origin: gets_player_origin,
+             destination: gets_player_destination)
   end
 
-  def valid_move?(origin, destination)
+  def valid_move?(origin = nil, destination = nil)
     true
   end
 
@@ -42,5 +45,17 @@ class Chess
 
   def valid_destination?(destination)
 
+  end
+
+  private
+
+  def gets_player_origin
+    puts 'Player input origin:'
+    gets.chomp.downcase.to_sym
+  end
+
+  def gets_player_destination
+    puts 'Player input destination:'
+    gets.chomp.downcase.to_sym
   end
 end

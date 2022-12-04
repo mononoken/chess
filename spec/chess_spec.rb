@@ -70,8 +70,7 @@ RSpec.describe Chess do
   end
 
   describe '#query_move' do
-    subject(:chess) { described_class.new(player:) }
-    let(:player) { instance_double(Player) }
+    subject(:chess) { described_class.new }
 
     context 'when valid_move? is true' do
       before do
@@ -79,27 +78,49 @@ RSpec.describe Chess do
           .and_return(true)
       end
 
-      it 'sends #pick_move with player once' do
+      it 'sends #pick_move once' do
         expect(chess).to receive(:pick_move)
-          .with(player).once
+          .once
         chess.query_move
       end
 
-      xit 'returns instance of Move' do
+      it 'returns instance of Move' do
         expect(chess.query_move).to be_a Move
       end
     end
 
-    context 'when valid_move? is false once' do
-      it 'sends #pick_move to player twice'
+    context 'when valid_move? is false once and then true' do
+      before do
+        allow(chess).to receive(:valid_move?)
+          .and_return(false, true)
+      end
 
-      it 'returns move Struct'
+      it 'sends #pick_move twice' do
+        expect(chess).to receive(:pick_move)
+          .exactly(2).times
+        chess.query_move
+      end
+
+      it 'returns instance of Move' do
+        expect(chess.query_move).to be_a Move
+      end
     end
 
-    context 'when valid_move? is false three times' do
-      it 'sends #pick_move to player four times'
+    context 'when valid_move? is false three times and then true' do
+      before do
+        allow(chess).to receive(:valid_move?)
+          .and_return(false, false, false, true)
+      end
 
-      it 'returns move Struct'
+      it 'sends #pick_move four times' do
+        expect(chess).to receive(:pick_move)
+          .exactly(4).times
+        chess.query_move
+      end
+
+      it 'returns instance of Move' do
+        expect(chess.query_move).to be_a Move
+      end
     end
   end
 
