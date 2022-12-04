@@ -62,13 +62,13 @@ RSpec.describe Chess do
   describe '#execute_move' do
     subject(:chess) { described_class.new(board:) }
     let(:board) { instance_double(Board) }
-    let(:move) { double('Move') }
+    let(:move) { instance_double(Move) }
 
     before do
       allow(board).to receive(:execute_move).with(move)
     end
 
-    it 'sends #execute_move to board with injected move' do
+    it 'sends #execute_move to board with injected Move object' do
       expect(chess.board).to receive(:execute_move).with(move)
 
       chess.execute_move(move)
