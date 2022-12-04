@@ -2,8 +2,6 @@
 
 require_relative './board'
 
-Move = Struct.new(:origin, :destination)
-
 class Chess
   attr_reader :board
 
@@ -11,15 +9,24 @@ class Chess
     @board = board
   end
 
-  # Dependency (as well as test)
-  # Knows #query_move will return an array that needs to be splat
-  # For #move to receive it
-  def run_round
-    execute_move(*query_move)
+  def play
+    loop do
+      run_round
+
+      break if game_over?
+    end
   end
 
-  def execute_move(origin, destination)
-    board.move(origin, destination)
+  def game_over?
+    # Pending check and checkmate implementation
+  end
+
+  def run_round
+    execute_move(query_move)
+  end
+
+  def execute_move(move)
+    board.execute_move(move)
   end
 
   # Broken
@@ -31,8 +38,8 @@ class Chess
   end
 
   def pick_move
-    Move.new(origin: gets_player_origin,
-             destination: gets_player_destination)
+    Move.new(gets_player_origin,
+             gets_player_destination)
   end
 
   def valid_move?(origin = nil, destination = nil)

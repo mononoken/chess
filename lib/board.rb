@@ -11,7 +11,7 @@ class Board
   end
 
   # From Chess#move spec
-  def move(origin, destination)
+  def execute_move(move)
 
   end
 
