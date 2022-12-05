@@ -56,9 +56,6 @@ RSpec.describe Chess do
     end
   end
 
-  # Tests below here may be limiting refactoring and should be private methods.
-  # Delete below tests if they fail.
-
   describe '#execute_move' do
     subject(:chess) { described_class.new(board:) }
     let(:board) { instance_double(Board) }
@@ -75,167 +72,160 @@ RSpec.describe Chess do
     end
   end
 
-  describe '#query_move' do
-    context 'when query_origin and query_destination return' do
-      let(:queried_origin) { :some_position }
-      let(:queried_destination) { :another_position }
+  # Tests below here may be limiting refactoring and should be private methods.
+  # Delete below tests if they fail.
 
-      before do
-        allow(chess).to receive(:query_origin)
-          .and_return(queried_origin)
-        allow(chess).to receive(:query_destination)
-          .and_return(queried_destination)
-      end
+  # describe '#query_move' do
+  #   context 'when query_origin and query_destination return' do
+  #     let(:queried_origin) { :some_position }
+  #     let(:queried_destination) { :another_position }
 
-      it 'returns a new Move object' do
-        expect(chess.query_move).to be_a_kind_of(Move)
-      end
+  #     before do
+  #       allow(chess).to receive(:query_origin)
+  #         .and_return(queried_origin)
+  #       allow(chess).to receive(:query_destination)
+  #         .and_return(queried_destination)
+  #     end
 
-      it 'returns object with #origin equal to query_origin result' do
-        query_result = chess.query_move
+  #     it 'returns a new Move object' do
+  #       expect(chess.query_move).to be_a_kind_of(Move)
+  #     end
 
-        expect(query_result.origin).to eq(queried_origin)
-      end
+  #     it 'returns object with #origin equal to query_origin result' do
+  #       query_result = chess.query_move
 
-      it 'returns object with #destination equal to query_destination result' do
-        query_result = chess.query_move
+  #       expect(query_result.origin).to eq(queried_origin)
+  #     end
 
-        expect(query_result.destination).to eq(queried_destination)
-      end
-    end
-  end
+  #     it 'returns object with #destination equal to query_destination result' do
+  #       query_result = chess.query_move
 
-  describe '#query_origin' do
-    before do
-      allow(chess).to receive(:pick_origin)
-        .and_return('some position')
-    end
+  #       expect(query_result.destination).to eq(queried_destination)
+  #     end
+  #   end
+  # end
 
-    context 'when valid_origin? is true' do
-      before do
-        allow(chess).to receive(:valid_origin?)
-          .and_return(true)
-      end
+  # describe '#query_origin' do
+  #   before do
+  #     allow(chess).to receive(:pick_origin)
+  #       .and_return('some position')
+  #   end
 
-      it 'sends #pick_origin once' do
-        expect(chess).to receive(:pick_origin)
-          .once
-        chess.query_origin
-      end
+  #   context 'when valid_origin? is true' do
+  #     before do
+  #       allow(chess).to receive(:valid_origin?)
+  #         .and_return(true)
+  #     end
 
-      it 'returns result of #pick_origin' do
-        picked_origin = chess.pick_origin
-        expect(chess.query_origin).to eq(picked_origin)
-      end
-    end
+  #     it 'sends #pick_origin once' do
+  #       expect(chess).to receive(:pick_origin)
+  #         .once
+  #       chess.query_origin
+  #     end
 
-    context 'when valid_origin? is false once and then true' do
-      before do
-        allow(chess).to receive(:valid_origin?)
-          .and_return(false, true)
-      end
+  #     it 'returns result of #pick_origin' do
+  #       picked_origin = chess.pick_origin
+  #       expect(chess.query_origin).to eq(picked_origin)
+  #     end
+  #   end
 
-      it 'sends #pick_origin twice' do
-        expect(chess).to receive(:pick_origin)
-          .exactly(2).times
-        chess.query_origin
-      end
+  #   context 'when valid_origin? is false once and then true' do
+  #     before do
+  #       allow(chess).to receive(:valid_origin?)
+  #         .and_return(false, true)
+  #     end
 
-      it 'returns result of #pick_origin' do
-        picked_origin = chess.pick_origin
-        expect(chess.query_origin).to eq(picked_origin)
-      end
-    end
+  #     it 'sends #pick_origin twice' do
+  #       expect(chess).to receive(:pick_origin)
+  #         .exactly(2).times
+  #       chess.query_origin
+  #     end
 
-    context 'when valid_origin? is false three times and then true' do
-      before do
-        allow(chess).to receive(:valid_origin?)
-          .and_return(false, false, false, true)
-      end
+  #     it 'returns result of #pick_origin' do
+  #       picked_origin = chess.pick_origin
+  #       expect(chess.query_origin).to eq(picked_origin)
+  #     end
+  #   end
 
-      it 'sends #pick_origin four times' do
-        expect(chess).to receive(:pick_origin)
-          .exactly(4).times
-        chess.query_origin
-      end
+  #   context 'when valid_origin? is false three times and then true' do
+  #     before do
+  #       allow(chess).to receive(:valid_origin?)
+  #         .and_return(false, false, false, true)
+  #     end
 
-      it 'returns result of #pick_origin' do
-        picked_origin = chess.pick_origin
-        expect(chess.query_origin).to eq(picked_origin)
-      end
-    end
-  end
+  #     it 'sends #pick_origin four times' do
+  #       expect(chess).to receive(:pick_origin)
+  #         .exactly(4).times
+  #       chess.query_origin
+  #     end
 
-  describe '#query_destination' do
-    before do
-      allow(chess).to receive(:pick_destination)
-        .and_return('some position')
-    end
+  #     it 'returns result of #pick_origin' do
+  #       picked_origin = chess.pick_origin
+  #       expect(chess.query_origin).to eq(picked_origin)
+  #     end
+  #   end
+  # end
 
-    context 'when valid_destination? is true' do
-      before do
-        allow(chess).to receive(:valid_destination?)
-          .and_return(true)
-      end
+  # describe '#query_destination' do
+  #   before do
+  #     allow(chess).to receive(:pick_destination)
+  #       .and_return('some position')
+  #   end
 
-      it 'sends #pick_destination once' do
-        expect(chess).to receive(:pick_destination)
-          .once
-        chess.query_destination
-      end
+  #   context 'when valid_destination? is true' do
+  #     before do
+  #       allow(chess).to receive(:valid_destination?)
+  #         .and_return(true)
+  #     end
 
-      it 'returns result of #pick_destination' do
-        picked_destination = chess.pick_destination
-        expect(chess.query_destination).to eq(picked_destination)
-      end
-    end
+  #     it 'sends #pick_destination once' do
+  #       expect(chess).to receive(:pick_destination)
+  #         .once
+  #       chess.query_destination
+  #     end
 
-    context 'when valid_destination? is false once and then true' do
-      before do
-        allow(chess).to receive(:valid_destination?)
-          .and_return(false, true)
-      end
+  #     it 'returns result of #pick_destination' do
+  #       picked_destination = chess.pick_destination
+  #       expect(chess.query_destination).to eq(picked_destination)
+  #     end
+  #   end
 
-      it 'sends #pick_destination twice' do
-        expect(chess).to receive(:pick_destination)
-          .exactly(2).times
-        chess.query_destination
-      end
+  #   context 'when valid_destination? is false once and then true' do
+  #     before do
+  #       allow(chess).to receive(:valid_destination?)
+  #         .and_return(false, true)
+  #     end
 
-      it 'returns result of #pick_destination' do
-        picked_destination = chess.pick_destination
-        expect(chess.query_destination).to eq(picked_destination)
-      end
-    end
+  #     it 'sends #pick_destination twice' do
+  #       expect(chess).to receive(:pick_destination)
+  #         .exactly(2).times
+  #       chess.query_destination
+  #     end
 
-    context 'when valid_destination? is false three times and then true' do
-      before do
-        allow(chess).to receive(:valid_destination?)
-          .and_return(false, false, false, true)
-      end
+  #     it 'returns result of #pick_destination' do
+  #       picked_destination = chess.pick_destination
+  #       expect(chess.query_destination).to eq(picked_destination)
+  #     end
+  #   end
 
-      it 'sends #pick_destination four times' do
-        expect(chess).to receive(:pick_destination)
-          .exactly(4).times
-        chess.query_destination
-      end
+  #   context 'when valid_destination? is false three times and then true' do
+  #     before do
+  #       allow(chess).to receive(:valid_destination?)
+  #         .and_return(false, false, false, true)
+  #     end
 
-      it 'returns result of #pick_destination' do
-        picked_destination = chess.pick_destination
-        expect(chess.query_destination).to eq(picked_destination)
-      end
-    end
-  end
+  #     it 'sends #pick_destination four times' do
+  #       expect(chess).to receive(:pick_destination)
+  #         .exactly(4).times
+  #       chess.query_destination
+  #     end
 
-  xdescribe '#valid_origin?' do
-    context 'when board returns false to #valid_piece? with origin' do
-      it 'returns false'
-    end
-
-    context 'when board returns true to #valid_piece? with origin' do
-      it 'returns true'
-    end
-  end
+  #     it 'returns result of #pick_destination' do
+  #       picked_destination = chess.pick_destination
+  #       expect(chess.query_destination).to eq(picked_destination)
+  #     end
+  #   end
+  # end
 end
 
 # rubocop:enable Metrics/BlockLength

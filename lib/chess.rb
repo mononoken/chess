@@ -9,6 +9,7 @@ class Chess
 
   def initialize(board: Board.new)
     @board = board
+    @current_player = 'Player'
   end
 
   def play
@@ -27,43 +28,45 @@ class Chess
     execute_move(move)
   end
 
-  # private
-
   def execute_move(move)
     board.execute_move(move)
   end
+
+  # private
 
   def query_move
     Move.new(origin: query_origin, destination: query_destination)
   end
 
-  def query_origin
+  def query_origin(player = current_player)
     loop do
-      origin = pick_origin
-      break origin if valid_origin?(origin)
+      origin = pick_origin(player)
+      break origin if valid_origin?(origin, player)
     end
   end
 
-  def valid_origin?(origin)
-    # foo
+  def valid_origin?(origin, player)
+    board.valid_origin?(origin, player)
   end
 
-  def pick_origin
-    # foo
+  def pick_origin(player)
+    puts "#{player}, pick a piece to move by typing its position."
+    gets.chomp.downcase.to_sym
   end
 
-  def query_destination
+  def query_destination(player = current_player)
     loop do
-      destination = pick_destination
-      break destination if valid_destination?(destination)
+      destination = pick_destination(player)
+      break destination if valid_destination?(destination, player)
     end
   end
 
-  def valid_destination?(destination)
-    # foo
+  def valid_destination?(destination, player)
+    board.valid_destination?(destination, player)
   end
 
-  def pick_destination
-    # foo
+  def pick_destination(player)
+    puts "#{player}, pick where you want to move piece by typing the position."
+    gets.chomp.downcase.to_sym
   end
 end
