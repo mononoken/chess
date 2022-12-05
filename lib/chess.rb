@@ -3,6 +3,7 @@
 require_relative './board'
 require_relative './move'
 
+# Runs rounds until the game is over.
 class Chess
   attr_reader :board
 
@@ -22,9 +23,11 @@ class Chess
     # Pending check and checkmate implementation
   end
 
-  def run_round
-    execute_move(query_move)
+  def run_round(move = query_move)
+    execute_move(move)
   end
+
+  # private
 
   def execute_move(move)
     board.execute_move(move)

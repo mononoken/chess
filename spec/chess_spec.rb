@@ -8,6 +8,10 @@ RSpec.describe Chess do
   subject(:chess) { described_class.new }
 
   describe '#play' do
+    before do
+      allow(chess).to receive(:run_round)
+    end
+
     context 'when game_over? is true' do
       before do
         allow(chess).to receive(:game_over?)
@@ -40,23 +44,20 @@ RSpec.describe Chess do
   end
 
   describe '#run_round' do
+    let(:selected_move) { instance_double(Move) }
     before do
-      allow(chess).to receive(:query_move)
+      allow(chess).to receive(:execute_move)
     end
 
-    it 'sends #query_move once' do
-      expect(chess).to receive(:query_move).once
-      chess.run_round
-    end
-
-    it 'sends result of #query_move to #execute_move' do
-      queried_move = chess.query_move
-
+    it 'sends #execute_move with selected move once' do
       expect(chess).to receive(:execute_move)
-        .with(queried_move)
-      chess.run_round
+        .with(selected_move).once
+      chess.run_round(selected_move)
     end
   end
+
+  # Tests below here may be limiting refactoring and should be private methods.
+  # Delete below tests if they fail.
 
   describe '#execute_move' do
     subject(:chess) { described_class.new(board:) }
@@ -223,6 +224,16 @@ RSpec.describe Chess do
         picked_destination = chess.pick_destination
         expect(chess.query_destination).to eq(picked_destination)
       end
+    end
+  end
+
+  xdescribe '#valid_origin?' do
+    context 'when board returns false to #valid_piece? with origin' do
+      it 'returns false'
+    end
+
+    context 'when board returns true to #valid_piece? with origin' do
+      it 'returns true'
     end
   end
 end
