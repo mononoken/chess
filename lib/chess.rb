@@ -31,17 +31,36 @@ class Chess
   end
 
   def query_move
+    Move.new(origin: query_origin, destination: query_destination)
+  end
+
+  def query_origin
     loop do
-      move = pick_move
-      break move if valid_move?(move)
+      origin = pick_origin
+      break origin if valid_origin?(origin)
     end
   end
 
-  def valid_move?(move)
-    move.valid?
+  def valid_origin?(origin)
+    # foo
   end
 
-  def pick_move
-    
+  def pick_origin
+    # foo
+  end
+
+  def query_destination
+    loop do
+      destination = pick_destination
+      break destination if valid_destination?(destination)
+    end
+  end
+
+  def valid_destination?(destination)
+    # foo
+  end
+
+  def pick_destination
+    # foo
   end
 end
