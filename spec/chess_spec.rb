@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative './../lib/chess'
-require_relative './../lib/square'
 
 # rubocop:disable Metrics/BlockLength
 
@@ -75,8 +74,11 @@ RSpec.describe Chess do
     end
   end
 
-  xdescribe '#query_move' do
-    subject(:chess) { described_class.new }
+  describe '#query_move' do
+    before do
+      allow(chess).to receive(:pick_move)
+        .and_return('some type of move')
+    end
 
     context 'when valid_move? is true' do
       before do
@@ -90,8 +92,9 @@ RSpec.describe Chess do
         chess.query_move
       end
 
-      it 'returns instance of Move' do
-        expect(chess.query_move).to be_a Move
+      it 'returns result of #pick_move' do
+        picked_move = chess.pick_move
+        expect(chess.query_move).to eq(picked_move)
       end
     end
 
@@ -107,8 +110,9 @@ RSpec.describe Chess do
         chess.query_move
       end
 
-      it 'returns instance of Move' do
-        expect(chess.query_move).to be_a Move
+      it 'returns result of #pick_move' do
+        picked_move = chess.pick_move
+        expect(chess.query_move).to eq(picked_move)
       end
     end
 
@@ -124,37 +128,36 @@ RSpec.describe Chess do
         chess.query_move
       end
 
-      it 'returns instance of Move' do
-        expect(chess.query_move).to be_a Move
+      it 'returns result of #pick_move' do
+        picked_move = chess.pick_move
+        expect(chess.query_move).to eq(picked_move)
       end
     end
   end
 
-  xdescribe '#valid_move?' do
-    subject(:chess) { described_class.new(board:) }
-    let(:board) { instance_double(Board) }
-    let(:origin) { instance_double(Square) }
-    let(:destination) { instance_double(Square) }
-    context 'when valid_origin? and valid_destination? are true' do
+  describe '#valid_move?' do
+    let(:movement_object) { double }
+
+    context 'when move returns true to #valid?' do
       before do
-        allow(chess).to receive(:valid_origin?)
-          .with(origin)
-          .and_return(true)
-        allow(chess).to receive(:valid_destination?)
-          .with(destination)
+        allow(movement_object).to receive(:valid?)
           .and_return(true)
       end
+
       it 'returns true' do
-        expect(chess.valid_move?(origin, destination)).to be(true)
+        expect(chess.valid_move?(movement_object)).to be(true)
       end
     end
 
-    context 'when valid_origin? is false' do
-      it 'returns false'
-    end
+    context 'when move returns false to #valid?' do
+      before do
+        allow(movement_object).to receive(:valid?)
+          .and_return(false)
+      end
 
-    context 'when valid_destination? is false' do
-      it 'returns false'
+      it 'returns false' do
+        expect(chess.valid_move?(movement_object)).to be(false)
+      end
     end
   end
 end
