@@ -10,20 +10,9 @@ class Squares
     @squares = Array.new(squares)
   end
 
+  # CONTINUE WORKING ON PRIVATE METHODS AND PUBLIC METHOD
   def valid_origin?(position, color)
     position_exists?(position) && matching_color?(color, piece_color(position))
-  end
-
-  def position_exists?(position)
-
-  end
-
-  def matching_color?(color1, color2)
-
-  end
-
-  def piece_color(position)
-    
   end
 
   ###
@@ -61,5 +50,24 @@ class Squares
     squares.reduce('') do |display, square|
       "#{display}#{square.simple_display}\n"
     end
+  end
+
+  private
+
+  def matching_color?(color1, color2)
+    color1 == color2
+  end
+
+  # DEMETER
+  def piece_color(position)
+    squares.find { |square| square.position == position }.content.color
+  end
+
+  def position_exists?(position)
+    positions.any?(position)
+  end
+
+  def positions
+    squares.map(&:position)
   end
 end

@@ -74,10 +74,6 @@ RSpec.describe Squares do
     end
   end
 
-  describe '#position_exists?' do
-    
-  end
-
   describe '#valid_coords' do
     context 'when squares coordinates include [0, 0] [42, 42], [0, 99]' do
       subject(:squares) { described_class.new(sq0, sq1, sq2) }

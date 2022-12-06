@@ -5,11 +5,13 @@ require_relative './move'
 
 # Runs rounds until the game is over.
 class Chess
+  Player = Struct.new(:name, keyword_init: true)
+
   attr_reader :board
 
   def initialize(board: Board.new)
     @board = board
-    @current_player = 'Player'
+    @current_player = Player.new(name: 'player')
   end
 
   def play
@@ -35,27 +37,54 @@ class Chess
   # private
 
   def query_move
-    Move.new(origin: query_origin, destination: query_destination)
+    Move.new(origin: verified_origin, destination: verified_destination)
   end
 
-  def query_origin(player = current_player)
+  Origin = Struct.new(:position, :board, :piece, :player, keyword_init: true)
+
+  def verified_origin(player = current_player)
     loop do
-      origin = pick_origin(player)
-      break origin if valid_origin?(origin, player)
+      origin = origin_choice(player)
+      break origin if valid_origin?(origin)
+      # break origin if origin.valid?
+
+
     end
   end
 
-  # player or player_color ?
-  def valid_origin?(origin, player = current_player)
-    board.valid_origin?(origin, player.color)
+  def origin_choice(player)
+    Origin.new(
+      position: position = verified_position(player),
+      board: board,
+      piece: board.position_piece(position),
+      player: player
+    )
   end
 
-  def pick_origin(player)
+  # verified_position
+  def verified_position(player)
+    loop do
+      position = origin_input(player).to_sym
+      break position if valid_position?(position)
+
+      # Raise invalid position error
+    end
+  end
+
+  def valid_position?(position)
+    board.valid_position(position)
+  end
+
+  def valid_origin?(origin)
+    MoveChecker.valid_origin?(origin)
+  end
+
+  def origin_input(player)
     puts "#{player}, pick a piece to move by typing its position."
-    gets.chomp.downcase.to_sym
+    player_input
   end
 
-  def query_destination(player = current_player)
+  def verified_destination(player = current_player)
     loop do
       destination = pick_destination(player)
       break destination if valid_destination?(destination, player)
@@ -68,6 +97,10 @@ class Chess
 
   def pick_destination(player)
     puts "#{player}, pick where you want to move piece by typing the position."
-    gets.chomp.downcase.to_sym
+    player_input
+  end
+
+  def player_input
+    gets.chomp.downcase
   end
 end
