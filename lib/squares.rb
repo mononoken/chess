@@ -10,6 +10,24 @@ class Squares
     @squares = Array.new(squares)
   end
 
+  def valid_origin?(position, color)
+    position_exists?(position) && matching_color?(color, piece_color(position))
+  end
+
+  def position_exists?(position)
+
+  end
+
+  def matching_color?(color1, color2)
+
+  end
+
+  def piece_color(position)
+    
+  end
+
+  ###
+
   def moves(position)
     find_square(position).moves
   end

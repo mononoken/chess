@@ -15,6 +15,16 @@ class Board
 
   end
 
+  # From Chess
+  def valid_origin?(position, color)
+    squares.valid_origin?(position, color)
+  end
+
+  # From Chess
+  def valid_destination?(position, player_color)
+    squares.valid_destination?(position, player_color)
+  end
+
   def moves(position)
     squares.moves(position)
   end

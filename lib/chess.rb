@@ -45,8 +45,9 @@ class Chess
     end
   end
 
-  def valid_origin?(origin, player)
-    board.valid_origin?(origin, player)
+  # player or player_color ?
+  def valid_origin?(origin, player = current_player)
+    board.valid_origin?(origin, player.color)
   end
 
   def pick_origin(player)
@@ -61,8 +62,8 @@ class Chess
     end
   end
 
-  def valid_destination?(destination, player)
-    board.valid_destination?(destination, player)
+  def valid_destination?(destination, player_color = current_player.color)
+    board.valid_destination?(destination, player_color)
   end
 
   def pick_destination(player)

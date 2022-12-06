@@ -6,6 +6,78 @@ require_relative '../lib/piece'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Squares do
+  subject(:squares) { described_class.new }
+
+  describe '#valid_origin?' do
+    let(:position) { :somewhere }
+    context 'when position_exists? with position returns true' do
+      before do
+        allow(squares).to receive(:position_exists?)
+          .with(position)
+          .and_return(true)
+
+        allow(squares).to receive(:piece_color)
+          .with(position)
+          .and_return(:some_color)
+      end
+
+      context 'when matching_color? with color and piece_color with position returns true' do
+        let(:color) { :purple }
+
+        before do
+          piece_color = squares.piece_color(position)
+
+          allow(squares).to receive(:matching_color?)
+            .with(color, piece_color)
+            .and_return(true)
+        end
+
+        it 'returns true' do
+          result = squares.valid_origin?(position, color)
+
+          expect(result).to be(true)
+        end
+      end
+
+      context 'when matching_color? with color and piece_color with position returns false' do
+        let(:color) { :purple }
+
+        before do
+          piece_color = squares.piece_color(position)
+
+          allow(squares).to receive(:matching_color?)
+            .with(color, piece_color)
+            .and_return(false)
+        end
+
+        it 'returns false' do
+          result = squares.valid_origin?(position, color)
+
+          expect(result).to be(false)
+        end
+      end
+    end
+
+    context 'when position_exists? with position returns false' do
+      before do
+        allow(squares).to receive(:position_exists?)
+          .with(position)
+          .and_return(false)
+      end
+
+      it 'returns false' do
+        color = :some_color
+        result = squares.valid_origin?(position, color)
+
+        expect(result).to be(false)
+      end
+    end
+  end
+
+  describe '#position_exists?' do
+    
+  end
+
   describe '#valid_coords' do
     context 'when squares coordinates include [0, 0] [42, 42], [0, 99]' do
       subject(:squares) { described_class.new(sq0, sq1, sq2) }
