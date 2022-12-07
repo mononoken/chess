@@ -12,8 +12,16 @@ class Origin
     all_checks.all?(true)
   end
 
+  def piece?
+    !square.empty?
+  end
+
   def on_board?
     board.position_exists?(position)
+  end
+
+  def square
+    
   end
 
   private
