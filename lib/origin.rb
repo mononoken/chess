@@ -21,7 +21,7 @@ class Origin
   end
 
   def square
-    
+    board.square(position)
   end
 
   private

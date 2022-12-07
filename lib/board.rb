@@ -11,6 +11,11 @@ class Board
   end
 
   # From Origin specs. No Board tests!
+  def square(position)
+    squares.find_square(position)
+  end
+
+  # From Origin specs. No Board tests!
   def position_exists?(position)
     squares.position_exists?(position)
   end
