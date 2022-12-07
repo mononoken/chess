@@ -2,12 +2,14 @@
 
 require_relative './../lib/origin'
 require_relative './../lib/board'
+require_relative './../lib/player'
 
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Origin do
-  subject(:origin) { described_class.new(position:, board:) }
+  subject(:origin) { described_class.new(position:, player:, board:) }
   let(:position) { :some_position }
+  let(:player) { instance_double(Player) }
   let(:board) { instance_double(Board) }
 
   describe '#valid?' do
@@ -46,6 +48,57 @@ RSpec.describe Origin do
   end
 
   describe '#player_owns?' do
+    let(:piece) { double }
+
+    context 'when player color and piece color match' do
+      let(:same_color) { double }
+      before do
+        allow(origin).to receive(:piece)
+          .and_return(piece)
+        allow(piece).to receive(:color)
+          .and_return(same_color)
+
+        allow(player).to receive(:color)
+          .and_return(same_color)
+      end
+
+      it 'returns true' do
+        expect(origin.player_owns?).to be(true)
+      end
+    end
+
+    context 'when player color and piece color do not match' do
+      let(:one_color) { double }
+      let(:diff_color) { double }
+      before do
+        allow(origin).to receive(:piece)
+          .and_return(piece)
+        allow(piece).to receive(:color)
+          .and_return(one_color)
+
+        allow(player).to receive(:color)
+          .and_return(diff_color)
+      end
+
+      it 'returns false' do
+        expect(origin.player_owns?).to be(false)
+      end
+    end
+
+    context 'when piece returns nil' do
+      let(:one_color) { double }
+      before do
+        allow(origin).to receive(:piece)
+          .and_return(nil)
+
+        allow(player).to receive(:color)
+          .and_return(one_color)
+      end
+
+      it 'returns false' do
+        expect(origin.player_owns?).to be(false)
+      end
+    end
   end
 
   describe '#piece?' do
@@ -83,8 +136,6 @@ RSpec.describe Origin do
   end
 
   describe '#on_board?' do
-    subject(:origin) { described_class.new(position:, board:) }
-
     context 'when board returns true to position_exists? with position' do
       before do
         allow(board).to receive(:position_exists?)
