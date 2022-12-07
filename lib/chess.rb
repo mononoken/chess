@@ -50,7 +50,6 @@ class Chess
     Origin.new(position: verified_position(player), player:, board:)
   end
 
-  # verified_position
   def verified_position(player)
     loop do
       position = origin_input(player).to_sym
@@ -64,10 +63,6 @@ class Chess
     board.valid_position(position)
   end
 
-  def valid_origin?(origin)
-    MoveChecker.valid_origin?(origin)
-  end
-
   def origin_input(player)
     puts "#{player}, pick a piece to move by typing its position."
     player_input
@@ -75,13 +70,13 @@ class Chess
 
   def verified_destination(player = current_player)
     loop do
-      destination = pick_destination(player)
-      break destination if valid_destination?(destination, player)
+      destination = destination_choice(player)
+      break destination if destination.valid?
     end
   end
 
-  def valid_destination?(destination, player_color = current_player.color)
-    board.valid_destination?(destination, player_color)
+  def destination_choice(player)
+    Destination.new(position: verified_position(player), player:, board:)
   end
 
   def pick_destination(player)
