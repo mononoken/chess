@@ -82,34 +82,6 @@ RSpec.describe Origin do
     end
   end
 
-  describe '#square' do
-    context 'when board calls square with position and returns nil' do
-      before do
-        allow(board).to receive(:square)
-          .with(position)
-          .and_return(nil)
-      end
-
-      it 'returns nil' do
-        expect(origin.square).to be(nil)
-      end
-    end
-
-    context 'when board calls square with position and returns square object' do
-      let(:matching_square) { instance_double(Square) }
-
-      before do
-        allow(board).to receive(:square)
-          .with(position)
-          .and_return(matching_square)
-      end
-
-      it 'returns the square object' do
-        expect(origin.square).to eq(matching_square)
-      end
-    end
-  end
-
   describe '#on_board?' do
     subject(:origin) { described_class.new(position:, board:) }
 

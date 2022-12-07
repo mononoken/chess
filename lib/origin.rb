@@ -20,13 +20,13 @@ class Origin
     board.position_exists?(position)
   end
 
-  def square
-    board.square(position)
-  end
-
   private
 
   def all_checks
 
+  end
+
+  def square
+    board.square(position)
   end
 end
