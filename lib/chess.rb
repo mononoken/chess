@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require_relative './board'
+require_relative './player'
 require_relative './move'
 
 # Runs rounds until the game is over.
 class Chess
-  Player = Struct.new(:name, keyword_init: true)
-
   attr_reader :board
 
   def initialize(board: Board.new)
