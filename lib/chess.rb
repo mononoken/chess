@@ -40,25 +40,15 @@ class Chess
     Move.new(origin: verified_origin, destination: verified_destination)
   end
 
-  Origin = Struct.new(:position, :board, :piece, :player, keyword_init: true)
-
   def verified_origin(player = current_player)
     loop do
       origin = origin_choice(player)
-      break origin if valid_origin?(origin)
-      # break origin if origin.valid?
-
-
+      break origin if origin.valid?
     end
   end
 
   def origin_choice(player)
-    Origin.new(
-      position: position = verified_position(player),
-      board: board,
-      piece: board.position_piece(position),
-      player: player
-    )
+    Origin.new(position: verified_position(player), player:, board:)
   end
 
   # verified_position
