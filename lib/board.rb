@@ -10,9 +10,14 @@ class Board
     @squares = squares
   end
 
+  # From Origin specs. No Board tests!
+  def position_exists?(position)
+    squares.position_exists?(position)
+  end
+
   # From Chess#move spec
   def execute_move(move)
-
+    # foo
   end
 
   # From Chess

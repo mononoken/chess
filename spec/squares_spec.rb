@@ -8,66 +8,37 @@ require_relative '../lib/piece'
 RSpec.describe Squares do
   subject(:squares) { described_class.new }
 
-  describe '#valid_origin?' do
-    let(:position) { :somewhere }
-    context 'when position_exists? with position returns true' do
+  describe '#position_exists?' do
+    let(:positions) { instance_double(Array) }
+    let(:position) { instance_double(Symbol) }
+
+    context 'when positions returns true to any? with position' do
       before do
-        allow(squares).to receive(:position_exists?)
+        allow(squares).to receive(:positions)
+          .and_return(positions)
+        allow(positions).to receive(:any?)
           .with(position)
           .and_return(true)
-
-        allow(squares).to receive(:piece_color)
-          .with(position)
-          .and_return(:some_color)
       end
 
-      context 'when matching_color? with color and piece_color with position returns true' do
-        let(:color) { :purple }
+      it 'returns true' do
+        result = squares.position_exists?(position)
 
-        before do
-          piece_color = squares.piece_color(position)
-
-          allow(squares).to receive(:matching_color?)
-            .with(color, piece_color)
-            .and_return(true)
-        end
-
-        it 'returns true' do
-          result = squares.valid_origin?(position, color)
-
-          expect(result).to be(true)
-        end
-      end
-
-      context 'when matching_color? with color and piece_color with position returns false' do
-        let(:color) { :purple }
-
-        before do
-          piece_color = squares.piece_color(position)
-
-          allow(squares).to receive(:matching_color?)
-            .with(color, piece_color)
-            .and_return(false)
-        end
-
-        it 'returns false' do
-          result = squares.valid_origin?(position, color)
-
-          expect(result).to be(false)
-        end
+        expect(result).to be(true)
       end
     end
 
-    context 'when position_exists? with position returns false' do
+    context 'when positions returns false to any? with position' do
       before do
-        allow(squares).to receive(:position_exists?)
+        allow(squares).to receive(:positions)
+          .and_return(positions)
+        allow(positions).to receive(:any?)
           .with(position)
           .and_return(false)
       end
 
       it 'returns false' do
-        color = :some_color
-        result = squares.valid_origin?(position, color)
+        result = squares.position_exists?(position)
 
         expect(result).to be(false)
       end
