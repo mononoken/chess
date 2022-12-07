@@ -8,6 +8,38 @@ require_relative './../lib/board'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Bishop do
+  subject(:bishop) { described_class.new }
+
+  describe '#moves?' do
+    context 'when moves returns false to empty?' do
+      let(:bishop_moves) { double }
+      before do
+        allow(bishop).to receive(:moves)
+          .and_return(bishop_moves)
+        allow(bishop_moves).to receive(:empty?)
+          .and_return(false)
+      end
+
+      it 'returns true' do
+        expect(bishop.moves?).to be(true)
+      end
+    end
+
+    context 'when moves returns true to empty?' do
+      let(:bishop_moves) { double }
+      before do
+        allow(bishop).to receive(:moves)
+          .and_return(bishop_moves)
+        allow(bishop_moves).to receive(:empty?)
+          .and_return(true)
+      end
+
+      it 'returns false' do
+        expect(bishop.moves?).to be(false)
+      end
+    end
+  end
+
   describe '#moves' do
     context 'when bishop is on 5x5 board' do
       subject(:bishop) { described_class.new(squares: squares_5x5) }

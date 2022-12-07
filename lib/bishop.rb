@@ -18,6 +18,10 @@ class Bishop
     movement - squares.obstructed_coords(paths)
   end
 
+  def moves?
+    !moves.empty?
+  end
+
   # LIVING THE DREAM
   # Nested inside this method is a private method that
   # calls #valid_coords from Board which currently

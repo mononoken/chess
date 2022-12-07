@@ -10,7 +10,17 @@ class Origin
   end
 
   def valid?
-    all_checks.all?(true)
+    checks.all?(true)
+  end
+
+  private
+
+  def checks
+    [on_board?, piece?, player_owns?, piece_can_move?]
+  end
+
+  def piece_can_move?
+    piece.moves?
   end
 
   def player_owns?
@@ -23,12 +33,6 @@ class Origin
 
   def on_board?
     board.position_exists?(position)
-  end
-
-  private
-
-  def all_checks
-
   end
 
   def piece
