@@ -1,13 +1,21 @@
 # frozen_string_literal: true
 
 class Destination
-  def valid?
-    checks.all?(true)
+  attr_reader :position, :origin
+
+  def initialize(position:, origin:)
+    @position = position
+    @origin = origin
+  end
+
+  def on_board?
+    board.position_exists?(position)
   end
 
   private
 
-  def checks
+  def board
+    origin.board
   end
 end
 
@@ -30,8 +38,8 @@ class Destination_old
     [on_board?, piece_can_move?]
   end
 
-  def piece_can_move?
-    piece.moves?
+  def position_is_reachable?
+
   end
 
   def on_board?
