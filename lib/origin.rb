@@ -14,6 +14,11 @@ class Origin
     checks.all?(true)
   end
 
+  # Needs test. Called by Destination spec.
+  def piece
+    square.content
+  end
+
   private
 
   def checks
@@ -34,10 +39,6 @@ class Origin
 
   def on_board?
     board.position_exists?(position)
-  end
-
-  def piece
-    square.content
   end
 
   def square

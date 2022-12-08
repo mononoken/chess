@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Check position is a valid destination for an origin.
 class Destination
   attr_reader :position, :origin
 
@@ -8,49 +9,25 @@ class Destination
     @origin = origin
   end
 
-  def on_board?
-    board.position_exists?(position)
-  end
-
-  private
-
-  def board
-    origin.board
-  end
-end
-
-class Destination_old
-  attr_reader :position, :board
-
-  def initialize(position:, player:, board:)
-    @position = position
-    @player = player
-    @board = board
-  end
-
   def valid?
-    checks.all?(true)
-  end
-
-  private
-
-  def checks
-    [on_board?, piece_can_move?]
+    on_board? && position_is_reachable?
   end
 
   def position_is_reachable?
-
+    piece.valid_move?(position)
   end
 
   def on_board?
     board.position_exists?(position)
   end
 
+  private
+
   def piece
-    # NOT THE SAME
+    origin.piece
   end
 
-  def square
-    board.square(position)
+  def board
+    origin.board
   end
 end
