@@ -9,6 +9,7 @@ class Origin
     @board = board
   end
 
+  # valid?(board)
   def valid?
     checks.all?(true)
   end

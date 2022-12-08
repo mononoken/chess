@@ -1,23 +1,18 @@
 # frozen_string_literal: true
 
-require_relative './../lib/origin'
-require_relative './../lib/board'
-require_relative './../lib/player'
+require_relative './../lib/destination'
 
 # rubocop:disable Metrics/BlockLength
 
-RSpec.describe Origin do
-  subject(:origin) { described_class.new(position:, player:, board:) }
-  let(:position) { :some_position }
-  let(:player) { instance_double(Player) }
-  let(:board) { instance_double(Board) }
+RSpec.describe Destination do
+  subject(:destination) { described_class.new }
 
-  describe '#valid?' do
+  describe '#valid?(origin, board)' do
     let(:checks) { instance_double(Array) }
 
-    context 'when checks returns true to all?(true)' do
+    context 'when checks with origin returns true to all?(true)' do
       before do
-        allow(origin).to receive(:checks)
+        allow(destination).to receive(:checks)
           .and_return(checks)
         allow(checks).to receive(:all?)
           .with(true)
@@ -25,13 +20,13 @@ RSpec.describe Origin do
       end
 
       it 'returns true' do
-        expect(origin.valid?).to be(true)
+        expect(destination.valid?).to be(true)
       end
     end
 
-    context 'when checks returns false to all?(true)' do
+    context 'when checks with origin returns false to all?(true)' do
       before do
-        allow(origin).to receive(:checks)
+        allow(destination).to receive(:checks)
           .and_return(checks)
         allow(checks).to receive(:all?)
           .with(true)
@@ -39,8 +34,16 @@ RSpec.describe Origin do
       end
 
       it 'returns false' do
-        expect(origin.valid?).to be(false)
+        expect(destination.valid?).to be(false)
       end
+    end
+  end
+
+  describe '#checks' do
+    it 'sends on_board? and piece_can_move?'
+    it 'returns an array'
+    context 'when it returns an array' do
+      it 'contains only booleans'
     end
   end
 end

@@ -1,7 +1,18 @@
 # frozen_string_literal: true
 
-class Origin
-  attr_reader :position, :player, :board
+class Destination
+  def valid?
+    checks.all?(true)
+  end
+
+  private
+
+  def checks
+  end
+end
+
+class Destination_old
+  attr_reader :position, :board
 
   def initialize(position:, player:, board:)
     @position = position
@@ -16,19 +27,11 @@ class Origin
   private
 
   def checks
-    [on_board?, piece?, player_owns?, piece_can_move?]
+    [on_board?, piece_can_move?]
   end
 
   def piece_can_move?
     piece.moves?
-  end
-
-  def player_owns?
-    piece&.color == player.color
-  end
-
-  def piece?
-    !square.empty?
   end
 
   def on_board?
@@ -36,7 +39,7 @@ class Origin
   end
 
   def piece
-    square.content
+    # NOT THE SAME
   end
 
   def square
