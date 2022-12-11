@@ -50,13 +50,8 @@ class Board
   end
 end
 
+# Moving methods from Squares to Board
 class Squares
-  attr_reader :squares
-
-  def initialize(*squares)
-    @squares = Array.new(squares)
-  end
-
   def position_exists?(position)
     positions.any?(position)
   end
@@ -89,12 +84,6 @@ class Squares
   def valid_coords
     squares.reduce([]) do |unique_coord, square|
       unique_coord.concat(square.coordinates).uniq
-    end
-  end
-
-  def simple_display
-    squares.reduce('') do |display, square|
-      "#{display}#{square.simple_display}\n"
     end
   end
 

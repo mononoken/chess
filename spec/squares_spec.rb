@@ -203,7 +203,6 @@ RSpec.describe Squares do
       end
     end
   end
-
 end
 
 # rubocop:enable Metrics/BlockLength

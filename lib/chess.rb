@@ -32,6 +32,7 @@ class Chess
   # private
 
   def query_move
+    # Move.query(current_player)
     Move.new(origin: verified_origin, destination: verified_destination)
   end
 
