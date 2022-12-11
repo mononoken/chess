@@ -44,31 +44,14 @@ RSpec.describe Chess do
   end
 
   describe '#run_round' do
-    let(:selected_move) { instance_double(Move) }
-    before do
-      allow(chess).to receive(:execute_move)
-    end
-
-    it 'sends #execute_move with selected move once' do
-      expect(chess).to receive(:execute_move)
-        .with(selected_move).once
-      chess.run_round(selected_move)
-    end
-  end
-
-  describe '#execute_move' do
     subject(:chess) { described_class.new(board:) }
-    let(:board) { instance_double(Board) }
+    let(:board) { spy('board') }
     let(:move) { instance_double(Move) }
 
-    before do
-      allow(board).to receive(:execute_move).with(move)
-    end
-
     it 'sends #execute_move to board with injected Move object' do
-      expect(chess.board).to receive(:execute_move).with(move)
+      chess.run_round(move)
 
-      chess.execute_move(move)
+      expect(board).to have_received(:execute_move).with(move)
     end
   end
 

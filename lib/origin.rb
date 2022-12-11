@@ -14,16 +14,16 @@ class Origin
     checks.all?(true)
   end
 
+  def checks
+    [on_board?, piece?, player_owns?, piece_can_move?]
+  end
+
   # Needs test. Called by Destination spec.
   def piece
     square.content
   end
 
   private
-
-  def checks
-    [on_board?, piece?, player_owns?, piece_can_move?]
-  end
 
   def piece_can_move?
     piece.moves?

@@ -44,6 +44,17 @@ RSpec.describe Origin do
     end
   end
 
+  # Fix tests
+  describe '#checks' do
+    it 'returns an array' do
+      expect(origin.checks).to be_instance_of(Array)
+    end
+
+    it 'contains only Booleans' do
+      expect(origin.checks).to include(Boolean)
+    end
+  end
+
   # DELETE THESE TESTS IF FAIL (PRIVATE METHODS).
 
   # describe '#player_owns?' do

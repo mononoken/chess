@@ -26,10 +26,6 @@ class Chess
   end
 
   def run_round(move = query_move)
-    execute_move(move)
-  end
-
-  def execute_move(move)
     board.execute_move(move)
   end
 
