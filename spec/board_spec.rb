@@ -6,46 +6,6 @@ require_relative '../lib/squares'
 # rubocop:disable Metrics/BlockLength
 
 RSpec.describe Board do
-  describe '#moves' do
-    context 'when selected square has a piece' do
-      subject(:board) { described_class.new(squares:) }
-      let(:squares) { instance_double(Squares) }
-      let(:selected_position) { :some_position }
-      let(:valid_moves) { %i[a_move another_move] }
-
-      before do
-        allow(squares).to receive(:moves)
-          .with(selected_position)
-          .and_return(valid_moves)
-      end
-
-      it 'returns array of valid moves for piece in selected square' do
-        expect(board.moves(selected_position)).to eq(valid_moves)
-      end
-    end
-
-    context 'when selected square has a different piece' do
-      subject(:board) { described_class.new(squares:) }
-      let(:squares) { instance_double(Squares) }
-      let(:selected_position) { :another_position }
-      let(:valid_moves) { %i[move1 move2 move3 move4 move5] }
-
-      before do
-        allow(squares).to receive(:moves)
-          .with(selected_position)
-          .and_return(valid_moves)
-      end
-
-      it 'returns array of valid moves for piece in selected square' do
-        expect(board.moves(selected_position)).to eq(valid_moves)
-      end
-    end
-
-    context 'when selected square has no piece' do
-      it 'returns an error'
-    end
-  end
-
   describe '#simple_display' do
     context 'when squares contains one entry with content' do
       subject(:solo_board) { described_class.new(squares: solo_squares) }

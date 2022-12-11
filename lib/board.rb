@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 
 require_relative './squares'
 
@@ -33,10 +32,6 @@ class Board
   # From Chess
   def valid_destination?(position, player_color)
     squares.valid_destination?(position, player_color)
-  end
-
-  def moves(position)
-    squares.moves(position)
   end
 
   # Bishop#moves spec
