@@ -7,50 +7,6 @@ require_relative './../lib/board'
 RSpec.describe Board do
   subject(:board) { described_class.new }
 
-  describe '#initialize' do
-    context 'when width is 3 and height is 5' do
-      subject(:board_3x5) { described_class.new(width: 3, height: 5) }
-      let(:squares) { board_3x5.squares }
-
-      it 'sets squares length to 3' do
-        expect(squares.length).to eq(3)
-      end
-
-      it 'sets squares to contain only arrays' do
-        types = squares.map(&:class).uniq[0]
-
-        expect(types).to be(Array)
-      end
-
-      it 'sets each array in squares to length 5' do
-        lengths = squares.map(&:length).uniq[0]
-
-        expect(lengths).to eq(5)
-      end
-    end
-
-    context 'when width is 8 and height is 8' do
-      subject(:board_8x8) { described_class.new(width: 8, height: 8) }
-      let(:squares) { board_8x8.squares }
-
-      it 'sets squares length to 8' do
-        expect(squares.length).to eq(8)
-      end
-
-      it 'sets squares to contain only arrays' do
-        types = squares.map(&:class).uniq[0]
-
-        expect(types).to be(Array)
-      end
-
-      it 'sets each array in squares to length 8' do
-        lengths = squares.map(&:length).uniq[0]
-
-        expect(lengths).to eq(8)
-      end
-    end
-  end
-
   describe '#move' do
     context 'when movement origin contains an object' do
       let(:origin) { spy('origin_square') }
