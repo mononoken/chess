@@ -1,11 +1,19 @@
 # frozen_string_literal: true
 
 class Square
-  def empty
-    # foo
+  attr_accessor :content
+
+  def initialize(content = nil)
+    @content = content
   end
 
-  def fill
-    # foo
+  def empty
+    previous_content = content
+    self.content = nil
+    previous_content
+  end
+
+  def fill(item)
+    self.content = item
   end
 end
