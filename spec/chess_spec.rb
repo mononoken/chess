@@ -10,7 +10,7 @@ RSpec.describe Chess do
   let(:player) { instance_double(Player) }
 
   describe '#play' do
-    let(:turn) { instance_spy(Turn) }
+    let(:turn) { class_spy(Turn) }
 
     before :each do
       allow(turn).to receive(:run)

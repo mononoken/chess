@@ -5,6 +5,13 @@ class Turn
     new(board, player).run
   end
 
-  def run(board, player)
+  attr_reader :board, :player
+
+  def initialize(board, player)
+    @board = board
+    @player = player
+  end
+
+  def run
   end
 end
