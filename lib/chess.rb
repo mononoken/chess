@@ -2,6 +2,7 @@
 
 require_relative './board'
 require_relative './player'
+require_relative './turn'
 
 # Sends player movements to board until the game is over.
 class Chess
@@ -12,8 +13,8 @@ class Chess
     @player = player
   end
 
-  def play
-    board.move(player.movement) until game_over?
+  def play(turn = Turn)
+    turn.run(board, player) until game_over?
   end
 
   def game_over?

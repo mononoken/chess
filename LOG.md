@@ -1,3 +1,17 @@
+20221213
+  I was thinking today what are the things that the program should unquestionably do in the eyes of the user. I came up with:
+  - The user/Player should be able to select a Piece to move and move that Piece to a new, valid Square.
+
+  In my current iteration, I reached for this idea quickly by making `#play` send `#move` to `@board`. In previous iterations, I was thinking of this differently. I thought that the `Piece` is what is moving so it should have `#move`. I ended up not liking this though because my attempt was tying Piece and Board closely together. I thought they depended on each other too much.
+
+  Now I am wondering if I like rewording the unquestionable as:
+  - The user/Player should be able to input Moves that systematically change the state of the Board.
+
+  This wording to me shows that Movement is a class. Move objects represent the player input that is given to board to interpret into a change to squares.
+
+  Do I come up with Movement first, how Player is involved with Movement or how Board interprets Movement? I've already hinted at Movement with writing the initial `#move` method. I realized that `#move` being refactored to need two parameters is not breaking the stubs in chess_spec. I will start with fixing that.
+
+
 20221212
   Decided to restart the project after getting more comfortable with RSpec and realizing I did not like how I was using it before. I think I was stubbing excessively before. I also think my classes may have had too many responsibilities as it was not clear to me what the classes would be doing when I made them.
 

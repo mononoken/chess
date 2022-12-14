@@ -6,10 +6,16 @@ require_relative './../lib/chess'
 
 RSpec.describe Chess do
   subject(:chess) { described_class.new(board:, player:) }
+  let(:board) { instance_double(Board) }
+  let(:player) { instance_double(Player) }
 
   describe '#play' do
-    let(:board) { spy('board') }
-    let(:player) { instance_double(Player) }
+    let(:turn) { instance_spy(Turn) }
+
+    before :each do
+      allow(turn).to receive(:run)
+        .with(board, player)
+    end
 
     context 'when game_over? returns true' do
       before do
@@ -18,9 +24,9 @@ RSpec.describe Chess do
       end
 
       it 'does not send move to board' do
-        chess.play
+        chess.play(turn)
 
-        expect(board).not_to have_received(:move)
+        expect(turn).not_to have_received(:run)
       end
     end
 
@@ -28,14 +34,13 @@ RSpec.describe Chess do
       before do
         allow(chess).to receive(:game_over?)
           .and_return(false, true)
-        allow(player).to receive(:movement)
       end
 
       it 'sends move with player movement to board once' do
-        chess.play
+        chess.play(turn)
 
-        expect(board).to have_received(:move)
-          .with(player.movement)
+        expect(turn).to have_received(:run)
+          .with(board, player)
           .once
       end
     end
@@ -44,23 +49,19 @@ RSpec.describe Chess do
       before do
         allow(chess).to receive(:game_over?)
           .and_return(false, false, false, false, true)
-        allow(player).to receive(:movement)
       end
 
       it 'sends move with player movement to board 4 times' do
-        chess.play
+        chess.play(turn)
 
-        expect(board).to have_received(:move)
-          .with(player.movement)
+        expect(turn).to have_received(:run)
+          .with(board, player)
           .exactly(4).times
       end
     end
   end
 
   describe '#game_over?' do
-    let(:board) { instance_double(Board) }
-    let(:player) { instance_double(Player) }
-
     context 'when player returns true to checkmate? and false to stalemate?' do
       before do
         allow(player).to receive(:checkmate?)
