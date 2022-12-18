@@ -13,6 +13,10 @@ class Square
     previous_content
   end
 
+  def empty?
+    # Board spec
+  end
+
   def fill(item)
     self.content = item
   end

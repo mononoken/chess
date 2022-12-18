@@ -4,7 +4,7 @@ require_relative './board'
 require_relative './player'
 require_relative './turn'
 
-# Sends player movements to board until the game is over.
+# Sends run to turn until the game is over.
 class Chess
   attr_reader :board, :player
 
@@ -13,11 +13,7 @@ class Chess
     @player = player
   end
 
-  def play(turn = Turn)
-    turn.run(board, player) until game_over?
-  end
-
-  def game_over?
-    player.checkmate? || player.stalemate?
+  def play(player, origin, destination)
+    board.move(origin, destination)
   end
 end
