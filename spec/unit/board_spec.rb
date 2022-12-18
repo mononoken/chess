@@ -65,14 +65,26 @@ RSpec.describe Board do
           .and_return(true)
       end
 
+      it 'raises error' do
+        expect { board.move(origin, destination) }.to raise_error
+      end
+
       it 'does not send empty to origin square' do
-        board.move(origin, destination)
+        begin
+          board.move(origin, destination)
+        rescue Board::EmptyOriginError
+          nil
+        end
 
         expect(origin_square).not_to have_received(:empty)
       end
 
       it 'does not send fill to destination square' do
-        board.move(origin, destination)
+        begin
+          board.move(origin, destination)
+        rescue Board::EmptyOriginError
+          nil
+        end
 
         expect(destination_square).not_to have_received(:fill)
       end

@@ -2,7 +2,6 @@
 
 require_relative './board'
 require_relative './player'
-require_relative './turn'
 
 # Sends run to turn until the game is over.
 class Chess

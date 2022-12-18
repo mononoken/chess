@@ -2,7 +2,14 @@
 
 require_relative './square'
 
+
 class Board
+  class EmptyOriginError < StandardError
+    def message
+      'Move sent to an empty origin.'
+    end
+  end
+
   attr_reader :squares
 
   def initialize(squares = Array.new(8) { Array.new(8) { Square.new } })
@@ -10,7 +17,7 @@ class Board
   end
 
   def move(origin, destination)
-    return if square(origin).empty?
+    raise EmptyOriginError if square(origin).empty?
 
     content = square(origin).empty
 
