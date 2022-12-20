@@ -3,7 +3,7 @@
 require_relative './../../lib/chess'
 
 RSpec.describe 'Solo Rook API' do
-  xit 'only accepts valid rook moves' do
+  it 'only accepts valid rook moves' do
     board = Board.new
 
     player = Player.new
@@ -18,11 +18,13 @@ RSpec.describe 'Solo Rook API' do
 
     invalid_destination = [5, 5]
 
-    expect { game.play(player, origin, invalid_destination) }.to raise_error
+    expect { game.play(player, origin, invalid_destination) }
+      .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = [4, 4]
 
-    expect { game.play(player, origin, valid_destination) }.not_to raise_error
+    expect { game.play(player, origin, valid_destination) }
+      .not_to raise_error
   end
 
   it 'moves rook across board' do
@@ -40,7 +42,7 @@ RSpec.describe 'Solo Rook API' do
     game.play(player, [0, 1], [0, 3])
     game.play(player, [0, 3], [0, 7])
 
-    last_square = board.square([0, 7])
+    last_square = board.squares[0][7]
 
     expect(last_square.content).to eq(rook)
   end

@@ -2,8 +2,6 @@
 
 require_relative './../../lib/square'
 
-# rubocop:disable Metrics/BlockLength
-
 RSpec.describe Square do
   subject(:square) { described_class.new }
 
@@ -72,5 +70,3 @@ RSpec.describe Square do
     end
   end
 end
-
-# rubocop:enable Metrics/BlockLength
