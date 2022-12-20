@@ -7,13 +7,13 @@ require_relative './../../lib/rook'
 
 RSpec.describe Board do
   subject(:board) { described_class.new(squares) }
-  let(:squares) { Array.new(5) { Array.new(5) { Square.new } } }
+  let(:squares) { Array.new(2) { Array.new(2) { Square.new } } }
 
   describe '#move' do
     context 'when origin square is populated' do
       let(:rook) { instance_double(Rook) }
       let(:origin) { [0, 0] }
-      let(:destination) { [0, 4] }
+      let(:destination) { [0, 1] }
 
       before do
         board.populate(rook, origin)
@@ -22,7 +22,7 @@ RSpec.describe Board do
       it 'moves origin population to destination square' do
         board.move(origin, destination)
 
-        destination_square = board.squares[0][4]
+        destination_square = board.squares[0][1]
 
         expect(destination_square.content).to eq(rook)
       end
@@ -30,7 +30,7 @@ RSpec.describe Board do
 
     context 'when origin square is empty' do
       let(:origin) { [0, 1] }
-      let(:destination) { [3, 1] }
+      let(:destination) { [1, 1] }
 
       it 'raises error' do
         expect { board.move(origin, destination) }.to \
@@ -38,7 +38,7 @@ RSpec.describe Board do
       end
 
       it 'does not change the desination square' do
-        destination_square = board.squares[3][1]
+        destination_square = board.squares[1][1]
 
         expect do
           begin
@@ -67,12 +67,12 @@ RSpec.describe Board do
       end
     end
 
-    context 'when rook is placed at 4, 2' do
+    context 'when rook is placed at 1, 0' do
       let(:rook) { instance_double(Rook) }
 
-      it 'changes square content at [4][2] to rook' do
-        x = 4
-        y = 2
+      it 'changes square content at [1][0] to rook' do
+        x = 1
+        y = 0
         position = [x, y]
 
         square = board.squares[x][y]
