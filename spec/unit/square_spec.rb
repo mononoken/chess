@@ -7,7 +7,29 @@ require_relative './../../lib/square'
 RSpec.describe Square do
   subject(:square) { described_class.new }
 
-  describe 'empty' do
+  describe '#empty?' do
+    context 'when Square content is nil' do
+      subject(:square) { described_class.new(nil) }
+
+      it 'returns true' do
+        expect(square.empty?).to be(true)
+      end
+    end
+
+    context 'when Square content is an object' do
+      let(:object) { double }
+
+      before do
+        square.fill(object)
+      end
+
+      it 'returns false' do
+        expect(square.empty?).to be(false)
+      end
+    end
+  end
+
+  describe '#empty' do
     context 'when content has some value' do
       subject(:square) { described_class.new(some_content) }
       let(:some_content) { double }

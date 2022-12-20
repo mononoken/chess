@@ -25,7 +25,7 @@ class Board
   end
 
   def populate(piece, position)
-    square(position).content = piece
+    square(position).fill(piece)
   end
 
   def square(position)

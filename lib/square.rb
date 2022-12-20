@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Square
-  attr_accessor :content
+  attr_reader :content
 
   def initialize(content = nil)
     @content = content
@@ -14,10 +14,14 @@ class Square
   end
 
   def empty?
-    # Board spec
+    content.nil?
   end
 
   def fill(item)
     self.content = item
   end
+
+  private
+
+  attr_writer :content
 end
