@@ -1,50 +1,50 @@
 # frozen_string_literal: true
 
 require_relative './../../lib/chess'
-require_relative './../../lib/bishop'
+require_relative './../../lib/king'
 
-RSpec.describe 'Solo Bishop API' do
-  it 'only accepts valid bishop moves' do
+RSpec.describe 'Solo King API' do
+  it 'only accepts valid king moves' do
     board = Board.new
 
     player = Player.new
 
     game = Chess.new(board:, player:)
 
-    bishop = Bishop.new
+    king = King.new
 
     origin = [2, 0]
 
-    board.populate(bishop, origin)
+    board.populate(king, origin)
 
     invalid_destination = [4, 1]
 
     expect { game.play(player, origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    valid_destination = [0, 2]
+    valid_destination = [3, 1]
 
     expect { game.play(player, origin, valid_destination) }
       .not_to raise_error
   end
 
-  it 'moves bishop across board' do
+  it 'moves king across board' do
     board = Board.new
 
     player = Player.new
 
     game = Chess.new(board:, player:)
 
-    bishop = Bishop.new
+    king = King.new
 
-    board.populate(bishop, [0, 0])
+    board.populate(king, [2, 2])
 
-    game.play(player, [0, 0], [1, 1])
-    game.play(player, [1, 1], [3, 3])
-    game.play(player, [3, 3], [7, 7])
+    game.play(player, [2, 2], [1, 1])
+    game.play(player, [1, 1], [1, 2])
+    game.play(player, [1, 2], [0, 2])
 
-    last_square = board.squares[7][7]
+    last_square = board.squares[0][2]
 
-    expect(last_square.content).to eq(bishop)
+    expect(last_square.content).to eq(king)
   end
 end
