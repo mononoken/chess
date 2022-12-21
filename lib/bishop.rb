@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Rook
+class Bishop
   def valid_destination?(origin, destination, boundaries)
     movement(origin, boundaries).any?(destination)
   end
@@ -13,27 +13,27 @@ class Rook
 
   def paths(origin, boundaries)
     [
-      top_vertical(origin, boundaries),
-      bot_vertical(origin, boundaries),
-      left_horizontal(origin, boundaries),
-      right_horizontal(origin, boundaries)
+      top_right_diagonal(origin, boundaries),
+      bot_right_diagonal(origin, boundaries),
+      bot_left_diagonal(origin, boundaries),
+      top_left_diagonal(origin, boundaries)
     ]
   end
 
-  def top_vertical(origin, boundaries)
-    path(origin, [0, 1], boundaries)
+  def top_right_diagonal(origin, boundaries)
+    path(origin, [1, 1], boundaries)
   end
 
-  def bot_vertical(origin, boundaries)
-    path(origin, [0, -1], boundaries)
+  def bot_right_diagonal(origin, boundaries)
+    path(origin, [1, -1], boundaries)
   end
 
-  def left_horizontal(origin, boundaries)
-    path(origin, [-1, 0], boundaries)
+  def bot_left_diagonal(origin, boundaries)
+    path(origin, [-1, -1], boundaries)
   end
 
-  def right_horizontal(origin, boundaries)
-    path(origin, [1, 0], boundaries)
+  def top_left_diagonal(origin, boundaries)
+    path(origin, [-1, 1], boundaries)
   end
 
   def path(coord, step, boundaries)

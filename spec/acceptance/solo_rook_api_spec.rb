@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './../../lib/chess'
+require_relative './../../lib/rook'
 
 RSpec.describe 'Solo Rook API' do
   it 'only accepts valid rook moves' do
