@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class King
+module Movable
   def valid_destination?(origin, destination, boundaries)
     movement(origin, boundaries).any?(destination)
   end
@@ -12,30 +12,19 @@ class King
   end
 
   def paths(origin, boundaries)
-    all_steps.map { |step| path(origin, step, boundaries, 0, 1) }
+    []
   end
 
-  def all_steps
-    [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
-  end
-
-  def path(coord, step, boundaries, steps, step_limit)
+  def path(coord, step, boundaries)
     next_coord = coord_step(coord, step)
 
-    return [] unless within_boundaries?(next_coord, boundaries) && within_step_limit?(steps, step_limit)
+    return [] unless within_boundaries?(next_coord, boundaries)
 
-    steps += 1
-    [next_coord] + path(next_coord, step, boundaries, steps, step_limit)
+    [next_coord] + path(next_coord, step, boundaries)
   end
 
   def coord_step(coord, step)
     [coord, step].transpose.map(&:sum)
-  end
-
-  def within_step_limit?(steps, step_limit)
-    return true if step_limit.nil?
-
-    steps < step_limit
   end
 
   def within_boundaries?(coordinates, boundaries)

@@ -21,31 +21,38 @@ class Rook
   end
 
   def top_vertical(origin, boundaries)
-    path(origin, [0, 1], boundaries)
+    path(origin, [0, 1], boundaries, 0, nil)
   end
 
   def bot_vertical(origin, boundaries)
-    path(origin, [0, -1], boundaries)
+    path(origin, [0, -1], boundaries, 0, nil)
   end
 
   def left_horizontal(origin, boundaries)
-    path(origin, [-1, 0], boundaries)
+    path(origin, [-1, 0], boundaries, 0, nil)
   end
 
   def right_horizontal(origin, boundaries)
-    path(origin, [1, 0], boundaries)
+    path(origin, [1, 0], boundaries, 0, nil)
   end
 
-  def path(coord, step, boundaries)
+  def path(coord, step, boundaries, steps, step_limit)
     next_coord = coord_step(coord, step)
 
-    return [] unless within_boundaries?(next_coord, boundaries)
+    return [] unless within_boundaries?(next_coord, boundaries) && within_step_limit?(steps, step_limit)
 
-    [next_coord] + path(next_coord, step, boundaries)
+    steps += 1
+    [next_coord] + path(next_coord, step, boundaries, steps, step_limit)
   end
 
   def coord_step(coord, step)
     [coord, step].transpose.map(&:sum)
+  end
+
+  def within_step_limit?(steps, step_limit)
+    return true if step_limit.nil?
+
+    steps < step_limit
   end
 
   def within_boundaries?(coordinates, boundaries)
