@@ -41,6 +41,17 @@
 
   Also, a king still has the board as a boundary as well. The step limit is an additional limitation it has. A limitation that simply does not apply to bishop and rook.
 
+  ---
+
+  What is the difference between putting behavior in a module vs a class?
+
+  In my head now, the difference is that a class instantiates objects, while a module just shares methods/behavior. Instantiated objects have instance variables.
+
+  For this problem with chess project, this is the solution I am thinking to try:
+
+  `Piece` class composed with a moveset. Each piece type has a moveset class such as `RookMoveset`. Each moveset shares a role using a shared module, `Movable`.
+
+  There will be a test that each moveset must pass to play the `Movable` role.
 
 20221213
   I was thinking today what are the things that the program should unquestionably do in the eyes of the user. I came up with:
