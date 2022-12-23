@@ -2,7 +2,6 @@
 
 require_relative './square'
 
-
 class Board
   class EmptyOriginError < StandardError
     def message

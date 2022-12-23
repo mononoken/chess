@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class Piece
-  class MissingPathsError < StandardError
-    def message
-      "#{self.class} must implement #paths."
-    end
-  end
-
   def valid_destination?(origin, destination, boundaries)
     movement(origin, boundaries).any?(destination)
   end
@@ -18,7 +12,7 @@ class Piece
   end
 
   def paths(origin, boundaries)
-    raise MissingRoleMethodError
+    step_directions.map { |step| path(origin, step, boundaries, 0, step_limit) }
   end
 
   def path(coord, step, boundaries, steps, step_limit)
