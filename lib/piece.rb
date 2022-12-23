@@ -1,6 +1,12 @@
 # frozen_string_literal: true
 
-module Movable
+class Piece
+  class MissingPathsError < StandardError
+    def message
+      "#{self.class} must implement #paths."
+    end
+  end
+
   def valid_destination?(origin, destination, boundaries)
     movement(origin, boundaries).any?(destination)
   end
@@ -12,19 +18,26 @@ module Movable
   end
 
   def paths(origin, boundaries)
-    []
+    raise MissingRoleMethodError
   end
 
-  def path(coord, step, boundaries)
+  def path(coord, step, boundaries, steps, step_limit)
     next_coord = coord_step(coord, step)
 
-    return [] unless within_boundaries?(next_coord, boundaries)
+    return [] unless within_boundaries?(next_coord, boundaries) && within_step_limit?(steps, step_limit)
 
-    [next_coord] + path(next_coord, step, boundaries)
+    steps += 1
+    [next_coord] + path(next_coord, step, boundaries, steps, step_limit)
   end
 
   def coord_step(coord, step)
     [coord, step].transpose.map(&:sum)
+  end
+
+  def within_step_limit?(steps, step_limit)
+    return true if step_limit.nil?
+
+    steps < step_limit
   end
 
   def within_boundaries?(coordinates, boundaries)
