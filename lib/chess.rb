@@ -19,6 +19,8 @@ class Chess
   end
 
   def play(player, origin, destination)
+    # raise InvalidOriginError if origin is not in board.positions
+    # raise InvalidDestinationError unless Movement.new(origin, )
     raise InvalidDestinationError unless board.valid_destination?(origin, destination)
 
     board.move(origin, destination)

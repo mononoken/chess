@@ -24,7 +24,7 @@ class Board
   end
 
   def valid_destination?(origin, destination)
-    square(origin).content.valid_destination?(origin, destination, boundaries)
+    square(origin).valid_destination?(origin, destination, boundaries)
   end
 
   def populate(piece, position)
@@ -39,6 +39,12 @@ class Board
       ranks: ranks_boundaries
     }
   end
+
+  # def positions
+  #   squares.map.with_index do |file, file_index|
+  #     file.map.with_index { |_, rank_index| [file_index, rank_index] }
+  #   end.flatten(1)
+  # end
 
   def files_boundaries
     (0..squares.count - 1)

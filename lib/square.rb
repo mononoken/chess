@@ -7,6 +7,10 @@ class Square
     @content = content
   end
 
+  def valid_destination?(origin, destination, boundaries)
+    content.valid_destination?(origin, destination, boundaries)
+  end
+
   def empty
     previous_content = content
     self.content = nil

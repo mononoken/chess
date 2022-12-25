@@ -24,18 +24,18 @@ class Movement
     step_directions.map { |step| path(origin, step) }
   end
 
-  # Path is an array of coordinates in a given step direction.
-  def path(coord, step, steps = 0)
-    next_coord = coord_step(coord, step)
+  # Path is an array of positions in a given step direction.
+  def path(position, step, steps = 0)
+    next_position = next_position(position, step)
 
-    return [] unless within_boundaries?(next_coord) && within_step_limit?(steps)
+    return [] unless within_boundaries?(next_position) && within_step_limit?(steps)
 
     steps += 1
-    [next_coord] + path(next_coord, step, steps)
+    [next_position] + path(next_position, step, steps)
   end
 
-  def coord_step(coord, step)
-    [coord, step].transpose.map(&:sum)
+  def next_position(position, step)
+    [position, step].transpose.map(&:sum)
   end
 
   def within_step_limit?(steps)
@@ -44,8 +44,8 @@ class Movement
     steps < step_limit
   end
 
-  def within_boundaries?(coord)
-    boundaries[:files].include?(coord[0]) && boundaries[:ranks].include?(coord[1])
+  def within_boundaries?(position)
+    boundaries[:files].include?(position[0]) && boundaries[:ranks].include?(position[1])
   end
 end
 
