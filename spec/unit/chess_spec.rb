@@ -3,8 +3,9 @@
 require_relative './../../lib/chess'
 
 RSpec.describe Chess do
-  subject(:chess) { described_class.new(board:, player:) }
+  subject(:chess) { described_class.new(board:, player:, movement:) }
   let(:player) { instance_double(Player) }
+  let(:movement) { double }
 
   describe '#play' do
     context 'when an invalid destination is selected for a board origin' do
@@ -13,7 +14,7 @@ RSpec.describe Chess do
       let(:destination) { [5, 5] }
 
       before do
-        allow(board).to receive(:valid_destination?)
+        allow(movement).to receive(:valid_destination?)
           .and_return(false)
       end
 
@@ -35,7 +36,7 @@ RSpec.describe Chess do
       let(:destination) { [7, 0] }
 
       before do
-        allow(board).to receive(:valid_destination?)
+        allow(movement).to receive(:valid_destination?)
           .and_return(true)
       end
 

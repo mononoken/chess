@@ -2,6 +2,7 @@
 
 require_relative './board'
 require_relative './player'
+require_relative './movement'
 
 # Sends run to turn until the game is over.
 class Chess
@@ -11,17 +12,16 @@ class Chess
     end
   end
 
-  attr_reader :board, :player
+  attr_reader :board, :player, :movement
 
-  def initialize(board:, player:)
+  def initialize(board:, player:, movement: Movement)
     @board = board
     @player = player
+    @movement = movement
   end
 
   def play(player, origin, destination)
-    # raise InvalidOriginError if origin is not in board.positions
-    # raise InvalidDestinationError unless Movement.new(origin, )
-    raise InvalidDestinationError unless board.valid_destination?(origin, destination)
+    raise InvalidDestinationError unless movement.valid_destination?(destination, origin, board)
 
     board.move(origin, destination)
   end

@@ -3,8 +3,6 @@
 require_relative './piece'
 
 class Bishop < Piece
-  private
-
   def step_directions
     [[1, 1], [1, -1], [-1, -1], [-1, 1]]
   end
