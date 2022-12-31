@@ -38,6 +38,10 @@ class Board
     }
   end
 
+  def occupied_squares(color)
+    squares.flatten.select { |square| square.piece_color?(color) }
+  end
+
   private
 
   # def positions

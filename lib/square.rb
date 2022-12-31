@@ -25,6 +25,10 @@ class Square
     self.content = item
   end
 
+  def piece_color?(color)
+    # Implement from Board spec
+  end
+
   private
 
   attr_writer :content

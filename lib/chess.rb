@@ -25,10 +25,4 @@ class Chess
 
     board.move(origin, destination)
   end
-
-  private
-
-  def valid_destination?(piece, destination)
-    piece.valid_destination?(destination)
-  end
 end
