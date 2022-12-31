@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './../../lib/chess'
-require_relative './../../lib/bishop'
+require_relative './../../lib/pieces/bishop'
 
 RSpec.describe 'Solo Bishop API' do
   it 'only accepts valid bishop moves' do

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './../../lib/board'
-require_relative './../../lib/rook'
+require_relative './../../lib/pieces/rook'
 
 RSpec.describe Board do
   subject(:board) { described_class.new(squares) }
@@ -84,7 +84,7 @@ RSpec.describe Board do
     let(:position) { [1, 0] }
 
     before do
-      allow(squares[1][0]).to receive(:content)
+      allow(squares[position[0]][position[1]]).to receive(:content)
         .and_return(content)
     end
 
