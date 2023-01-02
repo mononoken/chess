@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class Square
-  attr_reader :content
+  attr_reader :position, :content
 
-  def initialize(content = nil)
+  def initialize(position: nil, content: nil)
+    @position = position
     @content = content
   end
 

@@ -93,7 +93,7 @@ RSpec.describe Board do
     end
   end
 
-  fdescribe '#occupied_squares' do
+  describe '#occupied_squares' do
     let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
 
     context 'when three squares have pieces of selected color' do

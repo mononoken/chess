@@ -19,7 +19,7 @@ class Movement
   private
 
   def destinations
-    # paths.flatten(1) - board.occupied_squares(player_color)
+    # paths.flatten(1) - board.occupied_positions(player_color)
 
     paths.flatten(1)
   end

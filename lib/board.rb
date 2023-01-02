@@ -11,7 +11,7 @@ class Board
 
   attr_reader :squares
 
-  def initialize(squares = Array.new(8) { Array.new(8) { Square.new } })
+  def initialize(squares = default_squares)
     @squares = squares
   end
 
@@ -38,11 +38,23 @@ class Board
     }
   end
 
+  def occupied_positions(color)
+    # occupied_squares(color).map { |square| square.position }
+  end
+
   def occupied_squares(color)
     squares.flatten.select { |square| square.piece_color?(color) }
   end
 
   private
+
+  def default_squares
+    Array.new(8).map.with_index do |_, file_index|
+      Array.new(8).map.with_index do |_, rank_index|
+        Square.new(position: [file_index, rank_index])
+      end
+    end
+  end
 
   # def positions
   #   squares.map.with_index do |file, file_index|
