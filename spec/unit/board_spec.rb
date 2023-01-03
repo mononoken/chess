@@ -93,7 +93,7 @@ RSpec.describe Board do
     end
   end
 
-  describe '#occupied_squares' do
+  describe '#occupied_positions' do
     let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
 
     context 'when three squares have pieces of selected color' do
@@ -116,8 +116,10 @@ RSpec.describe Board do
         end
       end
 
-      it 'returns array of the three occupied squares' do
-        expect(board.occupied_squares(color)).to match_array(matching_squares)
+      it 'returns array of the three occupied squares positions' do
+        matching_positions = [[0, 0], [0, 1], [1, 0]]
+
+        expect(board.occupied_positions(color)).to match_array(matching_positions)
       end
     end
 
@@ -138,8 +140,61 @@ RSpec.describe Board do
       end
 
       it 'return nil' do
-        expect(board.occupied_squares(color)).to match_array(matching_squares)
+        matching_positions = []
+
+        expect(board.occupied_positions(color)).to match_array(matching_positions)
       end
     end
+
   end
+
+  # describe '#occupied_squares' do
+  #   let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
+
+  #   context 'when three squares have pieces of selected color' do
+  #     let(:matching_squares) { [squares[0][0], squares[0][1], squares[1][0]] }
+  #     let(:mismatch_squares) { [squares[1][1]] }
+
+  #     let(:color) { :black }
+
+  #     before do
+  #       matching_squares.each do |square|
+  #         allow(square).to receive(:piece_color?)
+  #           .with(color)
+  #           .and_return(true)
+  #       end
+
+  #       mismatch_squares.each do |square|
+  #         allow(square).to receive(:piece_color?)
+  #           .with(color)
+  #           .and_return(false)
+  #       end
+  #     end
+
+  #     it 'returns array of the three occupied squares' do
+  #       expect(board.occupied_squares(color)).to match_array(matching_squares)
+  #     end
+  #   end
+
+  #   context 'when no squares have pieces of selected color' do
+  #     let(:matching_squares) { [] }
+  #     let(:mismatch_squares) do
+  #       [squares[0][0], squares[0][1], squares[1][0], squares[1][1]]
+  #     end
+
+  #     let(:color) { :purple }
+
+  #     before do
+  #       mismatch_squares.each do |square|
+  #         allow(square).to receive(:piece_color?)
+  #           .with(color)
+  #           .and_return(false)
+  #       end
+  #     end
+
+  #     it 'return nil' do
+  #       expect(board.occupied_squares(color)).to match_array(matching_squares)
+  #     end
+  #   end
+  # end
 end

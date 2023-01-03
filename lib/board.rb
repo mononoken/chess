@@ -9,10 +9,11 @@ class Board
     end
   end
 
-  attr_reader :squares
+  attr_reader :squares, :coordinator
 
-  def initialize(squares = default_squares)
+  def initialize(squares = default_squares, coordinator = Coordinator.new(self))
     @squares = squares
+    @coordinator = coordinator
   end
 
   def move(origin, destination)
@@ -39,21 +40,17 @@ class Board
   end
 
   def occupied_positions(color)
-    # occupied_squares(color).map { |square| square.position }
-  end
-
-  def occupied_squares(color)
-    squares.flatten.select { |square| square.piece_color?(color) }
+    occupied_squares(color).map { |square| coordinator.position(square) }
   end
 
   private
 
   def default_squares
-    Array.new(8).map.with_index do |_, file_index|
-      Array.new(8).map.with_index do |_, rank_index|
-        Square.new(position: [file_index, rank_index])
-      end
-    end
+    Array.new(8) { Array.new(8) { Square.new } }
+  end
+
+  def occupied_squares(color)
+    squares.flatten.select { |square| square.piece_color?(color) }
   end
 
   # def positions
@@ -76,11 +73,23 @@ class Board
 end
 
 class Coordinator
-  def position(squares, square)
+  attr_reader :board
+
+  def initialize(board)
+    @board = board
+  end
+
+  def position(square)
     squares.map.with_index do |file, file_index|
       file.map.with_index do |board_square, rank_index|
         [file_index, rank_index] if board_square == square
       end
     end.flatten.compact
+  end
+
+  private
+
+  def squares
+    board.squares
   end
 end
