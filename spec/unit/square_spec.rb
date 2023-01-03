@@ -5,18 +5,6 @@ require_relative './../../lib/square'
 RSpec.describe Square do
   subject(:square) { described_class.new }
 
-  # Need to finish this test
-  xdescribe '#valid_destination?' do
-    subject(:square) { described_class.new(content) }
-    let(:content) { instance_spy(Piece) }
-
-    it 'sends valid_destination? to content' do
-      square.valid_destination?()
-
-      expect(content).to have_received(:valid_destination?)
-    end
-  end
-
   describe '#empty?' do
     context 'when Square content is nil' do
       subject(:square) { described_class.new(nil) }
