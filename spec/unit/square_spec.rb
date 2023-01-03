@@ -7,7 +7,7 @@ RSpec.describe Square do
 
   # Need to finish this test
   xdescribe '#valid_destination?' do
-    subject(:square) { described_class.new(content:) }
+    subject(:square) { described_class.new(content) }
     let(:content) { instance_spy(Piece) }
 
     it 'sends valid_destination? to content' do
@@ -19,7 +19,7 @@ RSpec.describe Square do
 
   describe '#empty?' do
     context 'when Square content is nil' do
-      subject(:square) { described_class.new(content: nil) }
+      subject(:square) { described_class.new(nil) }
 
       it 'returns true' do
         expect(square.empty?).to be(true)
@@ -41,7 +41,7 @@ RSpec.describe Square do
 
   describe '#empty' do
     context 'when content has some value' do
-      subject(:square) { described_class.new(content: some_content) }
+      subject(:square) { described_class.new(some_content) }
       let(:some_content) { double }
 
       it 'sets square content to nil' do
@@ -58,7 +58,7 @@ RSpec.describe Square do
 
   describe '#fill' do
     context 'when square content is nil' do
-      subject(:square) { described_class.new(content: nil) }
+      subject(:square) { described_class.new(nil) }
       let(:item) { double }
 
       it 'sets square content to item' do
@@ -69,7 +69,7 @@ RSpec.describe Square do
     end
 
     context 'when square content contains something' do
-      subject(:square) { described_class.new(content: previous_item) }
+      subject(:square) { described_class.new(previous_item) }
       let(:previous_item) { double }
       let(:new_item) { double }
 

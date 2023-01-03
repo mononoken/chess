@@ -74,3 +74,13 @@ class Board
     squares[position[0]][position[1]]
   end
 end
+
+class Coordinator
+  def position(squares, square)
+    squares.map.with_index do |file, file_index|
+      file.map.with_index do |board_square, rank_index|
+        [file_index, rank_index] if board_square == square
+      end
+    end.flatten.compact
+  end
+end

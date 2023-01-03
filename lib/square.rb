@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 class Square
-  attr_reader :position, :content
+  attr_reader :content
 
-  def initialize(position: nil, content: nil)
-    @position = position
+  def initialize(content = nil)
     @content = content
-  end
-
-  def valid_destination?(origin, destination, boundaries)
-    content.valid_destination?(origin, destination, boundaries)
   end
 
   def empty
