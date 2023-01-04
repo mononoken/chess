@@ -65,7 +65,7 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
       .not_to raise_error
   end
 
-  xit 'raises error if piece tries to move past an occupied square' do
+  it 'raises error if piece tries to move past an occupied square' do
     board = Board.new
 
     player = Player.new

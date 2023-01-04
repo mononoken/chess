@@ -23,7 +23,15 @@ class Movement
   end
 
   def paths
-    step_directions.map { |step| path(origin, step) }
+    step_directions.map { |step| unobstructed_path(path(origin, step)) }
+  end
+
+  def unobstructed_path(path)
+    path.reduce([]) do |unobstructed_path, position|
+      break unobstructed_path if board.occupied_positions.any?(position)
+
+      unobstructed_path << position
+    end
   end
 
   # Path is an array of positions in a given step direction.

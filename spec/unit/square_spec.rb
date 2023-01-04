@@ -71,8 +71,38 @@ RSpec.describe Square do
   end
 
   describe '#piece_color?' do
-    context '' do
-      
+    context 'when content color is equal to selected color' do
+      subject(:square) { described_class.new(content) }
+      let(:content) { double }
+      let(:selected_color) { :purple }
+
+      before do
+        allow(content).to receive(:color)
+          .and_return(selected_color)
+      end
+
+      it 'returns true' do
+        result = square.piece_color?(selected_color)
+
+        expect(result).to be(true)
+      end
+    end
+
+    context 'when content color is not equal to selected color' do
+      subject(:square) { described_class.new(content) }
+      let(:content) { double }
+      let(:selected_color) { :purple }
+
+      before do
+        allow(content).to receive(:color)
+          .and_return(:different_color)
+      end
+
+      it 'returns true' do
+        result = square.piece_color?(selected_color)
+
+        expect(result).to be(false)
+      end
     end
   end
 end

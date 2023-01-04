@@ -38,12 +38,8 @@ class Board
     }
   end
 
-  def occupied_positions(color)
-    if color.nil?
-      []
-    else
-      occupied_squares(color).map { |square| position(square) }
-    end
+  def occupied_positions(color = nil)
+    occupied_squares(color).map { |square| position(square) }
   end
 
   private
@@ -53,7 +49,11 @@ class Board
   end
 
   def occupied_squares(color)
-    squares.flatten.select { |square| square.piece_color?(color) }
+    if color.nil?
+      squares.flatten.reject(&:empty?)
+    else
+      squares.flatten.select { |square| square.piece_color?(color) }
+    end
   end
 
   def files_boundaries
