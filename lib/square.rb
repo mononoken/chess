@@ -21,8 +21,9 @@ class Square
     self.content = item
   end
 
+  # Require test!
   def piece_color?(color)
-    # Implement from Board spec
+    content&.color == color
   end
 
   private

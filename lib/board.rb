@@ -39,7 +39,11 @@ class Board
   end
 
   def occupied_positions(color)
-    occupied_squares(color).map { |square| position(square) }
+    if color.nil?
+      []
+    else
+      occupied_squares(color).map { |square| position(square) }
+    end
   end
 
   private

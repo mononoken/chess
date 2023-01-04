@@ -40,15 +40,17 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     expect(rook_square.content).to eq(rook)
   end
 
-  xit 'raises error if piece tries to move to occupied square of same color/player' do
+  it 'raises error if piece tries to move to occupied square of same color/player' do
     board = Board.new
 
     player = Player.new
 
     game = Chess.new(board:, player:)
 
-    bishop = Bishop.new
-    queen = Queen.new
+    piece_color = :black
+
+    bishop = Bishop.new(piece_color)
+    queen = Queen.new(piece_color)
 
     bishop_position = [2, 0]
     queen_position = [3, 0]
@@ -82,7 +84,7 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(rook, rook_position)
 
     expect { game.play(player, rook_position, invalid_destination) }
-      .to raise_error(Chess::Chess::InvalidDestinationError)
+      .to raise_error(Chess::InvalidDestinationError)
 
     expect { game.play(player, rook_position, valid_destination) }
       .not_to raise_error
