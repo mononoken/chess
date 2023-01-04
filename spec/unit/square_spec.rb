@@ -69,4 +69,10 @@ RSpec.describe Square do
       end
     end
   end
+
+  describe '#piece_color?' do
+    context '' do
+      
+    end
+  end
 end
