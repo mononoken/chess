@@ -147,7 +147,7 @@ RSpec.describe Board do
     end
   end
 
-  fdescribe '#to_s' do
+  describe '#to_s' do
     subject(:board) { described_class.new(squares) }
     context 'when squares is empty' do
       let(:squares) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
@@ -177,14 +177,18 @@ RSpec.describe Board do
       end
     end
 
-    context 'when squares has a single piece at bottom right corner' do
-      let(:squares) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
-      let(:piece) { double }
+    fcontext 'when squares has a single piece at bottom right corner' do
+      let(:squares) { Array.new(8) { Array.new(8) { instance_double(Square) } } }
 
       before do
-        board.populate(piece, [7, 0])
+        squares.each do |array|
+          array.each do |square|
+            allow(square).to receive(:to_s)
+              .and_return(' ')
+          end
+        end
 
-        allow(piece).to receive(:to_s)
+        allow(squares[7][0]).to receive(:to_s)
           .and_return('P')
       end
 
