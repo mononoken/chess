@@ -11,10 +11,6 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
   it 'populates multiple pieces on board' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
-
     bishop = Bishop.new
     king = King.new
     knight = Knight.new

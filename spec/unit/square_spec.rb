@@ -70,6 +70,30 @@ RSpec.describe Square do
     end
   end
 
+  describe '#to_s' do
+    context 'when content is nil' do
+      subject(:square) { described_class.new(nil) }
+
+      it 'returns a space character' do
+        expect(square.to_s).to eq(' ')
+      end
+    end
+
+    context 'when content is not nil' do
+      subject(:square) { described_class.new(content) }
+      let(:content) { instance_double(Piece) }
+
+      before do
+        allow(content).to receive(:to_s)
+          .and_return('P')
+      end
+
+      it 'returns the return of #to_s from content' do
+        expect(square.to_s).to eq(content.to_s)
+      end
+    end
+  end
+
   describe '#piece_color?' do
     context 'when content color is equal to selected color' do
       subject(:square) { described_class.new(content) }

@@ -14,4 +14,7 @@ class Piece
   def step_limit
     raise "#{self.class} must implement #step_limit."
   end
+
+  def to_s
+  end
 end

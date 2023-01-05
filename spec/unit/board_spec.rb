@@ -145,7 +145,73 @@ RSpec.describe Board do
         expect(board.occupied_positions(color)).to match_array(matching_positions)
       end
     end
+  end
 
+  fdescribe '#to_s' do
+    subject(:board) { described_class.new(squares) }
+    context 'when squares is empty' do
+      let(:squares) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
+
+      it 'returns empty board visual' do
+        expected_visual = <<~HEREDOC
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+        HEREDOC
+
+        expect(board.to_s).to eq(expected_visual)
+      end
+    end
+
+    context 'when squares has a single piece at bottom right corner' do
+      let(:squares) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
+      let(:piece) { double }
+
+      before do
+        board.populate(piece, [7, 0])
+
+        allow(piece).to receive(:to_s)
+          .and_return('P')
+      end
+
+      it 'returns visual with piece at appropriate location' do
+        expected_visual = <<~HEREDOC
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    |    |
+          +----+----+----+----+----+----+----+----+
+          |    |    |    |    |    |    |    | P  |
+          +----+----+----+----+----+----+----+----+
+        HEREDOC
+
+        expect(board.to_s).to eq(expected_visual)
+      end
+    end
   end
 
   # describe '#occupied_squares' do

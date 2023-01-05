@@ -21,9 +21,16 @@ class Square
     self.content = item
   end
 
-  # Require test!
   def piece_color?(color)
     content&.color == color
+  end
+
+  def to_s
+    if empty?
+      ' '
+    else
+      content.to_s
+    end
   end
 
   private
