@@ -10,4 +10,8 @@ class Bishop < Piece
   def step_limit
     nil
   end
+
+  def to_s
+    'B'
+  end
 end

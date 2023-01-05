@@ -10,4 +10,8 @@ class Knight < Piece
   def step_limit
     1
   end
+
+  def to_s
+    'N'
+  end
 end

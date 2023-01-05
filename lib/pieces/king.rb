@@ -10,4 +10,8 @@ class King < Piece
   def step_limit
     1
   end
+
+  def to_s
+    'K'
+  end
 end

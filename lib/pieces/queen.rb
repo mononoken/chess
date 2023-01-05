@@ -10,4 +10,8 @@ class Queen < Piece
   def step_limit
     nil
   end
+
+  def to_s
+    'Q'
+  end
 end

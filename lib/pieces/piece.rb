@@ -16,5 +16,6 @@ class Piece
   end
 
   def to_s
+    raise "#{self.class} must implement #to_s."
   end
 end
