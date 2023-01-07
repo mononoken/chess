@@ -177,7 +177,7 @@ RSpec.describe Board do
       end
     end
 
-    fcontext 'when squares has a single piece at bottom right corner' do
+    context 'when squares has a single piece at bottom right corner' do
       let(:squares) { Array.new(8) { Array.new(8) { instance_double(Square) } } }
 
       before do

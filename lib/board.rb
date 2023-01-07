@@ -44,23 +44,8 @@ class Board
 
   def to_s
     <<~HEREDOC
-      #{rank_spacer}
-      #{rank_to_s(rank(7))}
-      #{rank_spacer}
-      #{rank_to_s(rank(6))}
-      #{rank_spacer}
-      #{rank_to_s(rank(5))}
-      #{rank_spacer}
-      #{rank_to_s(rank(4))}
-      #{rank_spacer}
-      #{rank_to_s(rank(3))}
-      #{rank_spacer}
-      #{rank_to_s(rank(2))}
-      #{rank_spacer}
-      #{rank_to_s(rank(1))}
-      #{rank_spacer}
-      #{rank_to_s(rank(0))}
-      #{rank_spacer}
+      +----+----+----+----+----+----+----+----+
+      #{ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n+----+----+----+----+----+----+----+----+\n" }.join.strip}
     HEREDOC
   end
 
@@ -78,14 +63,14 @@ class Board
     end
   end
 
-  def rank_spacer
-    '+----+----+----+----+----+----+----+----+'
-  end
-
   def rank_to_s(rank)
     rank.reduce(+'|') do |rank_s, square|
       rank_s << " #{square}  |"
     end
+  end
+
+  def ranks
+    ranks_boundaries.to_a.map { |index| rank(index) }
   end
 
   def rank(index)
