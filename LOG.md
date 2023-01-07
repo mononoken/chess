@@ -1,3 +1,29 @@
+20230106
+  I am looking to implement checkmate.
+
+  Checkmate is one of the end conditions of the game. A player who is "in checkmate" has lost the game.
+
+  Checkmate is when no move will take a player's king out of check.
+
+  Check is when a player is under threat of being taken.
+
+  
+  The second end condition is called stalemate. It is related to checkmate. Stalemate results in a draw. Stalemate occurs when a king is not currently in check, but the player cannot make any moves that will not put their king in check.
+
+
+  I think the first step is to create a way to track whether a king is in check.
+
+  Check is related to Movement. Movement is further obstructed by check conditions. You cannot move a piece into a position that would put one's own king in check, so moves that result in that have to be removed from the valid destinations list.
+
+  How should check be checked? Does check belong in Chess, Board, Piece, or Player?
+
+  Since Movement needs access to `check`, it eithers needs such info injected into it or the info needs to be available from `Board`, which is already injected into it.
+
+
+  Perhaps the first test to start with then is for a condition where a piece cannot move because it will put the king in check.
+
+  Another test could be that one has to make a specific move in order to answer check.
+
 20221221
   I have three types of pieces currently. King, rook, and bishop. I will later have three more types: Queen, Knight, Pawn. The pawn is the most interesting of the future pieces.
 
