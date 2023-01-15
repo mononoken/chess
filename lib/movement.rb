@@ -61,18 +61,24 @@ class Path
   attr_reader :origin, :board
 
   def initialize(origin:, board:)
-    @origin = Position.new(origin)
+    @origin = origin
     @board = board
   end
 
   def positions(step:, position: origin, steps: 0)
-    return [] unless valid_position?(position.next_coordinates(step)) && within_step_limit?(steps)
+    next_position = next_position(position, step)
+
+    return [] unless valid_position?(next_position) && within_step_limit?(steps)
 
     steps += 1
-    [position.next_coordinates(step)] + positions(step:, position: position.next(step), steps:)
+    [next_position] + positions(step:, position: next_position, steps:)
   end
 
   private
+
+  def next_position(position, step)
+    [position, step].transpose.map(&:sum)
+  end
 
   def valid_position?(position)
     within_boundaries?(position) && board.occupied_positions.none?(position)
@@ -101,22 +107,6 @@ class Path
   end
 
   def piece
-    board.piece(origin.coordinates)
-  end
-end
-
-class Position
-  attr_reader :coordinates
-
-  def initialize(coordinates)
-    @coordinates = coordinates
-  end
-
-  def next(step)
-    Position.new([coordinates, step].transpose.map(&:sum))
-  end
-
-  def next_coordinates(step)
-    self.next(step).coordinates
+    board.piece(origin)
   end
 end
