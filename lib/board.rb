@@ -55,6 +55,10 @@ class Board
     Array.new(8) { Array.new(8) { Square.new } }
   end
 
+  def king_square(color)
+    occupied_squares(color).find { |square| square.content.is_a?(King) }
+  end
+
   def occupied_squares(color)
     if color.nil?
       squares.flatten.reject(&:empty?)

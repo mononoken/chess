@@ -24,6 +24,17 @@
 
   Another test could be that one has to make a specific move in order to answer check.
 
+
+  A king is in check if it is under attack. It is under attack if a piece on the board is able to take it from the current positions.
+
+  To check if the white king is in check, we could loop through each black piece and see if it is attacking the king.
+
+  # How should we loop through each black piece?
+  - If we were to assign pieces to a player at the start, then the player would know all the pieces. However, we would have to remove pieces as they were taken from this list.
+  - We could loop through every square on the board, and check if the piece matches the selected color.
+    - loop through each square. if square is empty?, can move on. If not empty, check if piece is the right color. If it is the right color, see if the selected king's position is a valid_destination? for the square piece.
+    - check? is true if there is at least one piece has the king position as a valid_destination?
+
 20221221
   I have three types of pieces currently. King, rook, and bishop. I will later have three more types: Queen, Knight, Pawn. The pawn is the most interesting of the future pieces.
 

@@ -5,6 +5,10 @@ class Movement
     new(origin, board).valid_destination?(destination)
   end
 
+  # def self.destinations(origin, board)
+  #   new(origin, board).destinations
+  # end
+
   attr_reader :origin, :board
 
   def initialize(origin, board)
@@ -18,34 +22,60 @@ class Movement
 
   private
 
+  # This should be public
   def destinations
-    paths.flatten(1) - board.occupied_positions(piece.color)
+    # filter_check_moves(paths.flatten(1) - board.occupied_positions(piece.color))
+    paths.flatten(1)
   end
 
-  def paths
-    step_directions.map { |step| unobstructed_path(path(origin, step)) }
+  # def player_destinations(player_color)
+  #   board.occupied_positions(player_color).map do |position|
+  #     movement.destinations(position, board)
+  #   end
+  # end
+
+  # def filter_check_moves(destinations)
+  #   destinations.filter do |destination|
+  #     board.occupied_squares(:opponent_color).any? { |square| new(square, board).valid_destination?(board.position(destination)) }
+  #   end
+  # end
+
+  def paths(path = Path)
+    step_directions.map { |step| path.positions(origin:, board:, step:) }
   end
 
-  def unobstructed_path(path)
-    path.reduce([]) do |unobstructed_path, position|
-      break unobstructed_path if board.occupied_positions.any?(position)
-
-      unobstructed_path << position
-    end
+  def step_directions
+    piece.step_directions
   end
 
-  # Path is an array of positions in a given step direction.
-  def path(position, step, steps = 0)
-    next_position = next_position(position, step)
+  def piece
+    board.piece(origin)
+  end
+end
 
-    return [] unless within_boundaries?(next_position) && within_step_limit?(steps)
+class Path
+  def self.positions(origin:, board:, step:)
+    new(origin:, board:).positions(step:)
+  end
+
+  attr_reader :origin, :board
+
+  def initialize(origin:, board:)
+    @origin = Position.new(origin)
+    @board = board
+  end
+
+  def positions(step:, position: origin, steps: 0)
+    return [] unless valid_position?(position.next_coordinates(step)) && within_step_limit?(steps)
 
     steps += 1
-    [next_position] + path(next_position, step, steps)
+    [position.next_coordinates(step)] + positions(step:, position: position.next(step), steps:)
   end
 
-  def next_position(position, step)
-    [position, step].transpose.map(&:sum)
+  private
+
+  def valid_position?(position)
+    within_boundaries?(position) && board.occupied_positions.none?(position)
   end
 
   def within_step_limit?(steps)
@@ -58,6 +88,10 @@ class Movement
     boundaries[:files].include?(position[0]) && boundaries[:ranks].include?(position[1])
   end
 
+  def boundaries
+    board.boundaries
+  end
+
   def step_directions
     piece.step_directions
   end
@@ -66,11 +100,23 @@ class Movement
     piece.step_limit
   end
 
-  def boundaries
-    board.boundaries
+  def piece
+    board.piece(origin.coordinates)
+  end
+end
+
+class Position
+  attr_reader :coordinates
+
+  def initialize(coordinates)
+    @coordinates = coordinates
   end
 
-  def piece
-    board.piece(origin)
+  def next(step)
+    Position.new([coordinates, step].transpose.map(&:sum))
+  end
+
+  def next_coordinates(step)
+    self.next(step).coordinates
   end
 end

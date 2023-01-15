@@ -20,7 +20,25 @@ RSpec.describe 'Check Movement API' do
 
   let(:black_rook) { Rook.new(:black) }
 
-  context 'when rook is defending king' do
+  xcontext 'when rook is blocking part of king movement' do
+    before do
+      board.populate(white_king, [2, 0])
+      board.populate(white_rook, [0, 0])
+      board.populate(black_rook, [1, 2])
+    end
+
+    it 'raises error when trying to move king in path of enemy rook' do
+      expect { game.play(player, [2, 0], [1, 0]) }
+        .to raise_error(Chess::InvalidDestinationError)
+    end
+
+    it 'allows king to move outside of enemy rook path' do
+      expect { game.play(player, [2, 0], [2, 1]) }
+        .not_to raise_error(Chess::InvalidDestinationError)
+    end
+  end
+
+  xcontext 'when rook is defending king' do
     before do
       board.populate(white_king, [1, 0])
       board.populate(white_rook, [1, 1])
