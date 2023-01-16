@@ -11,6 +11,10 @@ class King < Piece
     1
   end
 
+  def checkable?
+    true
+  end
+
   def to_s
     'K'
   end

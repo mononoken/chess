@@ -15,6 +15,10 @@ class Piece
     raise "#{self.class} must implement #step_limit."
   end
 
+  def checkable?
+    false
+  end
+
   def to_s
     raise "#{self.class} must implement #to_s."
   end
