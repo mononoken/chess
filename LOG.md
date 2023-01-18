@@ -1,3 +1,8 @@
+20230114
+  I created a Position class in commit 65cc48d05fa23312941eaf1a06f2eb803aebefbf. I liked this implementation at first, because to me it made sense that a position would be able to have a `#next` method that would give the next Position given a step.
+
+  However, after I implemented it I realized there was something fishy about how I had used it. It was creating a new instance of `Position` whenever I called `#next`. While the coordinates results were as expected, these were creating new Positions every time. In reality, the positions would be created with the `Board`. I think a cleaner implementation may present itself where `#next` would not create a new `Position`, it would find the already created next `Position` that was stored somewhere in relation to the whole `Board`.
+
 20230106
   I am looking to implement checkmate.
 

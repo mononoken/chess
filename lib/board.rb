@@ -55,8 +55,8 @@ class Board
     Array.new(8) { Array.new(8) { Square.new } }
   end
 
-  def king_square(color)
-    occupied_squares(color).find { |square| square.content.is_a?(King) }
+  def attacking_squares(square)
+    # square.piece.destinations
   end
 
   def occupied_squares(color)

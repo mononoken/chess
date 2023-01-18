@@ -20,7 +20,7 @@ RSpec.describe 'Check Movement API' do
 
   let(:black_rook) { Rook.new(:black) }
 
-  xcontext 'when rook is blocking part of king movement' do
+  context 'when rook is blocking part of king movement' do
     before do
       board.populate(white_king, [2, 0])
       board.populate(white_rook, [0, 0])

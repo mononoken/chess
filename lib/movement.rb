@@ -5,9 +5,9 @@ class Movement
     new(origin, board).valid_destination?(destination)
   end
 
-  # def self.destinations(origin, board)
-  #   new(origin, board).destinations
-  # end
+  def self.destinations(origin, board)
+    new(origin, board).destinations
+  end
 
   attr_reader :origin, :board
 
@@ -20,25 +20,25 @@ class Movement
     destinations.any?(destination)
   end
 
-  private
-
-  # This should be public
   def destinations
-    # filter_check_moves(paths.flatten(1) - board.occupied_positions(piece.color))
-    paths.flatten(1)
+    if piece.checkable?
+      paths.flatten(1) - positions_under_attack(opponent_color(piece.color))
+    else
+      paths.flatten(1)
+    end
   end
 
-  # def player_destinations(player_color)
-  #   board.occupied_positions(player_color).map do |position|
-  #     movement.destinations(position, board)
-  #   end
-  # end
+  # private
 
-  # def filter_check_moves(destinations)
-  #   destinations.filter do |destination|
-  #     board.occupied_squares(:opponent_color).any? { |square| new(square, board).valid_destination?(board.position(destination)) }
-  #   end
-  # end
+  def positions_under_attack(color)
+    if color.nil?
+      []
+    else
+      board.occupied_positions(color).reduce([]) do |attacked_positions, position|
+        attacked_positions + Movement.destinations(position, board)
+      end
+    end
+  end
 
   def paths(path = Path)
     step_directions.map { |step| path.positions(origin:, board:, step:) }
@@ -48,8 +48,17 @@ class Movement
     piece.step_directions
   end
 
+  def opponent_color(color)
+    case color
+    when :black
+      :white
+    when :white
+      :black
+    end
+  end
+
   def piece
-    board.piece(origin)
+    @piece ||= board.piece(origin)
   end
 end
 
@@ -74,7 +83,7 @@ class Path
     [next_position] + positions(step:, position: next_position, steps:)
   end
 
-  private
+  # private
 
   def next_position(position, step)
     [position, step].transpose.map(&:sum)
@@ -107,6 +116,6 @@ class Path
   end
 
   def piece
-    board.piece(origin)
+    @piece ||= board.piece(origin)
   end
 end
