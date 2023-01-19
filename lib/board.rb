@@ -31,11 +31,8 @@ class Board
     square(position).content
   end
 
-  def boundaries
-    {
-      files: files_boundaries,
-      ranks: ranks_boundaries
-    }
+  def positions(squares = self.squares)
+    squares.flatten.map { |square| position(square) }
   end
 
   def occupied_positions(color = nil)
@@ -79,10 +76,6 @@ class Board
 
   def rank(index)
     squares.map { |file| file[index] }
-  end
-
-  def files_boundaries
-    (0..squares.count - 1)
   end
 
   def ranks_boundaries
