@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './square'
+require_relative './movement'
 
 class Board
   class EmptyOriginError < StandardError
@@ -46,14 +47,34 @@ class Board
     HEREDOC
   end
 
+  def all_attacks(color, movement = Movement)
+    all_pieces(color).map { |piece| movement.destinations(piece_position(piece), self) }.flatten.uniq
+  end
+
+  def all_pieces(color = nil)
+    if color.nil?
+      squares.flatten.map(&:content)
+    else
+      squares.flatten.map{ |square| square.content if square.content.color == color }
+    end
+  end
+
   private
+
+  def checks?(king)
+    # all_attacks(opposite king color).any?(piece_position(king))
+  end
+
+  # def white_king
+  #   @white_king ||= all_pieces.find { |piece| piece.checkable? && piece.color == :white }
+  # end
+
+  # def black_king
+  #   @black_king ||= all_pieces.find { |piece| piece.checkable? && piece.color == :black }
+  # end
 
   def default_squares
     Array.new(8) { Array.new(8) { Square.new } }
-  end
-
-  def attacking_squares(square)
-    # square.piece.destinations
   end
 
   def occupied_squares(color)
@@ -80,6 +101,10 @@ class Board
 
   def ranks_boundaries
     (0..squares.reduce(squares[0].count) { |count, rank| [count, rank.count].min } - 1)
+  end
+
+  def piece_position(piece)
+    position(squares.flatten.find { |square| square.content == piece })
   end
 
   def position(square)

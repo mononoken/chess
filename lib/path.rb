@@ -32,7 +32,12 @@ class Path
   end
 
   def valid_move?(position)
+    # within_positions?(position) && unoccupied_position?(position) && checks_own_king?(position)
     within_positions?(position) && unoccupied_position?(position)
+  end
+
+  def checks_own_king?(position)
+    # Check game/board state for king checks in future board given movement to position
   end
 
   def valid_take?(position)
