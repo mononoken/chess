@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Pieces for chess that store piece move behavior.
 class Piece
   attr_reader :color
 
@@ -17,6 +18,15 @@ class Piece
 
   def checkable?
     false
+  end
+
+  def opponent_color
+    case color
+    when :black
+      :white
+    when :white
+      :black
+    end
   end
 
   def to_s

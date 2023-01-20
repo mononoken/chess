@@ -2,6 +2,7 @@
 
 require_relative './path'
 
+# List all valid destination positions on a board for an origin (with a piece).
 class Movement
   def self.valid_destination?(destination, origin, board)
     new(origin, board).valid_destination?(destination)
@@ -24,7 +25,7 @@ class Movement
 
   def destinations
     if piece.checkable?
-      paths.flatten(1) - positions_under_attack(opponent_color(piece.color))
+      paths.flatten(1) - positions_under_attack(piece.opponent_color)
     else
       paths.flatten(1)
     end
@@ -49,16 +50,6 @@ class Movement
 
   def step_directions
     piece.step_directions
-  end
-
-  # This feels like it does not belong in this class.
-  def opponent_color(color)
-    case color
-    when :black
-      :white
-    when :white
-      :black
-    end
   end
 
   def piece

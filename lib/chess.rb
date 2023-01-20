@@ -4,7 +4,7 @@ require_relative './board'
 require_relative './player'
 require_relative './movement'
 
-# Sends run to turn until the game is over.
+# Runs game of chess until end condition is met.
 class Chess
   class InvalidDestinationError < StandardError
     def message

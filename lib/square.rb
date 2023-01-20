@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Stores piece/content.
 class Square
   attr_reader :content
 

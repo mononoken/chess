@@ -3,6 +3,7 @@
 require_relative './square'
 require_relative './movement'
 
+# Chess board that stores and manipulates board data in a 2-D array.
 class Board
   class EmptyOriginError < StandardError
     def message
