@@ -33,12 +33,16 @@ class Movement
 
   private
 
-  def filter_checks_own_king_positions(positions)
-    positions.filter { |position| !board.movement_checks_own_king?(origin, position) }
-  end
-
   def paths(path = Path)
     step_directions.map { |step| path.positions(origin:, board:, step:) }
+  end
+
+  def destination_checks_own_king?(destination)
+    board.move_will_create_check?(origin, destination, piece.color)
+  end
+
+  def filter_checks_own_king_positions(positions)
+    positions.filter { |position| !destination_checks_own_king?(position) }
   end
 
   def positions_under_attack(color)

@@ -48,6 +48,30 @@ class Board
     HEREDOC
   end
 
+  def check?(king)
+    return false if king.nil?
+
+    all_attacks(king.opponent_color).any?(piece_position(king))
+  end
+
+  def king(color)
+    all_pieces.find { |piece| piece.checkable? && piece.color == color }
+  end
+
+  def move_will_create_check?(origin, destination, piece_color)
+    hypothetical_board = board_after_hypothetical_move(origin, destination)
+
+    hypothetical_board.check?(hypothetical_board.king(piece_color))
+  end
+
+  private
+
+  def board_after_hypothetical_move(origin, destination)
+    hypothetical_board = Board.new(Marshal.load(Marshal.dump(squares)))
+    hypothetical_board.move(origin, destination)
+    hypothetical_board
+  end
+
   def all_attacks(color, movement = Movement)
     all_pieces(color).map do |piece|
       movement.destinations(piece_position(piece), self)
@@ -61,26 +85,6 @@ class Board
       squares.flatten.map { |square| square.content if square.content&.color == color }.compact
     end
   end
-
-  def movement_checks_own_king?(origin, destination)
-    piece_color = piece(origin).color
-    hypothetical_board = Board.new(Marshal.load(Marshal.dump(squares)))
-    hypothetical_board.move(origin, destination)
-
-    hypothetical_board.check?(hypothetical_board.king(piece_color))
-  end
-
-  def check?(king)
-    return false if king.nil?
-
-    all_attacks(king.opponent_color).any?(piece_position(king))
-  end
-
-  def king(color)
-    all_pieces.find { |piece| piece.checkable? && piece.color == color }
-  end
-
-  private
 
   def occupied_squares(color)
     if color.nil?
