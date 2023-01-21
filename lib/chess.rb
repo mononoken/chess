@@ -26,16 +26,4 @@ class Chess
 
     board.move(origin, destination)
   end
-
-  private
-
-  def white_king
-    @white_king ||= board.all_pieces.find { |piece| piece.checkable? && piece.color == :white }
-  end
-
-  def black_king
-    @black_king ||= board.all_pieces.find { |piece| piece.checkable? && piece.color == :black }
-  end
-
-  
 end

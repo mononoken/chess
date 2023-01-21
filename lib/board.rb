@@ -49,34 +49,38 @@ class Board
   end
 
   def all_attacks(color, movement = Movement)
-    all_pieces(color).map { |piece| movement.destinations(piece_position(piece), self) }.flatten.uniq
+    all_pieces(color).map do |piece|
+      movement.destinations(piece_position(piece), self)
+    end.flatten(1).uniq
   end
 
   def all_pieces(color = nil)
     if color.nil?
-      squares.flatten.map(&:content)
+      squares.flatten.map(&:content).compact
     else
-      squares.flatten.map{ |square| square.content if square.content.color == color }
+      squares.flatten.map { |square| square.content if square.content&.color == color }.compact
     end
   end
 
+  def movement_checks_own_king?(origin, destination)
+    piece_color = piece(origin).color
+    hypothetical_board = Board.new(Marshal.load(Marshal.dump(squares)))
+    hypothetical_board.move(origin, destination)
+
+    hypothetical_board.check?(hypothetical_board.king(piece_color))
+  end
+
+  def check?(king)
+    return false if king.nil?
+
+    all_attacks(king.opponent_color).any?(piece_position(king))
+  end
+
+  def king(color)
+    all_pieces.find { |piece| piece.checkable? && piece.color == color }
+  end
+
   private
-
-  def checks?(king)
-    # all_attacks(opposite king color).any?(piece_position(king))
-  end
-
-  # def white_king
-  #   @white_king ||= all_pieces.find { |piece| piece.checkable? && piece.color == :white }
-  # end
-
-  # def black_king
-  #   @black_king ||= all_pieces.find { |piece| piece.checkable? && piece.color == :black }
-  # end
-
-  def default_squares
-    Array.new(8) { Array.new(8) { Square.new } }
-  end
 
   def occupied_squares(color)
     if color.nil?
@@ -118,5 +122,9 @@ class Board
 
   def square(position)
     squares[position[0]][position[1]]
+  end
+
+  def default_squares
+    Array.new(8) { Array.new(8) { Square.new } }
   end
 end

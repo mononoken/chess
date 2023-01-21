@@ -38,7 +38,7 @@ RSpec.describe 'Check Movement API' do
     end
   end
 
-  xcontext 'when rook is defending king' do
+  context 'when rook is defending king' do
     before do
       board.populate(white_king, [1, 0])
       board.populate(white_rook, [1, 1])
@@ -50,7 +50,7 @@ RSpec.describe 'Check Movement API' do
         .to raise_error(Chess::InvalidDestinationError)
     end
 
-    xit 'allows rook move that keeps king out of check' do
+    it 'allows rook move that keeps king out of check' do
       expect { game.play(player, [1, 1], [1, 2]) }
         .not_to raise_error(Chess::InvalidDestinationError)
     end
