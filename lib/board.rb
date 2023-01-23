@@ -51,7 +51,7 @@ class Board
   def check?(king)
     return false if king.nil?
 
-    all_attacks(king.opponent_color).any?(piece_position(king))
+    all_destinations(king.opponent_color).any?(piece_position(king))
   end
 
   def king(color)
@@ -72,7 +72,7 @@ class Board
     hypothetical_board
   end
 
-  def all_attacks(color, movement = Movement)
+  def all_destinations(color, movement = Movement)
     all_pieces(color).map do |piece|
       movement.destinations(piece_position(piece), self)
     end.flatten(1).uniq
@@ -80,10 +80,10 @@ class Board
 
   def all_pieces(color = nil)
     if color.nil?
-      squares.flatten.map(&:content).compact
+      squares.flatten.map(&:content)
     else
-      squares.flatten.map { |square| square.content if square.content&.color == color }.compact
-    end
+      squares.flatten.map { |square| square.content if square.content&.color == color }
+    end.compact
   end
 
   def occupied_squares(color)

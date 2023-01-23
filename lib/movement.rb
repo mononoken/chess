@@ -19,10 +19,12 @@ class Movement
     @board = board
   end
 
+  # Returns true if the provided destination exists in #destinations.
   def valid_destination?(destination)
     destinations.any?(destination)
   end
 
+  # Array of valid move destination positions for the piece of the origin.
   def destinations
     if piece.checkable?
       paths.flatten(1) - positions_under_attack(piece.opponent_color)

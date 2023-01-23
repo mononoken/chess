@@ -55,4 +55,22 @@ RSpec.describe 'Check Movement API' do
         .not_to raise_error(Chess::InvalidDestinationError)
     end
   end
+
+  context 'when king is currently in check' do
+    before do
+      board.populate(white_king, [0, 0])
+      board.populate(white_rook, [2, 1])
+      board.populate(black_rook, [0, 2])
+    end
+
+    it 'raises error when attempted move does not defend king' do
+      expect { game.play(player, [2, 1], [2, 0]) }
+        .to raise_error(Chess::InvalidDestinationError)
+    end
+
+    it 'allows move that defends king' do
+      expect { game.play(player, [2, 1], [0, 1]) }
+        .not_to raise_error(Chess::InvalidDestinationError)
+    end
+  end
 end
