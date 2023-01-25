@@ -48,7 +48,7 @@ RSpec.describe 'Solo Knight API' do
     game.play(player, [3, 4], [5, 5])
     game.play(player, [5, 5], [4, 3])
 
-    last_square = board.squares[4][3]
+    last_square = board.files[4][3]
 
     expect(last_square.content).to eq(knight)
   end

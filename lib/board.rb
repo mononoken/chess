@@ -3,7 +3,6 @@
 require_relative './square'
 require_relative './movement'
 
-# Chess board that stores and manipulates board data in a 2-D array.
 class Board
   class EmptyOriginError < StandardError
     def message
@@ -11,30 +10,30 @@ class Board
     end
   end
 
-  attr_reader :squares
+  attr_reader :files
 
-  def initialize(squares = default_squares)
-    @squares = squares
+  def initialize(files = default_files)
+    @files = files
   end
 
   def move(origin, destination)
-    raise EmptyOriginError if square(origin).empty?
+    raise EmptyOriginError if square(file: origin[0], rank: origin[1]).empty?
 
-    content = square(origin).empty
+    content = square(file: origin[0], rank: origin[1]).empty
 
-    square(destination).fill(content)
+    square(file: destination[0], rank: destination[1]).fill(content)
   end
 
   def populate(piece, position)
-    square(position).fill(piece)
+    square(file: position[0], rank: position[1]).fill(piece)
   end
 
   def piece(position)
-    square(position).content
+    square(file: position[0], rank: position[1]).content
   end
 
-  def positions(squares = self.squares)
-    squares.flatten.map { |square| position(square) }
+  def positions(files = self.files)
+    files.flatten.map { |square| position(square) }
   end
 
   def occupied_positions(color = nil)
@@ -67,7 +66,7 @@ class Board
   private
 
   def board_after_hypothetical_move(origin, destination)
-    hypothetical_board = Board.new(Marshal.load(Marshal.dump(squares)))
+    hypothetical_board = Board.new(Marshal.load(Marshal.dump(files)))
     hypothetical_board.move(origin, destination)
     hypothetical_board
   end
@@ -80,17 +79,17 @@ class Board
 
   def all_pieces(color = nil)
     if color.nil?
-      squares.flatten.map(&:content)
+      files.flatten.map(&:content)
     else
-      squares.flatten.map { |square| square.content if square.content&.color == color }
+      files.flatten.map { |square| square.content if square.content&.color == color }
     end.compact
   end
 
   def occupied_squares(color)
     if color.nil?
-      squares.flatten.reject(&:empty?)
+      files.flatten.reject(&:empty?)
     else
-      squares.flatten.select { |square| square.piece_color?(color) }
+      files.flatten.select { |square| square.piece_color?(color) }
     end
   end
 
@@ -105,30 +104,34 @@ class Board
   end
 
   def rank(index)
-    squares.map { |file| file[index] }
+    files.map { |file| file[index] }
   end
 
   def ranks_boundaries
-    (0..squares.reduce(squares[0].count) { |count, rank| [count, rank.count].min } - 1)
+    (0..files.reduce(files[0].count) { |count, rank| [count, rank.count].min } - 1)
   end
 
   def piece_position(piece)
-    position(squares.flatten.find { |square| square.content == piece })
+    position(files.flatten.find { |square| square.content == piece })
   end
 
   def position(square)
-    squares.map.with_index do |file, file_index|
+    files.map.with_index do |file, file_index|
       file.map.with_index do |board_square, rank_index|
         [file_index, rank_index] if board_square == square
       end
     end.flatten.compact
   end
 
-  def square(position)
-    squares[position[0]][position[1]]
+  def square(file: nil, rank: nil)
+    files[file][rank]
   end
 
-  def default_squares
+  def squares
+    files.flatten
+  end
+
+  def default_files
     Array.new(8) { Array.new(8) { Square.new } }
   end
 end

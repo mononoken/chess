@@ -23,11 +23,11 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(queen, [3, 0])
     board.populate(rook, [0, 0])
 
-    bishop_square = board.squares[2][0]
-    king_square = board.squares[4][0]
-    knight_square = board.squares[1][0]
-    queen_square = board.squares[3][0]
-    rook_square = board.squares[0][0]
+    bishop_square = board.files[2][0]
+    king_square = board.files[4][0]
+    knight_square = board.files[1][0]
+    queen_square = board.files[3][0]
+    rook_square = board.files[0][0]
 
     expect(bishop_square.content).to eq(bishop)
     expect(king_square.content).to eq(king)

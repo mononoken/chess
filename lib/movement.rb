@@ -33,7 +33,7 @@ class Movement
     end
   end
 
-  private
+  # private
 
   def paths(path = Path)
     step_directions.map { |step| path.positions(origin:, board:, step:) }

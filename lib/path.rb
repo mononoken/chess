@@ -16,10 +16,10 @@ class Path
   def positions(step:, position: origin, steps: 0)
     next_position = next_position(position, step)
 
-    if valid_move?(next_position)
+    if valid_move?(next_position) && within_step_limit?(steps)
       steps += 1
       [next_position] + positions(step:, position: next_position, steps:)
-    elsif valid_take?(next_position)
+    elsif valid_take?(next_position) && within_step_limit?(steps)
       [next_position]
     else
       []
@@ -33,12 +33,7 @@ class Path
   end
 
   def valid_move?(position)
-    # within_positions?(position) && unoccupied_position?(position) && checks_own_king?(position)
     within_positions?(position) && unoccupied_position?(position)
-  end
-
-  def checks_own_king?(position)
-    # Check game/board state for king checks in future board given movement to position
   end
 
   def valid_take?(position)

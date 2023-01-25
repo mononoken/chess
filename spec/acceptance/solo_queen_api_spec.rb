@@ -43,7 +43,7 @@ RSpec.describe 'Solo Queen API' do
     game.play(player, [1, 1], [4, 4])
     game.play(player, [4, 4], [0, 4])
 
-    last_square = board.squares[0][4]
+    last_square = board.files[0][4]
 
     expect(last_square.content).to eq(queen)
   end

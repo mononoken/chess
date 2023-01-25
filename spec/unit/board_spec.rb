@@ -4,8 +4,8 @@ require_relative './../../lib/board'
 require_relative './../../lib/pieces/rook'
 
 RSpec.describe Board do
-  subject(:board) { described_class.new(squares) }
-  let(:squares) { Array.new(2) { Array.new(2) { Square.new } } }
+  subject(:board) { described_class.new(files) }
+  let(:files) { Array.new(2) { Array.new(2) { Square.new } } }
 
   describe '#move' do
     context 'when origin square is populated' do
@@ -20,7 +20,7 @@ RSpec.describe Board do
       it 'moves origin population to destination square' do
         board.move(origin, destination)
 
-        destination_square = board.squares[0][1]
+        destination_square = board.files[0][1]
 
         expect(destination_square.content).to eq(rook)
       end
@@ -36,7 +36,7 @@ RSpec.describe Board do
       end
 
       it 'does not change the desination square' do
-        destination_square = board.squares[1][1]
+        destination_square = board.files[1][1]
 
         expect { board.move(origin, destination) rescue :EXPECTED_ERROR }
           .not_to change { destination_square.content }
@@ -53,7 +53,7 @@ RSpec.describe Board do
         y = 0
         position = [x, y]
 
-        square = board.squares[x][y]
+        square = board.files[x][y]
 
         board.populate(rook, position)
 
@@ -69,7 +69,7 @@ RSpec.describe Board do
         y = 0
         position = [x, y]
 
-        square = board.squares[x][y]
+        square = board.files[x][y]
 
         board.populate(rook, position)
 
@@ -79,12 +79,12 @@ RSpec.describe Board do
   end
 
   describe '#piece' do
-    let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
+    let(:files) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
     let(:content) { double }
     let(:position) { [1, 0] }
 
     before do
-      allow(squares[position[0]][position[1]]).to receive(:content)
+      allow(files[position[0]][position[1]]).to receive(:content)
         .and_return(content)
     end
 
@@ -94,11 +94,11 @@ RSpec.describe Board do
   end
 
   describe '#occupied_positions' do
-    let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
+    let(:files) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
 
     context 'when three squares have pieces of selected color' do
-      let(:matching_squares) { [squares[0][0], squares[0][1], squares[1][0]] }
-      let(:mismatch_squares) { [squares[1][1]] }
+      let(:matching_squares) { [files[0][0], files[0][1], files[1][0]] }
+      let(:mismatch_squares) { [files[1][1]] }
 
       let(:color) { :black }
 
@@ -126,7 +126,7 @@ RSpec.describe Board do
     context 'when no squares have pieces of selected color' do
       let(:matching_squares) { [] }
       let(:mismatch_squares) do
-        [squares[0][0], squares[0][1], squares[1][0], squares[1][1]]
+        [files[0][0], files[0][1], files[1][0], files[1][1]]
       end
 
       let(:color) { :purple }
@@ -148,9 +148,9 @@ RSpec.describe Board do
   end
 
   describe '#to_s' do
-    subject(:board) { described_class.new(squares) }
-    context 'when squares is empty' do
-      let(:squares) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
+    subject(:board) { described_class.new(files) }
+    context 'when squares are empty' do
+      let(:files) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
 
       it 'returns empty board visual' do
         expected_visual = <<~HEREDOC
@@ -178,17 +178,17 @@ RSpec.describe Board do
     end
 
     context 'when squares has a single piece at bottom right corner' do
-      let(:squares) { Array.new(8) { Array.new(8) { instance_double(Square) } } }
+      let(:files) { Array.new(8) { Array.new(8) { instance_double(Square) } } }
 
       before do
-        squares.each do |array|
+        files.each do |array|
           array.each do |square|
             allow(square).to receive(:to_s)
               .and_return(' ')
           end
         end
 
-        allow(squares[7][0]).to receive(:to_s)
+        allow(files[7][0]).to receive(:to_s)
           .and_return('P')
       end
 
@@ -217,54 +217,4 @@ RSpec.describe Board do
       end
     end
   end
-
-  # describe '#occupied_squares' do
-  #   let(:squares) { Array.new(2) { Array.new(2) { instance_double(Square) } } }
-
-  #   context 'when three squares have pieces of selected color' do
-  #     let(:matching_squares) { [squares[0][0], squares[0][1], squares[1][0]] }
-  #     let(:mismatch_squares) { [squares[1][1]] }
-
-  #     let(:color) { :black }
-
-  #     before do
-  #       matching_squares.each do |square|
-  #         allow(square).to receive(:piece_color?)
-  #           .with(color)
-  #           .and_return(true)
-  #       end
-
-  #       mismatch_squares.each do |square|
-  #         allow(square).to receive(:piece_color?)
-  #           .with(color)
-  #           .and_return(false)
-  #       end
-  #     end
-
-  #     it 'returns array of the three occupied squares' do
-  #       expect(board.occupied_squares(color)).to match_array(matching_squares)
-  #     end
-  #   end
-
-  #   context 'when no squares have pieces of selected color' do
-  #     let(:matching_squares) { [] }
-  #     let(:mismatch_squares) do
-  #       [squares[0][0], squares[0][1], squares[1][0], squares[1][1]]
-  #     end
-
-  #     let(:color) { :purple }
-
-  #     before do
-  #       mismatch_squares.each do |square|
-  #         allow(square).to receive(:piece_color?)
-  #           .with(color)
-  #           .and_return(false)
-  #       end
-  #     end
-
-  #     it 'return nil' do
-  #       expect(board.occupied_squares(color)).to match_array(matching_squares)
-  #     end
-  #   end
-  # end
 end

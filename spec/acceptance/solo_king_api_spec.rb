@@ -43,7 +43,7 @@ RSpec.describe 'Solo King API' do
     game.play(player, [1, 1], [1, 2])
     game.play(player, [1, 2], [0, 2])
 
-    last_square = board.squares[0][2]
+    last_square = board.files[0][2]
 
     expect(last_square.content).to eq(king)
   end

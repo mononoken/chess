@@ -43,7 +43,7 @@ RSpec.describe 'Solo Rook API' do
     game.play(player, [0, 1], [0, 3])
     game.play(player, [0, 3], [0, 7])
 
-    last_square = board.squares[0][7]
+    last_square = board.files[0][7]
 
     expect(last_square.content).to eq(rook)
   end

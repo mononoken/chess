@@ -43,7 +43,7 @@ RSpec.describe 'Solo Bishop API' do
     game.play(player, [1, 1], [3, 3])
     game.play(player, [3, 3], [7, 7])
 
-    last_square = board.squares[7][7]
+    last_square = board.files[7][7]
 
     expect(last_square.content).to eq(bishop)
   end
