@@ -12,7 +12,7 @@ class Board
 
   attr_reader :files
 
-  def initialize(files = empty_files, piece_types = nil)
+  def initialize(files: empty_files, piece_types: nil)
     @files = files
     init_piece_types(piece_types)
   end

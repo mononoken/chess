@@ -4,7 +4,7 @@ require_relative './../../lib/board'
 require_relative './../../lib/pieces/rook'
 
 RSpec.describe Board do
-  subject(:board) { described_class.new(files) }
+  subject(:board) { described_class.new(files:) }
   let(:files) { Array.new(2) { Array.new(2) { Square.new } } }
 
   describe '#move' do
@@ -148,7 +148,6 @@ RSpec.describe Board do
   end
 
   describe '#to_s' do
-    subject(:board) { described_class.new(files) }
     context 'when squares are empty' do
       let(:files) { Array.new(8) { Array.new(8) { Square.new(nil) } } }
 

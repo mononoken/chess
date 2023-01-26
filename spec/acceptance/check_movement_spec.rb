@@ -11,7 +11,7 @@ RSpec.describe 'Check Movement API' do
   let(:game) { Chess.new(board:, player:) }
 
   let(:squares_3x3) { Array.new(3) { Array.new(3) { Square.new } } }
-  let(:board) { Board.new(squares_3x3) }
+  let(:board) { Board.new(files: squares_3x3) }
 
   let(:player) { Player.new }
 

@@ -29,7 +29,7 @@ class BoardAnalyzer
   end
 
   def board_after_hypothetical_move(origin, destination)
-    hypothetical_board = board.class.new(Marshal.load(Marshal.dump(board.files)))
+    hypothetical_board = board.class.new(files: Marshal.load(Marshal.dump(board.files)))
     hypothetical_board.move(origin, destination)
     hypothetical_board
   end
