@@ -40,10 +40,8 @@ class BoardAnalyzer
   end
 
   def all_pieces(color = nil)
-    if color.nil?
-      board.squares.map(&:content)
-    else
-      board.squares.map { |square| square.content if square.content&.color == color }
-    end.compact
+    board.squares.filter_map(&:content).select do |content|
+      content&.color == color
+    end
   end
 end
