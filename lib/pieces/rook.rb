@@ -11,6 +11,15 @@ class Rook < Piece
     nil
   end
 
+  def start_positions
+    [
+      StartPosition.new(position: [0, 0], color: :white),
+      StartPosition.new(position: [7, 0], color: :white),
+      StartPosition.new(position: [0, 7], color: :black),
+      StartPosition.new(position: [7, 7], color: :black)
+    ]
+  end
+
   def to_s
     'R'
   end

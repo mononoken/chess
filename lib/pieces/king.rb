@@ -15,6 +15,13 @@ class King < Piece
     true
   end
 
+  def start_positions
+    [
+      StartPosition.new(position: [4, 0], color: :white),
+      StartPosition.new(position: [4, 7], color: :black)
+    ]
+  end
+
   def to_s
     'K'
   end

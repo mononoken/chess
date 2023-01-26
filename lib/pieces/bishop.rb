@@ -11,6 +11,15 @@ class Bishop < Piece
     nil
   end
 
+  def start_positions
+    [
+      StartPosition.new(position: [2, 0], color: :white),
+      StartPosition.new(position: [5, 0], color: :white),
+      StartPosition.new(position: [2, 7], color: :black),
+      StartPosition.new(position: [5, 7], color: :black)
+    ]
+  end
+
   def to_s
     'B'
   end

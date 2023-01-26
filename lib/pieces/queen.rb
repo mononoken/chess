@@ -11,6 +11,13 @@ class Queen < Piece
     nil
   end
 
+  def start_positions
+    [
+      StartPosition.new(position: [3, 0], color: :white),
+      StartPosition.new(position: [3, 7], color: :black)
+    ]
+  end
+
   def to_s
     'Q'
   end

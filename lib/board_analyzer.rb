@@ -2,6 +2,8 @@
 
 require_relative './movement'
 
+# Maybe rename to BoardStatus?
+# Check for Board status in reference to the Chess game.
 class BoardAnalyzer
   attr_reader :board
 

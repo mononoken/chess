@@ -11,6 +11,15 @@ class Knight < Piece
     1
   end
 
+  def start_positions
+    [
+      StartPosition.new(position: [1, 0], color: :white),
+      StartPosition.new(position: [6, 0], color: :white),
+      StartPosition.new(position: [1, 7], color: :black),
+      StartPosition.new(position: [6, 7], color: :black)
+    ]
+  end
+
   def to_s
     'N'
   end

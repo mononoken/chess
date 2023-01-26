@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Store start positions with their matching color.
+StartPosition = Struct.new(:position, :color)
+
 # Pieces for chess that store piece move behavior.
 class Piece
   attr_reader :color
@@ -18,6 +21,10 @@ class Piece
 
   def checkable?
     false
+  end
+
+  def start_positions
+    []
   end
 
   def opponent_color

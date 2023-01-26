@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative './square'
-require_relative './movement'
 
+# Stores and manipulates Squares in a 2-D array, organized into 'files'.
 class Board
   class EmptyOriginError < StandardError
     def message
@@ -12,8 +12,13 @@ class Board
 
   attr_reader :files
 
-  def initialize(files = default_files)
+  def initialize(files = empty_files, piece_types = nil)
     @files = files
+    post_initialize(piece_types)
+  end
+
+  # Subclasses may implement.
+  def post_initialize(piece_types)
   end
 
   def move(origin, destination)
@@ -95,7 +100,20 @@ class Board
     files[file][rank]
   end
 
-  def default_files
+  def empty_files
     Array.new(8) { Array.new(8) { Square.new } }
+  end
+end
+
+# Board subclass that initializes with Chess pieces at their start positions.
+class ChessBoard < Board
+  def post_initialize(piece_types)
+    piece_types.each { |piece_type| init_start_positions(piece_type) }
+  end
+
+  def init_start_positions(piece_type)
+    piece_type.start_positions do |start_position|
+      populate(piece_type.new(start_position.color), start_position.position)
+    end
   end
 end
