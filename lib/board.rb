@@ -10,6 +10,12 @@ class Board
     end
   end
 
+  def self.future_board(board, origin, destination)
+    future_board = new(files: Marshal.load(Marshal.dump(board.files)))
+    future_board.move(origin, destination)
+    future_board
+  end
+
   attr_reader :files
 
   def initialize(files: empty_files, piece_types: nil)

@@ -22,16 +22,10 @@ class BoardAnalyzer
   end
 
   def move_will_create_check?(origin, destination, piece_color)
-    hypothetical_board = board_after_hypothetical_move(origin, destination)
+    future_board = board.class.future_board(board, origin, destination)
+    future_analyzer = BoardAnalyzer.new(future_board)
 
-    hypothetical_analyzer = BoardAnalyzer.new(hypothetical_board)
-    hypothetical_analyzer.check?(hypothetical_analyzer.king(piece_color))
-  end
-
-  def board_after_hypothetical_move(origin, destination)
-    hypothetical_board = board.class.new(files: Marshal.load(Marshal.dump(board.files)))
-    hypothetical_board.move(origin, destination)
-    hypothetical_board
+    future_analyzer.check?(future_analyzer.king(piece_color))
   end
 
   private
