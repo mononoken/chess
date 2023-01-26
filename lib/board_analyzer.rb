@@ -5,13 +5,18 @@ require_relative './movement'
 # Maybe rename to BoardStatus?
 # Check for Board status in reference to the Chess game.
 class BoardAnalyzer
+  def self.check?(board, piece_color)
+    new(board).check?(piece_color)
+  end
+
   attr_reader :board
 
   def initialize(board)
     @board = board
   end
 
-  def check?(king)
+  def check?(piece_color)
+    king = king(piece_color)
     return false if king.nil?
 
     all_destinations(king.opponent_color).any?(board.piece_position(king))
@@ -23,9 +28,7 @@ class BoardAnalyzer
 
   def move_will_create_check?(origin, destination, piece_color)
     future_board = board.class.future_board(board, origin, destination)
-    future_analyzer = BoardAnalyzer.new(future_board)
-
-    future_analyzer.check?(future_analyzer.king(piece_color))
+    self.class.check?(future_board, piece_color)
   end
 
   private
