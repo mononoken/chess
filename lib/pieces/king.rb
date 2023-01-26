@@ -3,6 +3,13 @@
 require_relative './piece'
 
 class King < Piece
+  def self.start_positions
+    [
+      StartPosition.new(position: [4, 0], color: :white),
+      StartPosition.new(position: [4, 7], color: :black)
+    ]
+  end
+
   def step_directions
     [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
   end
@@ -13,13 +20,6 @@ class King < Piece
 
   def checkable?
     true
-  end
-
-  def start_positions
-    [
-      StartPosition.new(position: [4, 0], color: :white),
-      StartPosition.new(position: [4, 7], color: :black)
-    ]
   end
 
   def to_s

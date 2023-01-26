@@ -14,11 +14,7 @@ class Board
 
   def initialize(files = empty_files, piece_types = nil)
     @files = files
-    post_initialize(piece_types)
-  end
-
-  # Subclasses may implement.
-  def post_initialize(piece_types)
+    init_piece_types(piece_types)
   end
 
   def move(origin, destination)
@@ -100,20 +96,18 @@ class Board
     files[file][rank]
   end
 
-  def empty_files
-    Array.new(8) { Array.new(8) { Square.new } }
-  end
-end
-
-# Board subclass that initializes with Chess pieces at their start positions.
-class ChessBoard < Board
-  def post_initialize(piece_types)
-    piece_types.each { |piece_type| init_start_positions(piece_type) }
+  # Places piece types at start positions if piece_types is given.
+  def init_piece_types(piece_types)
+    piece_types&.each { |piece_type| init_start_positions(piece_type) }
   end
 
   def init_start_positions(piece_type)
-    piece_type.start_positions do |start_position|
+    piece_type.start_positions.each do |start_position|
       populate(piece_type.new(start_position.color), start_position.position)
     end
+  end
+
+  def empty_files
+    Array.new(8) { Array.new(8) { Square.new } }
   end
 end
