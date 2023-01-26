@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative './path'
-require_relative './board_analyzer'
 
 # List all valid destination positions on a board for an origin (with a piece).
 class Movement
@@ -40,8 +39,8 @@ class Movement
     step_directions.map { |step| path.positions(origin:, board:, step:) }
   end
 
-  def destination_checks_own_king?(destination, analyzer = BoardAnalyzer)
-    analyzer.new(board).move_will_create_check?(origin, destination, piece.color)
+  def destination_checks_own_king?(destination)
+    board.move_will_create_check?(origin, destination, piece.color)
   end
 
   def filter_checks_own_king_positions(positions)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './square'
+require_relative './check_status'
 
 # Stores and manipulates Squares in a 2-D array, organized into 'files'.
 class Board
@@ -15,6 +16,8 @@ class Board
     future_board.move(origin, destination)
     future_board
   end
+
+  include CheckStatus
 
   attr_reader :files
 
