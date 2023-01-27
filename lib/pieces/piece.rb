@@ -9,10 +9,6 @@ class Piece
     []
   end
 
-  def self.chess_pieces
-    [King, Queen, Bishop, Knight, Rook, Pawn]
-  end
-
   attr_reader :color
 
   def initialize(color = nil)
