@@ -3,9 +3,7 @@
 require_relative './board'
 require_relative './player'
 require_relative './movement'
-# require all files in pieces
-project_root = File.dirname(File.absolute_path(__FILE__))
-Dir.glob("#{project_root}/pieces/*", &method(:require_relative))
+require_relative './pieces/piece'
 
 # Runs game of chess until end condition is met.
 class Chess
