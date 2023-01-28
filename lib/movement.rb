@@ -8,8 +8,8 @@ class Movement
     new(origin, board).valid_destination?(destination)
   end
 
-  def self.destinations(origin, board)
-    new(origin, board).destinations
+  def self.valid_destinations(origin, board)
+    new(origin, board).valid_destinations
   end
 
   attr_reader :origin, :board
@@ -21,30 +21,39 @@ class Movement
 
   # Returns true if the provided destination exists in #destinations.
   def valid_destination?(destination)
-    destinations.any?(destination)
+    valid_destinations.any?(destination)
   end
 
   # Array of valid move destination positions for the piece of the origin.
-  def destinations
+  # Conditional should be removable here, right?
+  def valid_destinations
     if piece.checkable?
-      paths.flatten(1) - positions_under_attack(piece.opponent_color)
+      destinations - positions_under_attack(piece.opponent_color)
     else
-      filter_checks_own_king_positions(paths.flatten(1))
+      filter_checks_own_king_positions(destinations)
     end
   end
 
   # private
 
+  def destinations(paths = self.paths)
+    paths_to_positions(paths)
+  end
+
+  def paths_to_positions(paths)
+    paths.flatten(1)
+  end
+
   def paths(path = Path)
     step_directions.map { |step| path.positions(origin:, board:, step:) }
   end
 
-  def destination_checks_own_king?(destination)
-    board.move_will_create_check?(origin, destination, piece.color)
-  end
-
   def filter_checks_own_king_positions(positions)
     positions.filter { |position| !destination_checks_own_king?(position) }
+  end
+
+  def destination_checks_own_king?(destination)
+    board.move_will_create_check?(origin, destination, piece.color)
   end
 
   def positions_under_attack(color)
@@ -53,7 +62,7 @@ class Movement
       # This is a bandaid. nil should actually give all attacks.
     else
       board.occupied_positions(color).reduce([]) do |attacked_positions, position|
-        attacked_positions + Movement.destinations(position, board)
+        attacked_positions + Movement.valid_destinations(position, board)
       end.uniq
     end
   end
