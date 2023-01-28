@@ -12,7 +12,6 @@ module CheckStatus
     check?(piece_color) && all_valid_destinations(piece_color).empty?
   end
 
-  # Investigate!
   def check?(piece_color)
     king = king(piece_color)
     return false if king.nil?
@@ -20,19 +19,16 @@ module CheckStatus
     all_attacks(king.opponent_color).any?(piece_position(king))
   end
 
-  # It should not have to find the piece objects every time. Resource intense.
   def king(color)
     all_pieces(color).find(&:checkable?)
   end
 
-  # Too heavy with full board and enemy pieces exist.
   def all_valid_destinations(color, movement = Movement)
     all_pieces(color).map do |piece|
       movement.valid_destinations(piece_position(piece), self)
     end.flatten(1).uniq
   end
 
-  # Too heavy with full board and enemy pieces exist.
   def all_attacks(color, movement = Movement)
     all_pieces(color).map do |piece|
       movement.paths_positions(piece_position(piece), self)

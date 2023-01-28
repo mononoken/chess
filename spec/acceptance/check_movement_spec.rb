@@ -8,25 +8,6 @@ require_relative './../../lib/pieces/queen'
 require_relative './../../lib/pieces/rook'
 
 RSpec.describe 'Check Movement API' do
-  xcontext 'when full-sized board of chess' do
-    let(:board) { Board.new }
-    let(:player) { Player.new }
-
-    context 'when queen has king in check' do
-      white_king = King.new(:white)
-      black_queen = Queen.new(:black)
-
-      before do
-        board.populate(white_king, [0, 0])
-        board.populate(black_queen, [0, 7])
-      end
-
-      it 'returns true to board.check?' do
-        result = board.check?(piece_color)
-      end
-    end
-  end
-
   context 'when board is 3x3' do
     let(:game) { Chess.new(board:, player:) }
 
