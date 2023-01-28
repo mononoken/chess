@@ -61,8 +61,8 @@ class Board
 
   def to_s
     <<~HEREDOC
-      +----+----+----+----+----+----+----+----+
-      #{ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n+----+----+----+----+----+----+----+----+\n" }.join.strip}
+      #{rank_spacer}
+      #{ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n#{rank_spacer}\n" }.join.strip}
     HEREDOC
   end
 
@@ -119,5 +119,9 @@ class Board
 
   def empty_files
     Array.new(8) { Array.new(8) { Square.new } }
+  end
+
+  def rank_spacer
+    files.reduce('+') { |spacer, _| spacer + '----+' }
   end
 end
