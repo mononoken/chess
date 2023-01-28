@@ -8,69 +8,90 @@ require_relative './../../lib/pieces/queen'
 require_relative './../../lib/pieces/rook'
 
 RSpec.describe 'Check Movement API' do
-  let(:game) { Chess.new(board:, player:) }
+  xcontext 'when full-sized board of chess' do
+    let(:board) { Board.new }
+    let(:player) { Player.new }
 
-  let(:squares_3x3) { Array.new(3) { Array.new(3) { Square.new } } }
-  let(:board) { Board.new(files: squares_3x3) }
+    context 'when queen has king in check' do
+      white_king = King.new(:white)
+      black_queen = Queen.new(:black)
 
-  let(:player) { Player.new }
+      before do
+        board.populate(white_king, [0, 0])
+        board.populate(black_queen, [0, 7])
+      end
 
-  let(:white_king) { King.new(:white) }
-  let(:white_rook) { Rook.new(:white) }
-
-  let(:black_rook) { Rook.new(:black) }
-
-  context 'when rook is blocking part of king movement' do
-    before do
-      board.populate(white_king, [2, 0])
-      board.populate(white_rook, [0, 0])
-      board.populate(black_rook, [1, 2])
-    end
-
-    it 'raises error when trying to move king in path of enemy rook' do
-      expect { game.play(player, [2, 0], [1, 0]) }
-        .to raise_error(Chess::InvalidDestinationError)
-    end
-
-    it 'allows king to move outside of enemy rook path' do
-      expect { game.play(player, [2, 0], [2, 1]) }
-        .not_to raise_error(Chess::InvalidDestinationError)
+      it 'returns true to board.check?' do
+        result = board.check?(piece_color)
+      end
     end
   end
 
-  context 'when rook is defending king' do
-    before do
-      board.populate(white_king, [1, 0])
-      board.populate(white_rook, [1, 1])
-      board.populate(black_rook, [1, 2])
+  context 'when board is 3x3' do
+    let(:game) { Chess.new(board:, player:) }
+
+    let(:squares_3x3) { Array.new(3) { Array.new(3) { Square.new } } }
+    let(:board) { Board.new(files: squares_3x3) }
+
+    let(:player) { Player.new }
+
+    let(:white_king) { King.new(:white) }
+    let(:white_rook) { Rook.new(:white) }
+
+    let(:black_rook) { Rook.new(:black) }
+
+    context 'when rook is blocking part of king movement' do
+      before do
+        board.populate(white_king, [2, 0])
+        board.populate(white_rook, [0, 0])
+        board.populate(black_rook, [1, 2])
+      end
+
+      it 'raises error when trying to move king in path of enemy rook' do
+        expect { game.play(player, [2, 0], [1, 0]) }
+          .to raise_error(Chess::InvalidDestinationError)
+      end
+
+      it 'allows king to move outside of enemy rook path' do
+        expect { game.play(player, [2, 0], [2, 1]) }
+          .not_to raise_error(Chess::InvalidDestinationError)
+      end
     end
 
-    it 'raises error when trying to move rook and putting king in check' do
-      expect { game.play(player, [1, 1], [0, 1]) }
-        .to raise_error(Chess::InvalidDestinationError)
+    context 'when rook is defending king' do
+      before do
+        board.populate(white_king, [1, 0])
+        board.populate(white_rook, [1, 1])
+        board.populate(black_rook, [1, 2])
+      end
+
+      it 'raises error when trying to move rook and putting king in check' do
+        expect { game.play(player, [1, 1], [0, 1]) }
+          .to raise_error(Chess::InvalidDestinationError)
+      end
+
+      it 'allows rook move that keeps king out of check' do
+        expect { game.play(player, [1, 1], [1, 2]) }
+          .not_to raise_error(Chess::InvalidDestinationError)
+      end
     end
 
-    it 'allows rook move that keeps king out of check' do
-      expect { game.play(player, [1, 1], [1, 2]) }
-        .not_to raise_error(Chess::InvalidDestinationError)
-    end
-  end
+    context 'when king is currently in check' do
+      before do
+        board.populate(white_king, [0, 0])
+        board.populate(white_rook, [2, 1])
+        board.populate(black_rook, [0, 2])
+      end
 
-  context 'when king is currently in check' do
-    before do
-      board.populate(white_king, [0, 0])
-      board.populate(white_rook, [2, 1])
-      board.populate(black_rook, [0, 2])
-    end
+      it 'raises error when attempted move does not defend king' do
+        expect { game.play(player, [2, 1], [2, 0]) }
+          .to raise_error(Chess::InvalidDestinationError)
+      end
 
-    it 'raises error when attempted move does not defend king' do
-      expect { game.play(player, [2, 1], [2, 0]) }
-        .to raise_error(Chess::InvalidDestinationError)
-    end
-
-    it 'allows move that defends king' do
-      expect { game.play(player, [2, 1], [0, 1]) }
-        .not_to raise_error(Chess::InvalidDestinationError)
+      it 'allows move that defends king' do
+        expect { game.play(player, [2, 1], [0, 1]) }
+          .not_to raise_error(Chess::InvalidDestinationError)
+      end
     end
   end
 end

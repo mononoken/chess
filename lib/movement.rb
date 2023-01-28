@@ -12,6 +12,10 @@ class Movement
     new(origin, board).valid_destinations
   end
 
+  def self.paths_positions(origin, board)
+    new(origin, board).paths_positions
+  end
+
   attr_reader :origin, :board
 
   def initialize(origin, board)
@@ -27,18 +31,18 @@ class Movement
   # Array of valid move destination positions for the piece of the origin.
   # Conditional should be removable here, right?
   def valid_destinations
-    if piece.checkable?
-      destinations - positions_under_attack(piece.opponent_color)
-    else
-      filter_checks_own_king_positions(destinations)
-    end
+    # if piece.checkable?
+    #   paths_positions - positions_under_attack(piece.opponent_color)
+    # else
+      filter_checks_own_king_positions(paths_positions)
+    # end
+  end
+
+  def paths_positions(paths = self.paths)
+    paths_to_positions(paths)
   end
 
   # private
-
-  def destinations(paths = self.paths)
-    paths_to_positions(paths)
-  end
 
   def paths_to_positions(paths)
     paths.flatten(1)

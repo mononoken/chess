@@ -11,6 +11,7 @@ class Board
     end
   end
 
+  # Instantiate a notional board that makes the given move.
   def self.future_board(board, origin, destination)
     future_board = new(files: Marshal.load(Marshal.dump(board.files)))
     future_board.move(origin, destination)
