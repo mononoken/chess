@@ -20,7 +20,7 @@ class Knight < Piece
     1
   end
 
-  def to_s
+  def skin
     'N'
   end
 end

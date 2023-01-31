@@ -7,6 +7,8 @@ RSpec.describe Chess do
   let(:player) { instance_double(Player) }
   let(:movement) { double }
 
+  describe ''
+
   describe '#play' do
     context 'when an invalid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }

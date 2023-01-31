@@ -22,7 +22,7 @@ class King < Piece
     true
   end
 
-  def to_s
+  def skin
     'K'
   end
 end

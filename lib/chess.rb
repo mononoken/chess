@@ -3,12 +3,7 @@
 require_relative './board'
 require_relative './player'
 require_relative './movement'
-require_relative './pieces/bishop'
-require_relative './pieces/king'
-require_relative './pieces/knight'
-require_relative './pieces/pawn'
-require_relative './pieces/queen'
-require_relative './pieces/rook'
+require_relative './pieces/pieces'
 
 # Runs game of chess until end condition is met.
 class Chess
@@ -18,17 +13,28 @@ class Chess
     end
   end
 
-  def self.chess_pieces
-    [King, Queen, Bishop, Knight, Rook, Pawn]
-  end
-
   attr_reader :board, :player, :movement
 
-  def initialize(board:, player:, movement: Movement)
+  def initialize(board: Board.new, player: Player.new, pieces: Pieces, movement: Movement)
     @board = board
     @player = player
     # @players = players
     @movement = movement
+  end
+
+  def play_game
+    # rounds
+    # announce result
+  end
+
+  def rounds
+    # rounds until game_over?
+  end
+
+  def round
+    # Set current player (this belongs in players I think)
+    # And get valid_destination from current player
+    # And send destination to board
   end
 
   def play(player, origin, destination)

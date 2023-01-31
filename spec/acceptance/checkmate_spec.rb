@@ -6,7 +6,7 @@ RSpec.describe 'Checkmate Game API' do
   context "when game is in Fool's mate" do
     let(:board) { Board.new(piece_types:) }
 
-    let(:piece_types) { Chess.chess_pieces }
+    let(:piece_types) { Pieces.piece_types }
 
     let(:player) { Player.new }
 

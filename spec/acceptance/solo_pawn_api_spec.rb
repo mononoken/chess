@@ -23,6 +23,21 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error
   end
 
+  xit 'moves pawn in the right direction based on color' do
+    board = Board.new
+
+    player = Player.new
+
+    game = Chess.new(board:, player:)
+
+    pawn = Pawn.new
+4
+    board.populate(pawn, [1, 6])
+
+    expect { game.play(player, [1, 6], [1, 5]) }
+      .not_to raise_error(Chess::InvalidDestinationError)
+  end
+
   it 'only accepts valid pawn moves' do
     board = Board.new
 

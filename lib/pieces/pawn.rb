@@ -32,7 +32,7 @@ class Pawn < Piece
     1
   end
 
-  def to_s
+  def skin
     'P'
   end
 end

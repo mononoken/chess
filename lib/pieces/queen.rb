@@ -18,7 +18,7 @@ class Queen < Piece
     nil
   end
 
-  def to_s
+  def skin
     'Q'
   end
 end

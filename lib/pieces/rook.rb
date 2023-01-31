@@ -20,7 +20,7 @@ class Rook < Piece
     nil
   end
 
-  def to_s
+  def skin
     'R'
   end
 end

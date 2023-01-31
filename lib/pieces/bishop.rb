@@ -20,7 +20,7 @@ class Bishop < Piece
     nil
   end
 
-  def to_s
+  def skin
     'B'
   end
 end
