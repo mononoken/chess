@@ -34,7 +34,7 @@ class Square
     if empty?
       '   '
     else
-      " #{content.to_s.chomp("\e[0m")} "
+      " #{content.to_s.chomp("\e[0m")} " # Removes early exit code for when BG color is included.
     end.bg_color(:dark)
   end
 

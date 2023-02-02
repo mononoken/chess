@@ -63,7 +63,7 @@ class Board
     ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n" }.join
   end
 
-  # private
+  private
 
   def occupied_squares(color)
     if color.nil?
@@ -117,8 +117,4 @@ class Board
   def empty_files
     Array.new(8) { Array.new(8) { Square.new } }
   end
-
-  # def rank_spacer
-  #   files.reduce('+') { |spacer, _| spacer + '----+' }
-  # end
 end
