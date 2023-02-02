@@ -32,10 +32,10 @@ class Square
 
   def to_s
     if empty?
-      ' '
+      '   '
     else
-      content.to_s
-    end.bg_color(:light)
+      " #{content.to_s.chomp("\e[0m")} "
+    end.bg_color(:dark)
   end
 
   private

@@ -60,13 +60,10 @@ class Board
   end
 
   def to_s
-    <<~HEREDOC
-      #{rank_spacer}
-      #{ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n#{rank_spacer}\n" }.join.strip}
-    HEREDOC
+    ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n" }.join
   end
 
-  private
+  # private
 
   def occupied_squares(color)
     if color.nil?
@@ -77,8 +74,8 @@ class Board
   end
 
   def rank_to_s(rank)
-    rank.reduce(+'|') do |rank_s, square|
-      rank_s << " #{square}  |"
+    rank.reduce(+'') do |rank_s, square|
+      rank_s << square.to_s
     end
   end
 
@@ -121,7 +118,7 @@ class Board
     Array.new(8) { Array.new(8) { Square.new } }
   end
 
-  def rank_spacer
-    files.reduce('+') { |spacer, _| spacer + '----+' }
-  end
+  # def rank_spacer
+  #   files.reduce('+') { |spacer, _| spacer + '----+' }
+  # end
 end

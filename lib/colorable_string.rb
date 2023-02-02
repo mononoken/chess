@@ -6,7 +6,7 @@ module ColorableString
     black: '0;0;0',
     white: '255;255;255',
     light: '255;207;159',
-    dark: '210,140,69'
+    dark: '210;140;69'
   }.freeze
 
   refine String do

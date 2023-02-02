@@ -51,6 +51,6 @@ class Piece
   end
 
   def to_s
-    skin.fg_color(color).bg_color(:light)
+    skin.fg_color(color)
   end
 end
