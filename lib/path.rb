@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative './position'
+
 # List valid destination positions in one direction on a board for an origin (with a piece).
 class Path
   def self.positions(origin:, board:, step:)
@@ -13,6 +15,7 @@ class Path
     @board = board
   end
 
+  # Return an array of Position objects based on step using recursion.
   def positions(step:, position: origin, steps: 0)
     next_position = next_position(position, step)
 
@@ -29,7 +32,10 @@ class Path
   private
 
   def next_position(position, step)
-    [position, step].transpose.map(&:sum)
+    # [position, step].transpose.map(&:sum)
+    # Position.from_a([position.to_a, step].transpose.map(&:sum))
+    position.step(step)
+    # Positions.next_position(Positions.fetch_from_a([x, y]), step)
   end
 
   def valid_move?(position)
@@ -60,10 +66,6 @@ class Path
 
   def all_positions
     @all_positions ||= board.positions
-  end
-
-  def step_directions
-    piece.step_directions
   end
 
   def step_limit

@@ -3,6 +3,8 @@
 require_relative './square'
 require_relative './check_status'
 
+require_relative './positions'
+
 # Stores and manipulates Squares in a 2-D array, organized into 'files'.
 class Board
   class EmptyOriginError < StandardError
@@ -20,23 +22,31 @@ class Board
 
   include CheckStatus
 
-  attr_reader :files
+  attr_reader :files, :positions_new
 
-  def initialize(files: empty_files, piece_types: nil)
+  def initialize(files: empty_files, piece_types: nil, positions_new: Positions.new(files))
     @files = files
+    @positions_new = positions_new
     init_piece_types(piece_types)
   end
 
+  # FIX_ME
+  def positions
+    # squares.map { |square| position(square) }
+
+    positions_new.all
+  end
+
   def move(origin, destination)
-    raise EmptyOriginError if square(file: origin[0], rank: origin[1]).empty?
+    raise EmptyOriginError if square(origin).empty?
 
-    content = square(file: origin[0], rank: origin[1]).empty
+    content = square(origin).empty
 
-    square(file: destination[0], rank: destination[1]).fill(content)
+    square(destination).fill(content)
   end
 
   def populate(piece, position)
-    square(file: position[0], rank: position[1]).fill(piece)
+    square(position).fill(piece)
   end
 
   def piece_position(piece)
@@ -44,11 +54,7 @@ class Board
   end
 
   def piece(position)
-    square(file: position[0], rank: position[1]).content
-  end
-
-  def positions(files = self.files)
-    squares.map { |square| position(square) }
+    square(position).content
   end
 
   def occupied_positions(color = nil)
@@ -63,7 +69,7 @@ class Board
     ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n" }.join
   end
 
-  private
+  # private
 
   def occupied_squares(color)
     if color.nil?
@@ -92,15 +98,17 @@ class Board
   end
 
   def position(square)
-    files.map.with_index do |file, file_index|
-      file.map.with_index do |board_square, rank_index|
-        [file_index, rank_index] if board_square == square
-      end
-    end.flatten.compact
+    # files.map.with_index do |file, file_index|
+    #   file.map.with_index do |board_square, rank_index|
+    #     Position.from_a([file_index, rank_index]) if board_square == square
+    #   end
+    # end.flatten.compact
+
+    positions_new.from_square(square)
   end
 
-  def square(file: nil, rank: nil)
-    files[file][rank]
+  def square(position)
+    files[position.file_index][position.rank_index]
   end
 
   # Places piece types at start positions if piece_types is given.
@@ -110,7 +118,7 @@ class Board
 
   def init_start_positions(piece_type)
     piece_type.start_positions.each do |start_position|
-      populate(piece_type.new(start_position.color), start_position.position)
+      populate(piece_type.new(start_position.color), Position.from_a(start_position.position))
     end
   end
 

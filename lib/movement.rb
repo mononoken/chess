@@ -31,11 +31,7 @@ class Movement
   # Array of valid move destination positions for the piece of the origin.
   # Conditional should be removable here, right?
   def valid_destinations
-    # if piece.checkable?
-    #   paths_positions - positions_under_attack(piece.opponent_color)
-    # else
-      filter_checks_own_king_positions(paths_positions)
-    # end
+    filter_checks_own_king_positions(paths_positions)
   end
 
   def paths_positions(paths = self.paths)

@@ -13,11 +13,11 @@ RSpec.describe 'Solo Pawn API' do
 
     pawn = Pawn.new
 
-    origin = [1, 1]
+    origin = Position.from_a([1, 1])
 
     board.populate(pawn, origin)
 
-    special_destination = [1, 3]
+    special_destination = Position.from_a([1, 3])
 
     expect { game.play(player, origin, special_destination) }
       .not_to raise_error
@@ -32,9 +32,9 @@ RSpec.describe 'Solo Pawn API' do
 
     pawn = Pawn.new
 4
-    board.populate(pawn, [1, 6])
+    board.populate(pawn, Position.from_a([1, 6]))
 
-    expect { game.play(player, [1, 6], [1, 5]) }
+    expect { game.play(player, Position.from_a([1, 6]), Position.from_a([1, 5])) }
       .not_to raise_error(Chess::InvalidDestinationError)
   end
 
@@ -47,16 +47,16 @@ RSpec.describe 'Solo Pawn API' do
 
     pawn = Pawn.new
 
-    origin = [1, 1]
+    origin = Position.from_a([1, 1])
 
     board.populate(pawn, origin)
 
-    invalid_destination = [2, 2]
+    invalid_destination = Position.from_a([2, 2])
 
     expect { game.play(player, origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    valid_destination = [1, 2]
+    valid_destination = Position.from_a([1, 2])
 
     expect { game.play(player, origin, valid_destination) }
       .not_to raise_error
@@ -71,14 +71,14 @@ RSpec.describe 'Solo Pawn API' do
 
     pawn = Pawn.new
 4
-    board.populate(pawn, [3, 1])
+    board.populate(pawn, Position.from_a(([3, 1])))
 
-    game.play(player, [3, 1], [3, 2])
-    game.play(player, [3, 2], [3, 3])
-    game.play(player, [3, 3], [3, 4])
-    game.play(player, [3, 4], [3, 5])
-    game.play(player, [3, 5], [3, 6])
-    game.play(player, [3, 6], [3, 7])
+    game.play(player, Position.from_a([3, 1]), Position.from_a([3, 2]))
+    game.play(player, Position.from_a([3, 2]), Position.from_a([3, 3]))
+    game.play(player, Position.from_a([3, 3]), Position.from_a([3, 4]))
+    game.play(player, Position.from_a([3, 4]), Position.from_a([3, 5]))
+    game.play(player, Position.from_a([3, 5]), Position.from_a([3, 6]))
+    game.play(player, Position.from_a([3, 6]), Position.from_a([3, 7]))
 
     last_square = board.files[3][7]
 

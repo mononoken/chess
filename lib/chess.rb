@@ -3,6 +3,7 @@
 require_relative './board'
 require_relative './player'
 require_relative './movement'
+require_relative './position'
 require_relative './pieces/pieces'
 
 # Runs game of chess until end condition is met.
@@ -27,14 +28,16 @@ class Chess
     # announce result
   end
 
-  def rounds
-    # rounds until game_over?
+  def play_rounds
+    round until game_over?
   end
 
   def round
     # Set current player (this belongs in players I think)
     # And get valid_destination from current player
     # And send destination to board
+
+    # play(player, gets.chomp.downcase.to_a, gets.chomp.downcase)
   end
 
   def play(player, origin, destination)

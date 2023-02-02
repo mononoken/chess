@@ -17,11 +17,11 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     queen = Queen.new
     rook = Rook.new
 
-    board.populate(bishop, [2, 0])
-    board.populate(king, [4, 0])
-    board.populate(knight, [1, 0])
-    board.populate(queen, [3, 0])
-    board.populate(rook, [0, 0])
+    board.populate(bishop, Position.from_a([2, 0]))
+    board.populate(king, Position.from_a([4, 0]))
+    board.populate(knight, Position.from_a([1, 0]))
+    board.populate(queen, Position.from_a([3, 0]))
+    board.populate(rook, Position.from_a([0, 0]))
 
     bishop_square = board.files[2][0]
     king_square = board.files[4][0]
@@ -48,8 +48,8 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     bishop = Bishop.new(piece_color)
     queen = Queen.new(piece_color)
 
-    bishop_position = [2, 0]
-    queen_position = [3, 0]
+    bishop_position = Position.from_a([2, 0])
+    queen_position = Position.from_a([3, 0])
 
     board.populate(bishop, bishop_position)
     board.populate(queen, queen_position)
@@ -57,7 +57,7 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     expect { game.play(player, queen_position, bishop_position) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.play(player, queen_position, [1, 2]) }
+    expect { game.play(player, queen_position, Position.from_a([1, 2])) }
       .not_to raise_error
   end
 
@@ -71,10 +71,10 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     bishop = Bishop.new
     rook = Rook.new
 
-    bishop_position = [2, 0]
-    rook_position = [0, 0]
-    invalid_destination = [7, 0]
-    valid_destination = [0, 7]
+    bishop_position = Position.from_a([2, 0])
+    rook_position = Position.from_a([0, 0])
+    invalid_destination = Position.from_a([7, 0])
+    valid_destination = Position.from_a([0, 7])
 
     board.populate(bishop, bishop_position)
     board.populate(rook, rook_position)
