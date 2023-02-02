@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative './colorable_string'
+
 # Stores piece/content.
 class Square
+  using ColorableString
+
   attr_reader :content
 
   def initialize(content = nil)
@@ -31,7 +35,7 @@ class Square
       ' '
     else
       content.to_s
-    end
+    end.bg_color(:light)
   end
 
   private
