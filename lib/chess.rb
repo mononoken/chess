@@ -16,7 +16,7 @@ class Chess
 
   attr_reader :board, :player, :movement
 
-  def initialize(board: Board.new, player: Player.new, pieces: Pieces, movement: Movement)
+  def initialize(board: Board.new(piece_types: Pieces.piece_types), player: Player.new, movement: Movement)
     @board = board
     @player = player
     # @players = players
@@ -29,15 +29,21 @@ class Chess
   end
 
   def play_rounds
-    round until game_over?
+    # round until game_over?
+    round until board.checkmate?(:white) || board.checkmate?(:black)
   end
 
   def round
     # Set current player (this belongs in players I think)
     # And get valid_destination from current player
     # And send destination to board
+    puts board
+    puts 'Enter origin'
+    origin = Position.from_algebra(gets.chomp.downcase.to_sym)
+    puts 'Enter destination'
+    destination = Position.from_algebra(gets.chomp.downcase.to_sym)
 
-    # play(player, gets.chomp.downcase.to_a, gets.chomp.downcase)
+    play(player, origin, destination)
   end
 
   def play(player, origin, destination)
@@ -46,3 +52,6 @@ class Chess
     board.move(origin, destination)
   end
 end
+
+game = Chess.new
+game.play_rounds
