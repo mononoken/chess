@@ -13,35 +13,39 @@ class Chess
     end
   end
 
-  attr_reader :board, :player, :movement
+  attr_reader :board, :movement
 
   def initialize(board: Board.new(piece_types: Pieces.piece_types), movement: Movement)
     @board = board
     @movement = movement
+    # Show instructions
   end
 
-  def play_game
-    # rounds
-    # announce result
-  end
+  # def play
+  #   # rounds
+  #   # announce result
+  # end
 
-  def play_rounds
-    # round until game_over?
-    round until board.checkmate?(:white) || board.checkmate?(:black)
-  end
+  # def rounds
+  #   round until game_over?
+  # end
 
-  def round
-    # Set current player (this belongs in players I think)
-    # And get valid_destination from current player
-    # And send destination to board
-    puts board
-    puts 'Enter origin'
-    origin = Position.from_algebra(gets.chomp.downcase.to_sym)
-    puts 'Enter destination'
-    destination = Position.from_algebra(gets.chomp.downcase.to_sym)
+  # def game_over?
+  #   board.checkmate?(:white) || board.checkmate?(:black)
+  # end
 
-    make_move(origin, destination)
-  end
+  # def round
+  #   # Set current player (this belongs in players I think)
+  #   # And get valid_destination from current player
+  #   # And send destination to board
+  #   puts board
+  #   puts 'Enter origin'
+  #   origin = Position.from_algebra(gets.chomp.downcase.to_sym)
+  #   puts 'Enter destination'
+  #   destination = Position.from_algebra(gets.chomp.downcase.to_sym)
+
+  #   make_move(origin, destination)
+  # end
 
   def make_move(origin, destination)
     raise InvalidDestinationError unless movement.valid_destination?(destination, origin, board)
