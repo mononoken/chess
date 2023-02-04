@@ -7,9 +7,7 @@ RSpec.describe 'Solo King API' do
   it 'only accepts valid king moves' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     king = King.new
 
@@ -19,29 +17,27 @@ RSpec.describe 'Solo King API' do
 
     invalid_destination = Position.from_a([4, 1])
 
-    expect { game.play(player, origin, invalid_destination) }
+    expect { game.play(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([3, 1])
 
-    expect { game.play(player, origin, valid_destination) }
+    expect { game.play(origin, valid_destination) }
       .not_to raise_error
   end
 
   it 'moves king across board' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     king = King.new
 
     board.populate(king, Position.from_a([2, 2]))
 
-    game.play(player, Position.from_a([2, 2]), Position.from_a([1, 1]))
-    game.play(player, Position.from_a([1, 1]), Position.from_a([1, 2]))
-    game.play(player, Position.from_a([1, 2]), Position.from_a([0, 2]))
+    game.play(Position.from_a([2, 2]), Position.from_a([1, 1]))
+    game.play(Position.from_a([1, 1]), Position.from_a([1, 2]))
+    game.play(Position.from_a([1, 2]), Position.from_a([0, 2]))
 
     last_square = board.files[0][2]
 

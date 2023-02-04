@@ -7,9 +7,7 @@ RSpec.describe 'Solo Knight API' do
   it 'only accepts valid knight moves' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     knight = Knight.new
 
@@ -19,34 +17,32 @@ RSpec.describe 'Solo Knight API' do
 
     invalid_destination = Position.from_a([2, 1])
 
-    expect { game.play(player, origin, invalid_destination) }
+    expect { game.play(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     invalid_destination = Position.from_a([3, 1])
 
-    expect { game.play(player, origin, invalid_destination) }
+    expect { game.play(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([3, 2])
 
-    expect { game.play(player, origin, valid_destination) }
+    expect { game.play(origin, valid_destination) }
       .not_to raise_error
   end
 
   it 'moves knight across board' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     knight = Knight.new
 
     board.populate(knight, Position.from_a([2, 2]))
 
-    game.play(player, Position.from_a([2, 2]), Position.from_a([3, 4]))
-    game.play(player, Position.from_a([3, 4]), Position.from_a([5, 5]))
-    game.play(player, Position.from_a([5, 5]), Position.from_a([4, 3]))
+    game.play(Position.from_a([2, 2]), Position.from_a([3, 4]))
+    game.play(Position.from_a([3, 4]), Position.from_a([5, 5]))
+    game.play(Position.from_a([5, 5]), Position.from_a([4, 3]))
 
     last_square = board.files[4][3]
 

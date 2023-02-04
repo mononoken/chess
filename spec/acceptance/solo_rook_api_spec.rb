@@ -7,9 +7,7 @@ RSpec.describe 'Solo Rook API' do
   it 'only accepts valid rook moves' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     rook = Rook.new
 
@@ -19,29 +17,27 @@ RSpec.describe 'Solo Rook API' do
 
     invalid_destination = Position.from_a([5, 5])
 
-    expect { game.play(player, origin, invalid_destination) }
+    expect { game.play(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([4, 4])
 
-    expect { game.play(player, origin, valid_destination) }
+    expect { game.play(origin, valid_destination) }
       .not_to raise_error
   end
 
   it 'moves rook across board' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     rook = Rook.new
 
     board.populate(rook, Position.from_a([0, 0]))
 
-    game.play(player, Position.from_a([0, 0]), Position.from_a([0, 1]))
-    game.play(player, Position.from_a([0, 1]), Position.from_a([0, 3]))
-    game.play(player, Position.from_a([0, 3]), Position.from_a([0, 7]))
+    game.play(Position.from_a([0, 0]), Position.from_a([0, 1]))
+    game.play(Position.from_a([0, 1]), Position.from_a([0, 3]))
+    game.play(Position.from_a([0, 3]), Position.from_a([0, 7]))
 
     last_square = board.files[0][7]
 

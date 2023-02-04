@@ -39,9 +39,7 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
   it 'raises error if piece tries to move to occupied square of same color/player' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     piece_color = :black
 
@@ -54,19 +52,17 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(bishop, bishop_position)
     board.populate(queen, queen_position)
 
-    expect { game.play(player, queen_position, bishop_position) }
+    expect { game.play(queen_position, bishop_position) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.play(player, queen_position, Position.from_a([1, 2])) }
+    expect { game.play(queen_position, Position.from_a([1, 2])) }
       .not_to raise_error
   end
 
   it 'raises error if piece tries to move past an occupied square' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     bishop = Bishop.new
     rook = Rook.new
@@ -79,10 +75,10 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(bishop, bishop_position)
     board.populate(rook, rook_position)
 
-    expect { game.play(player, rook_position, invalid_destination) }
+    expect { game.play(rook_position, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.play(player, rook_position, valid_destination) }
+    expect { game.play(rook_position, valid_destination) }
       .not_to raise_error
   end
 end

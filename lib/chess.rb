@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative './board'
-require_relative './player'
 require_relative './movement'
 require_relative './position'
 require_relative './pieces/pieces'
@@ -16,10 +15,8 @@ class Chess
 
   attr_reader :board, :player, :movement
 
-  def initialize(board: Board.new(piece_types: Pieces.piece_types), player: Player.new, movement: Movement)
+  def initialize(board: Board.new(piece_types: Pieces.piece_types), movement: Movement)
     @board = board
-    @player = player
-    # @players = players
     @movement = movement
   end
 
@@ -43,10 +40,10 @@ class Chess
     puts 'Enter destination'
     destination = Position.from_algebra(gets.chomp.downcase.to_sym)
 
-    play(player, origin, destination)
+    play(origin, destination)
   end
 
-  def play(player, origin, destination)
+  def play(origin, destination)
     raise InvalidDestinationError unless movement.valid_destination?(destination, origin, board)
 
     board.move(origin, destination)

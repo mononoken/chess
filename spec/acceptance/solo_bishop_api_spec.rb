@@ -7,9 +7,7 @@ RSpec.describe 'Solo Bishop API' do
   it 'only accepts valid bishop moves' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     bishop = Bishop.new
 
@@ -19,29 +17,27 @@ RSpec.describe 'Solo Bishop API' do
 
     invalid_destination = Position.from_a([4, 1])
 
-    expect { game.play(player, origin, invalid_destination) }
+    expect { game.play(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([0, 2])
 
-    expect { game.play(player, origin, valid_destination) }
+    expect { game.play(origin, valid_destination) }
       .not_to raise_error
   end
 
   it 'moves bishop across board' do
     board = Board.new
 
-    player = Player.new
-
-    game = Chess.new(board:, player:)
+    game = Chess.new(board:)
 
     bishop = Bishop.new
 
     board.populate(bishop, Position.from_a([0, 0]))
 
-    game.play(player, Position.from_a([0, 0]), Position.from_a([1, 1]))
-    game.play(player, Position.from_a([1, 1]), Position.from_a([3, 3]))
-    game.play(player, Position.from_a([3, 3]), Position.from_a([7, 7]))
+    game.play(Position.from_a([0, 0]), Position.from_a([1, 1]))
+    game.play(Position.from_a([1, 1]), Position.from_a([3, 3]))
+    game.play(Position.from_a([3, 3]), Position.from_a([7, 7]))
 
     last_square = board.files[7][7]
 

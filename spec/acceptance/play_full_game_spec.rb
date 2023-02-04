@@ -8,9 +8,7 @@ RSpec.describe 'Checkmate Game API' do
 
     let(:piece_types) { Piece.chess_pieces }
 
-    let(:player) { Player.new }
-
-    let(:game) { Chess.new(board:, player:) }
+    let(:game) { Chess.new(board:) }
 
     it "plays game of Fool's mate"
     # Create new game.

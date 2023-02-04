@@ -8,9 +8,7 @@ RSpec.describe 'Checkmate Game API' do
 
     let(:piece_types) { Pieces.piece_types }
 
-    let(:player) { Player.new }
-
-    let(:game) { Chess.new(board:, player:) }
+    let(:game) { Chess.new(board:) }
 
     before do
       board.move(Position.from_a([5, 1]), Position.from_a([5, 2]))

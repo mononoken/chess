@@ -3,8 +3,7 @@
 require_relative './../../lib/chess'
 
 RSpec.describe Chess do
-  subject(:chess) { described_class.new(board:, player:, movement:) }
-  let(:player) { instance_double(Player) }
+  subject(:chess) { described_class.new(board:, movement:) }
   let(:movement) { double }
 
   describe '#play' do
@@ -19,12 +18,12 @@ RSpec.describe Chess do
       end
 
       it 'raises error' do
-        expect { chess.play(player, origin, destination) }
+        expect { chess.play(origin, destination) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'does not send move to board' do
-        chess.play(player, origin, destination) rescue :EXPECTED_ERROR
+        chess.play(origin, destination) rescue :EXPECTED_ERROR
 
         expect(board).not_to have_received(:move)
       end
@@ -41,7 +40,7 @@ RSpec.describe Chess do
       end
 
       it 'sends board move with origin and destination' do
-        chess.play(player, origin, destination)
+        chess.play(origin, destination)
 
         expect(board).to have_received(:move)
           .with(origin, destination)
