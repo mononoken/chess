@@ -3,6 +3,7 @@
 require_relative './path'
 
 # List all valid destination positions on a board for an origin (with a piece).
+# Note that in this project 'movement' is used as a noun and 'move' as a verb.
 class Movement
   def self.valid_destination?(destination, origin, board)
     new(origin, board).valid_destination?(destination)

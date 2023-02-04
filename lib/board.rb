@@ -2,7 +2,6 @@
 
 require_relative './square'
 require_relative './check_status'
-
 require_relative './positions'
 
 # Stores and manipulates Squares in a 2-D array, organized into 'files'.
@@ -22,19 +21,12 @@ class Board
 
   include CheckStatus
 
-  attr_reader :files, :positions_new
+  attr_reader :files, :positions
 
-  def initialize(files: empty_files, piece_types: nil, positions_new: Positions.new(files))
+  def initialize(files: empty_files, piece_types: nil, positions: Positions.new(files))
     @files = files
-    @positions_new = positions_new
+    @positions = positions
     init_piece_types(piece_types)
-  end
-
-  # FIX_ME
-  def positions
-    # squares.map { |square| position(square) }
-
-    positions_new.all
   end
 
   def move(origin, destination)
@@ -69,7 +61,7 @@ class Board
     ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n" }.join
   end
 
-  # private
+  private
 
   def occupied_squares(color)
     if color.nil?
@@ -98,7 +90,7 @@ class Board
   end
 
   def position(square)
-    positions_new.from_square(square)
+    positions.from_square(square)
   end
 
   def square(position)

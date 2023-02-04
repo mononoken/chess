@@ -32,7 +32,6 @@ class Path
   private
 
   def next_position(position, step)
-    # [position, step].transpose.map(&:sum)
     position.step(step)
   end
 

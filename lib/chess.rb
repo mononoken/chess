@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 require_relative './board'
-require_relative './movement'
-require_relative './position'
 require_relative './pieces/pieces'
+require_relative './movement'
 
 # Runs game of chess until end condition is met.
 class Chess

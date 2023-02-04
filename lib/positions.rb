@@ -23,6 +23,10 @@ class Positions
     all.any? { |position| position.to_a == array }
   end
 
+  def any?(position)
+    all.any?(position)
+  end
+
   private
 
   def init_positions(files)
