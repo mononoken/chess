@@ -98,12 +98,6 @@ class Board
   end
 
   def position(square)
-    # files.map.with_index do |file, file_index|
-    #   file.map.with_index do |board_square, rank_index|
-    #     Position.from_a([file_index, rank_index]) if board_square == square
-    #   end
-    # end.flatten.compact
-
     positions_new.from_square(square)
   end
 

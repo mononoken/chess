@@ -2,8 +2,6 @@
 
 require_relative '.././colorable_string'
 
-require_relative './pieces'
-
 # Store start positions with their matching color.
 StartPosition = Struct.new(:position, :color, keyword_init: true)
 

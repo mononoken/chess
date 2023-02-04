@@ -33,9 +33,7 @@ class Path
 
   def next_position(position, step)
     # [position, step].transpose.map(&:sum)
-    # Position.from_a([position.to_a, step].transpose.map(&:sum))
     position.step(step)
-    # Positions.next_position(Positions.fetch_from_a([x, y]), step)
   end
 
   def valid_move?(position)

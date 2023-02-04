@@ -31,7 +31,7 @@ RSpec.describe 'Solo Pawn API' do
     game = Chess.new(board:, player:)
 
     pawn = Pawn.new
-4
+
     board.populate(pawn, Position.from_a([1, 6]))
 
     expect { game.play(player, Position.from_a([1, 6]), Position.from_a([1, 5])) }
@@ -70,7 +70,7 @@ RSpec.describe 'Solo Pawn API' do
     game = Chess.new(board:, player:)
 
     pawn = Pawn.new
-4
+
     board.populate(pawn, Position.from_a(([3, 1])))
 
     game.play(player, Position.from_a([3, 1]), Position.from_a([3, 2]))

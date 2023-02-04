@@ -53,5 +53,5 @@ class Chess
   end
 end
 
-game = Chess.new
-game.play_rounds
+# game = Chess.new
+# game.play_rounds
