@@ -17,7 +17,7 @@ RSpec.describe 'Solo Pawn API' do
 
     special_destination = Position.from_a([1, 3])
 
-    expect { game.play(origin, special_destination) }
+    expect { game.make_move(origin, special_destination) }
       .not_to raise_error
   end
 
@@ -30,7 +30,7 @@ RSpec.describe 'Solo Pawn API' do
 
     board.populate(pawn, Position.from_a([1, 6]))
 
-    expect { game.play(Position.from_a([1, 6]), Position.from_a([1, 5])) }
+    expect { game.make_move(Position.from_a([1, 6]), Position.from_a([1, 5])) }
       .not_to raise_error(Chess::InvalidDestinationError)
   end
 
@@ -47,12 +47,12 @@ RSpec.describe 'Solo Pawn API' do
 
     invalid_destination = Position.from_a([2, 2])
 
-    expect { game.play(origin, invalid_destination) }
+    expect { game.make_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([1, 2])
 
-    expect { game.play(origin, valid_destination) }
+    expect { game.make_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -65,12 +65,12 @@ RSpec.describe 'Solo Pawn API' do
 
     board.populate(pawn, Position.from_a(([3, 1])))
 
-    game.play(Position.from_a([3, 1]), Position.from_a([3, 2]))
-    game.play(Position.from_a([3, 2]), Position.from_a([3, 3]))
-    game.play(Position.from_a([3, 3]), Position.from_a([3, 4]))
-    game.play(Position.from_a([3, 4]), Position.from_a([3, 5]))
-    game.play(Position.from_a([3, 5]), Position.from_a([3, 6]))
-    game.play(Position.from_a([3, 6]), Position.from_a([3, 7]))
+    game.make_move(Position.from_a([3, 1]), Position.from_a([3, 2]))
+    game.make_move(Position.from_a([3, 2]), Position.from_a([3, 3]))
+    game.make_move(Position.from_a([3, 3]), Position.from_a([3, 4]))
+    game.make_move(Position.from_a([3, 4]), Position.from_a([3, 5]))
+    game.make_move(Position.from_a([3, 5]), Position.from_a([3, 6]))
+    game.make_move(Position.from_a([3, 6]), Position.from_a([3, 7]))
 
     last_square = board.files[3][7]
 

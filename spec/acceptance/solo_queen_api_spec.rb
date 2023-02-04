@@ -17,12 +17,12 @@ RSpec.describe 'Solo Queen API' do
 
     invalid_destination = Position.from_a([4, 1])
 
-    expect { game.play(origin, invalid_destination) }
+    expect { game.make_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([4, 2])
 
-    expect { game.play(origin, valid_destination) }
+    expect { game.make_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -35,9 +35,9 @@ RSpec.describe 'Solo Queen API' do
 
     board.populate(queen, Position.from_a([2, 2]))
 
-    game.play(Position.from_a([2, 2]), Position.from_a([1, 1]))
-    game.play(Position.from_a([1, 1]), Position.from_a([4, 4]))
-    game.play(Position.from_a([4, 4]), Position.from_a([0, 4]))
+    game.make_move(Position.from_a([2, 2]), Position.from_a([1, 1]))
+    game.make_move(Position.from_a([1, 1]), Position.from_a([4, 4]))
+    game.make_move(Position.from_a([4, 4]), Position.from_a([0, 4]))
 
     last_square = board.files[0][4]
 

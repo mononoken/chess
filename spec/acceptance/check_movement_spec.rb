@@ -27,12 +27,12 @@ RSpec.describe 'Check Movement API' do
       end
 
       it 'raises error when trying to move king in path of enemy rook' do
-        expect { game.play(Position.from_a([2, 0]), Position.from_a([1, 0])) }
+        expect { game.make_move(Position.from_a([2, 0]), Position.from_a([1, 0])) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'allows king to move outside of enemy rook path' do
-        expect { game.play(Position.from_a([2, 0]), Position.from_a([2, 1])) }
+        expect { game.make_move(Position.from_a([2, 0]), Position.from_a([2, 1])) }
           .not_to raise_error(Chess::InvalidDestinationError)
       end
     end
@@ -45,12 +45,12 @@ RSpec.describe 'Check Movement API' do
       end
 
       it 'raises error when trying to move rook and putting king in check' do
-        expect { game.play(Position.from_a([1, 1]), Position.from_a([0, 1])) }
+        expect { game.make_move(Position.from_a([1, 1]), Position.from_a([0, 1])) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'allows rook move that keeps king out of check' do
-        expect { game.play(Position.from_a([1, 1]), Position.from_a([1, 2])) }
+        expect { game.make_move(Position.from_a([1, 1]), Position.from_a([1, 2])) }
           .not_to raise_error(Chess::InvalidDestinationError)
       end
     end
@@ -63,12 +63,12 @@ RSpec.describe 'Check Movement API' do
       end
 
       it 'raises error when attempted move does not defend king' do
-        expect { game.play(Position.from_a([2, 1]), Position.from_a([2, 0])) }
+        expect { game.make_move(Position.from_a([2, 1]), Position.from_a([2, 0])) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'allows move that defends king' do
-        expect { game.play(Position.from_a([2, 1]), Position.from_a([0, 1])) }
+        expect { game.make_move(Position.from_a([2, 1]), Position.from_a([0, 1])) }
           .not_to raise_error(Chess::InvalidDestinationError)
       end
     end

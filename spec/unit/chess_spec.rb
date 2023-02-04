@@ -6,7 +6,7 @@ RSpec.describe Chess do
   subject(:chess) { described_class.new(board:, movement:) }
   let(:movement) { double }
 
-  describe '#play' do
+  describe '#make_move' do
     context 'when an invalid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }
       let(:origin) { [4, 2] }
@@ -18,12 +18,12 @@ RSpec.describe Chess do
       end
 
       it 'raises error' do
-        expect { chess.play(origin, destination) }
+        expect { chess.make_move(origin, destination) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'does not send move to board' do
-        chess.play(origin, destination) rescue :EXPECTED_ERROR
+        chess.make_move(origin, destination) rescue :EXPECTED_ERROR
 
         expect(board).not_to have_received(:move)
       end
@@ -40,7 +40,7 @@ RSpec.describe Chess do
       end
 
       it 'sends board move with origin and destination' do
-        chess.play(origin, destination)
+        chess.make_move(origin, destination)
 
         expect(board).to have_received(:move)
           .with(origin, destination)

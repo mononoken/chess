@@ -17,12 +17,12 @@ RSpec.describe 'Solo Rook API' do
 
     invalid_destination = Position.from_a([5, 5])
 
-    expect { game.play(origin, invalid_destination) }
+    expect { game.make_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([4, 4])
 
-    expect { game.play(origin, valid_destination) }
+    expect { game.make_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -35,9 +35,9 @@ RSpec.describe 'Solo Rook API' do
 
     board.populate(rook, Position.from_a([0, 0]))
 
-    game.play(Position.from_a([0, 0]), Position.from_a([0, 1]))
-    game.play(Position.from_a([0, 1]), Position.from_a([0, 3]))
-    game.play(Position.from_a([0, 3]), Position.from_a([0, 7]))
+    game.make_move(Position.from_a([0, 0]), Position.from_a([0, 1]))
+    game.make_move(Position.from_a([0, 1]), Position.from_a([0, 3]))
+    game.make_move(Position.from_a([0, 3]), Position.from_a([0, 7]))
 
     last_square = board.files[0][7]
 

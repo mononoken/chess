@@ -17,17 +17,17 @@ RSpec.describe 'Solo Knight API' do
 
     invalid_destination = Position.from_a([2, 1])
 
-    expect { game.play(origin, invalid_destination) }
+    expect { game.make_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     invalid_destination = Position.from_a([3, 1])
 
-    expect { game.play(origin, invalid_destination) }
+    expect { game.make_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([3, 2])
 
-    expect { game.play(origin, valid_destination) }
+    expect { game.make_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -40,9 +40,9 @@ RSpec.describe 'Solo Knight API' do
 
     board.populate(knight, Position.from_a([2, 2]))
 
-    game.play(Position.from_a([2, 2]), Position.from_a([3, 4]))
-    game.play(Position.from_a([3, 4]), Position.from_a([5, 5]))
-    game.play(Position.from_a([5, 5]), Position.from_a([4, 3]))
+    game.make_move(Position.from_a([2, 2]), Position.from_a([3, 4]))
+    game.make_move(Position.from_a([3, 4]), Position.from_a([5, 5]))
+    game.make_move(Position.from_a([5, 5]), Position.from_a([4, 3]))
 
     last_square = board.files[4][3]
 

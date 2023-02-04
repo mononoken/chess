@@ -40,10 +40,10 @@ class Chess
     puts 'Enter destination'
     destination = Position.from_algebra(gets.chomp.downcase.to_sym)
 
-    play(origin, destination)
+    make_move(origin, destination)
   end
 
-  def play(origin, destination)
+  def make_move(origin, destination)
     raise InvalidDestinationError unless movement.valid_destination?(destination, origin, board)
 
     board.move(origin, destination)
