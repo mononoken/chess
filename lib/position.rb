@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Represent a location on a chess board.
-# Files are columns; ranks are rows.
+# Files are columns (vertical); ranks are rows (horizontal).
 class Position
   FILE_LABELS = %w[a b c d e f g h].freeze
   RANK_LABELS = %w[1 2 3 4 5 6 7 8].freeze

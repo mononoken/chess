@@ -4,7 +4,43 @@ require_relative './../../lib/chess'
 
 RSpec.describe Chess do
   subject(:chess) { described_class.new(board:, movement:) }
-  let(:movement) { double }
+  let(:movement) { class_double(Movement) }
+
+  describe '#player_origin' do
+    let(:board) { instance_double(Board) }
+    context 'when positions returns true to valid_origin? with gets' do
+      let(:positions) { instance_double(Positions) }
+      let(:valid_gets) { double }
+
+      before do
+        allow(positions).to receive(:valid_origin?)
+          .and_return(true)
+        allow(chess).to receive(:gets)
+          .and_return(valid_gets)
+      end
+
+      it 'returns gets result' do
+        expect(chess.player_origin).to eq(valid_gets)
+      end
+    end
+
+    xcontext 'when positions returns false then true to valid_origin? with gets' do
+      let(:positions) { instance_double(Positions) }
+      let(:valid_gets) { double }
+      let(:invalid_gets) { double }
+
+      before do
+        allow(positions).to receive(:valid_origin?)
+          .and_return(false, true)
+        allow(chess).to receive(:gets)
+          .and_return(double, valid_gets)
+      end
+
+      it 'raises invalid_origin error once'
+      it 'sends gets twice'
+      it 'returns gets second result'
+    end
+  end
 
   describe '#make_move' do
     context 'when an invalid destination is selected for a board origin' do
@@ -14,6 +50,7 @@ RSpec.describe Chess do
 
       before do
         allow(movement).to receive(:valid_destination?)
+          .with(destination, origin, board)
           .and_return(false)
       end
 
@@ -36,6 +73,7 @@ RSpec.describe Chess do
 
       before do
         allow(movement).to receive(:valid_destination?)
+          .with(destination, origin, board)
           .and_return(true)
       end
 

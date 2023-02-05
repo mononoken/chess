@@ -90,7 +90,7 @@ class Board
   end
 
   def position(square)
-    positions.from_square(square)
+    positions.find { |position| position.square == square }
   end
 
   def square(position)
