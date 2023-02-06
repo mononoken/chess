@@ -73,7 +73,7 @@ class Movement
   end
 
   def piece
-    # Consider raising error if piece is nil. EmptyOriginError
+    # Should not have to query board for piece, as position.square.piece should return.
     @piece ||= board.piece(origin)
   end
 end

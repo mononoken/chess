@@ -4,22 +4,49 @@ require_relative './position'
 
 require 'forwardable'
 
-# Manage an array of positions given squares from a Board's files.
+# Manage an array of position objects.
 class Positions
   extend Forwardable
-  def_delegators :@positions, :any?, :find
+  def_delegators :@positions, :any?, :filter, :find, :reject
   include Enumerable
 
-  attr_reader :files, :positions
+  attr_reader :positions
 
-  def initialize(files)
-    @files = files
-    @positions ||= init_positions(files)
+  def initialize(positions)
+    @positions = positions
   end
 
-  private
+  # def valid_origin?(algebraic_notation, player_color)
+  #   position = find { |a_position| a_position.algebraic == algebraic_notation }
 
-  def init_positions(files)
+  #   position.piece_color == player_color
+  # end
+
+  def position_from_a(array)
+    find { |position| position.to_a == array }
+  end
+
+  def piece_position(piece)
+    find { |position| position.square.content == piece }
+  end
+
+  def occupied_positions(color = nil)
+    if color.nil?
+      reject { |position| position.square.empty? }
+    else
+      filter { |position| position.piece_color?(color) }
+    end
+  end
+end
+
+# Create instances of Positions.
+module PositionsFactory
+  def self.build(files, positions_class = Positions)
+    positions_class.new(positions_array(files))
+  end
+
+  # Create positions array from 2D array from Chess board files.
+  def self.positions_array(files)
     files.each_with_object([]).with_index do |(file, positions), file_index|
       file.each_with_index do |square, rank_index|
         positions << new_position(file_index:, rank_index:, square:)
@@ -27,7 +54,7 @@ class Positions
     end
   end
 
-  def new_position(file_index:, rank_index:, square:, position_class: Position)
+  def self.new_position(file_index:, rank_index:, square:, position_class: Position)
     position_class.new(file_index:, rank_index:, square:)
   end
 end

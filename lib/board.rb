@@ -23,7 +23,7 @@ class Board
 
   attr_reader :files, :positions
 
-  def initialize(files: empty_files, piece_types: nil, positions: Positions.new(files))
+  def initialize(files: empty_files, piece_types: nil, positions: PositionsFactory.build(files))
     @files = files
     @positions = positions
     init_piece_types(piece_types)
@@ -42,7 +42,7 @@ class Board
   end
 
   def piece_position(piece)
-    position(squares.find { |square| square.content == piece })
+    positions.piece_position(piece)
   end
 
   def piece(position)
@@ -50,7 +50,7 @@ class Board
   end
 
   def occupied_positions(color = nil)
-    occupied_squares(color).map { |square| position(square) }
+    positions.occupied_positions(color)
   end
 
   def squares
@@ -62,14 +62,6 @@ class Board
   end
 
   private
-
-  def occupied_squares(color)
-    if color.nil?
-      squares.reject(&:empty?)
-    else
-      squares.select { |square| square.piece_color?(color) }
-    end
-  end
 
   def rank_to_s(rank)
     rank.reduce(+'') do |rank_s, square|

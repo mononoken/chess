@@ -3,8 +3,8 @@
 # Represent a location on a chess board.
 # Files are columns (vertical); ranks are rows (horizontal).
 class Position
-  FILE_LABELS = %w[a b c d e f g h].freeze
-  RANK_LABELS = %w[1 2 3 4 5 6 7 8].freeze
+  FILE_ALGEBRAICS = %w[a b c d e f g h].freeze
+  RANK_ALGEBRAICS = %w[1 2 3 4 5 6 7 8].freeze
 
   class InvalidNotationError < StandardError
     def message
@@ -16,20 +16,6 @@ class Position
     new(file_index: array[0], rank_index: array[1])
   end
 
-  def self.from_algebra(algebra_notation)
-    new(file_index: convert_algebra_notation(algebra_notation)[:file_index],
-        rank_index: convert_algebra_notation(algebra_notation)[:rank_index])
-  end
-
-  def self.convert_algebra_notation(algebra_notation)
-    raise InvalidNotationError if algebra_notation.length != 2
-
-    {
-      file_index: FILE_LABELS.index(algebra_notation[0]),
-      rank_index: RANK_LABELS.index(algebra_notation[1])
-    }
-  end
-
   attr_reader :file_index, :rank_index, :square
 
   def initialize(file_index:, rank_index:, square: nil)
@@ -38,12 +24,12 @@ class Position
     @square = square
   end
 
-  def to_sym
-    "#{file_label}#{rank_label}".to_sym
-  end
-
   def to_a
     [file_index, rank_index]
+  end
+
+  def piece_color?(color)
+    square.piece_color?(color)
   end
 
   def ==(other)
@@ -56,11 +42,11 @@ class Position
 
   private
 
-  def file_label
-    FILE_LABEL[file_index]
+  def file_algebraic
+    FILE_ALGEBRAICS[file_index]
   end
 
-  def rank_label
-    RANK_LABELS[rank_index]
+  def rank_algebraic
+    RANK_ALGEBRAICS[rank_index]
   end
 end
