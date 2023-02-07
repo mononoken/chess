@@ -21,13 +21,6 @@ class Knight < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2658"
-    when :black
-      "\u265E"
-    else
-      'N'
-    end
+    "\u265E"
   end
 end

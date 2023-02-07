@@ -51,4 +51,6 @@ class Piece
   def to_s
     skin.fg_color(color)
   end
+
+  def post_initialize; end
 end

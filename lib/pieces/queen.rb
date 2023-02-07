@@ -19,13 +19,6 @@ class Queen < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2655"
-    when :black
-      "\u265B"
-    else
-      'Q'
-    end
+    "\u265B"
   end
 end

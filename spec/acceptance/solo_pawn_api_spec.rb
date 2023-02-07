@@ -4,7 +4,7 @@ require_relative './../../lib/chess'
 require_relative './../../lib/pieces/pawn'
 
 RSpec.describe 'Solo Pawn API' do
-  xit 'accepts special start move' do
+  it 'accepts special start move' do
     board = Board.new
 
     game = Chess.new(board:)

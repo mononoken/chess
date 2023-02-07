@@ -21,13 +21,6 @@ class Bishop < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2657"
-    when :black
-      "\u265D"
-    else
-      'B'
-    end
+    "\u265D"
   end
 end

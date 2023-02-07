@@ -23,13 +23,6 @@ class King < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2654"
-    when :black
-      "\u265A"
-    else
-      'K'
-    end
+    "\u265A"
   end
 end

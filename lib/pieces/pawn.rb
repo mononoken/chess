@@ -38,13 +38,6 @@ class Pawn < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2659"
-    when :black
-      "\u265F"
-    else
-      'P'
-    end
+    "\u265F"
   end
 end

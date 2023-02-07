@@ -21,13 +21,6 @@ class Rook < Piece
   end
 
   def skin
-    case color
-    when :white
-      "\u2656"
-    when :black
-      "\u265C"
-    else
-      'R'
-    end
+    "\u265C"
   end
 end
