@@ -16,12 +16,29 @@ class Position
     new(file_index: array[0], rank_index: array[1])
   end
 
-  attr_reader :file_index, :rank_index, :square
+  def self.from_algebraic(algebraic_notation)
+    new(
+      file_index: FILE_ALGEBRAICS.index(algebraic_notation[0]),
+      rank_index: RANK_ALGEBRAICS.index(algebraic_notation[1])
+    )
+  end
+
+  attr_reader :file_index, :rank_index
 
   def initialize(file_index:, rank_index:, square: nil)
     @file_index = file_index
     @rank_index = rank_index
     @square = square
+  end
+
+  def square(board = nil)
+    return @square if board.nil?
+
+    board.square(self)
+  end
+
+  def algebraic
+    "#{file_algebraic}#{rank_algebraic}".to_sym
   end
 
   def to_a

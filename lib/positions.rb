@@ -7,7 +7,7 @@ require 'forwardable'
 # Manage an array of position objects.
 class Positions
   extend Forwardable
-  def_delegators :@positions, :any?, :filter, :find, :reject
+  def_delegators :@positions, :any?, :filter, :find, :map, :reject
   include Enumerable
 
   attr_reader :positions
@@ -16,11 +16,9 @@ class Positions
     @positions = positions
   end
 
-  # def valid_origin?(algebraic_notation, player_color)
-  #   position = find { |a_position| a_position.algebraic == algebraic_notation }
-
-  #   position.piece_color == player_color
-  # end
+  def algebraic
+    map(&:algebraic)
+  end
 
   def position_from_a(array)
     find { |position| position.to_a == array }

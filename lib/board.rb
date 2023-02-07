@@ -23,10 +23,14 @@ class Board
 
   attr_reader :files, :positions
 
-  def initialize(files: empty_files, piece_types: nil, positions: PositionsFactory.build(files))
+  def initialize(files: empty_files, positions: PositionsFactory.build(files), piece_types: nil)
     @files = files
     @positions = positions
     init_piece_types(piece_types)
+  end
+
+  def positions_algebraic
+    positions.algebraic
   end
 
   def move(origin, destination)
@@ -45,12 +49,17 @@ class Board
     positions.piece_position(piece)
   end
 
+  def occupied_positions(color = nil)
+    positions.occupied_positions(color)
+  end
+
   def piece(position)
+    # Alternative?: position.square.content
     square(position).content
   end
 
-  def occupied_positions(color = nil)
-    positions.occupied_positions(color)
+  def square(position)
+    files[position.file_index][position.rank_index]
   end
 
   def squares
@@ -83,10 +92,6 @@ class Board
 
   def position(square)
     positions.find { |position| position.square == square }
-  end
-
-  def square(position)
-    files[position.file_index][position.rank_index]
   end
 
   # Places piece types at start positions if piece_types is given.

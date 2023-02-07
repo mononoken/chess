@@ -39,7 +39,7 @@ class Movement
     paths_to_positions(paths)
   end
 
-  # private
+  private
 
   def paths_to_positions(paths)
     paths.flatten(1)
@@ -73,7 +73,6 @@ class Movement
   end
 
   def piece
-    # Should not have to query board for piece, as position.square.piece should return.
     @piece ||= board.piece(origin)
   end
 end
