@@ -25,7 +25,12 @@ class Pawn < Piece
   end
 
   def step_directions
-    [[0, 1]]
+    case color
+    when :white
+      [[0, 1]]
+    when :black
+      [[0, -1]]
+    end
   end
 
   def step_limit

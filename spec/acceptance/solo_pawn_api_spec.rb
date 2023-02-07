@@ -21,12 +21,12 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error
   end
 
-  xit 'moves pawn in the right direction based on color' do
+  it 'moves pawn in the right direction based on color' do
     board = Board.new
 
     game = Chess.new(board:)
 
-    pawn = Pawn.new
+    pawn = Pawn.new(:black)
 
     board.populate(pawn, Position.from_a([1, 6]))
 
@@ -39,7 +39,7 @@ RSpec.describe 'Solo Pawn API' do
 
     game = Chess.new(board:)
 
-    pawn = Pawn.new
+    pawn = Pawn.new(:white)
 
     origin = Position.from_a([1, 1])
 
@@ -61,7 +61,7 @@ RSpec.describe 'Solo Pawn API' do
 
     game = Chess.new(board:)
 
-    pawn = Pawn.new
+    pawn = Pawn.new(:white)
 
     board.populate(pawn, Position.from_a(([3, 1])))
 
