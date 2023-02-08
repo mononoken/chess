@@ -19,6 +19,10 @@ class Piece
     @color = color
   end
 
+  def take_directions
+    step_directions
+  end
+
   def step_directions
     raise "#{self.class} must implement #step_directions."
   end
