@@ -9,7 +9,7 @@ RSpec.describe 'Solo Pawn API' do
 
     game = Chess.new(board:)
 
-    pawn = Pawn.new
+    pawn = Pawn.new(:white)
 
     origin = Position.from_a([1, 1])
 

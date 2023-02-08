@@ -33,6 +33,19 @@ class Pawn < Piece
     end
   end
 
+  def special_first_step_directions
+    case color
+    when :white
+      [[0, 2]]
+    when :black
+      [[0, -2]]
+    end
+  end
+
+  def special_first_step_directions?
+    true
+  end
+
   def step_limit
     1
   end

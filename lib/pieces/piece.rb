@@ -23,6 +23,14 @@ class Piece
     raise "#{self.class} must implement #step_directions."
   end
 
+  def special_first_step_directions
+    []
+  end
+
+  def special_first_step_directions?
+    false
+  end
+
   def step_limit
     raise "#{self.class} must implement #step_limit."
   end
