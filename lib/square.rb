@@ -30,12 +30,12 @@ class Square
     content&.color == color
   end
 
-  def to_s
+  def to_s(color = nil)
     if empty?
       '   '
     else
       " #{content.to_s.chomp("\e[0m")} " # Removes early exit code for when BG color is included.
-    end.bg_color(:dark)
+    end.bg_color(color)
   end
 
   private

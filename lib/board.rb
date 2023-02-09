@@ -67,16 +67,18 @@ class Board
   end
 
   def to_s
-    "#{ranks.reverse.map do |rank|
-      "#{rank_label(rank)} #{rank_to_s(rank)}\n"
+    rank_color_cycles = [%i[light dark].cycle, %i[dark light].cycle].cycle
+
+    "   a  b  c  d  e  f  g  h\n#{ranks.reverse.map do |rank|
+      "#{rank_label(rank)} #{rank_to_s(rank, rank_color_cycles.next)} #{rank_label(rank)}\n"
     end.join}   a  b  c  d  e  f  g  h"
   end
 
   private
 
-  def rank_to_s(rank)
+  def rank_to_s(rank, square_color_cycle = %i[dark light].cycle)
     rank.reduce(+'') do |rank_s, square|
-      rank_s << square.to_s
+      rank_s << square.to_s(square_color_cycle&.next)
     end
   end
 
