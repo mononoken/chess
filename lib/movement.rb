@@ -69,16 +69,10 @@ class Movement
   end
 
   def step_directions
-    if piece.special_first_step_directions?
-      if piece.color == :white && origin.rank_index == 1
-        piece.step_directions + piece.special_first_step_directions
-      elsif piece.color == :black && origin.rank_index == 6
-        piece.step_directions + piece.special_first_step_directions
-      else
-        piece.step_directions
-      end
-    else
+    if piece.first_move_taken?
       piece.step_directions
+    else
+      piece.step_directions + piece.special_first_step
     end
   end
 

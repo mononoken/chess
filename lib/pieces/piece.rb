@@ -17,6 +17,15 @@ class Piece
 
   def initialize(color = nil)
     @color = color
+    @first_move_taken = false
+  end
+
+  def first_move_taken?
+    first_move_taken
+  end
+
+  def take_first_move
+    self.first_move_taken = true
   end
 
   def take_directions
@@ -27,12 +36,8 @@ class Piece
     raise "#{self.class} must implement #step_directions."
   end
 
-  def special_first_step_directions
+  def special_first_step
     []
-  end
-
-  def special_first_step_directions?
-    false
   end
 
   def step_limit
@@ -65,4 +70,8 @@ class Piece
   end
 
   def post_initialize; end
+
+  private
+
+  attr_accessor :first_move_taken
 end
