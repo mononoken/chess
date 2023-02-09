@@ -67,7 +67,9 @@ class Board
   end
 
   def to_s
-    ranks.reverse.map { |rank| "#{rank_to_s(rank)}\n" }.join
+    "#{ranks.reverse.map do |rank|
+      "#{rank_label(rank)} #{rank_to_s(rank)}\n"
+    end.join}   a  b  c  d  e  f  g  h"
   end
 
   private
@@ -78,16 +80,16 @@ class Board
     end
   end
 
+  def rank_label(rank)
+    position(rank[0]).rank_algebraic
+  end
+
   def ranks
-    ranks_boundaries.to_a.map { |index| rank(index) }
+    (0..7).to_a.map { |index| rank(index) }
   end
 
   def rank(index)
     files.map { |file| file[index] }
-  end
-
-  def ranks_boundaries
-    (0..files.reduce(files[0].count) { |count, rank| [count, rank.count].min } - 1)
   end
 
   def position(square)

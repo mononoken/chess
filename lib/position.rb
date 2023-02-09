@@ -57,8 +57,6 @@ class Position
     Position.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
   end
 
-  private
-
   def file_algebraic
     FILE_ALGEBRAICS[file_index]
   end

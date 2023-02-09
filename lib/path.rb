@@ -2,8 +2,6 @@
 
 require_relative './position'
 
-require 'pry-byebug'
-
 # List valid destination positions in one direction on a board for an origin (with a piece).
 class Path
   def self.positions(origin:, board:, step:)
