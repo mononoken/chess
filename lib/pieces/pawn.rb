@@ -24,14 +24,14 @@ class Pawn < Piece
     ]
   end
 
-  # def take_directions
-  #   case color
-  #   when :white
-  #     [[-1, 1], [1, 1]]
-  #   when :black
-  #     [[-1, -1], [1, -1]]
-  #   end
-  # end
+  def special_takes
+    case color
+    when :white
+      [[-1, 1], [1, 1]]
+    when :black
+      [[-1, -1], [1, -1]]
+    end
+  end
 
   def step_directions
     case color
@@ -49,6 +49,10 @@ class Pawn < Piece
     when :black
       [[0, -2]]
     end
+  end
+
+  def step_take?
+    false
   end
 
   def step_limit

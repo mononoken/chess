@@ -28,8 +28,12 @@ class Piece
     self.first_move_taken = true
   end
 
-  def take_directions
-    step_directions
+  def special_takes
+    []
+  end
+
+  def special_takes?
+    special_takes.any?
   end
 
   def step_directions
@@ -38,6 +42,10 @@ class Piece
 
   def special_first_step
     []
+  end
+
+  def step_take?
+    true
   end
 
   def step_limit

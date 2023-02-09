@@ -2,6 +2,8 @@
 
 require_relative './position'
 
+require 'pry-byebug'
+
 # List valid destination positions in one direction on a board for an origin (with a piece).
 class Path
   def self.positions(origin:, board:, step:)
@@ -22,8 +24,14 @@ class Path
     if valid_move?(next_position) && within_step_limit?(steps)
       steps += 1
       [next_position] + positions(step:, position: next_position, steps:)
-    elsif valid_take?(next_position) && within_step_limit?(steps)
+    elsif valid_take?(next_position) && within_step_limit?(steps) && piece.step_take?
       [next_position]
+    elsif valid_take?(next_position) && within_step_limit?(steps) && piece.special_takes?
+      piece.special_takes.filter_map do |step|
+        next_position = next_position(position, step)
+
+        [next_position] if valid_take?(next_position)
+      end.flatten(1)
     else
       []
     end
@@ -39,8 +47,9 @@ class Path
     within_positions?(position) && unoccupied_position?(position)
   end
 
+  # This method should be renamed.
   def valid_take?(position)
-    board.occupied_positions.any?(position) && board.piece(position).color != piece.color
+    board.occupied_positions.any?(position) && board.piece(position)&.color == piece.opponent_color
   end
 
   def valid_position?(position)
