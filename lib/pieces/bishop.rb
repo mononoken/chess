@@ -12,6 +12,10 @@ class Bishop < Piece
     ]
   end
 
+  def self.algebraic
+    :B
+  end
+
   def step_directions
     [[1, 1], [1, -1], [-1, -1], [-1, 1]]
   end

@@ -10,6 +10,10 @@ class Queen < Piece
     ]
   end
 
+  def self.algebraic
+    :Q
+  end
+
   def step_directions
     [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
   end

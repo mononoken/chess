@@ -24,6 +24,9 @@ RSpec.describe Board do
         allow(destination).to receive(:rank_index)
           .and_return(1)
 
+        allow(rook).to receive(:promotable?)
+          .and_return(false)
+
         board.populate(rook, origin)
       end
 

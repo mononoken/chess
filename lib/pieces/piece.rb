@@ -69,8 +69,8 @@ class Piece
     end
   end
 
-  def bg_color
-    # Set BG color of to_s per square color.
+  def algebraic
+    raise "#{self.class} must implement #algebraic."
   end
 
   def skin

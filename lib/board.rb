@@ -38,7 +38,17 @@ class Board
 
     content = square(origin).empty
 
-    square(destination).fill(content)
+    if content.promotable? && content.promotion_position?(destination)
+          # PROBLEM: This method currently conflicts with future_board.
+          # When filtering out moves that would check own king,
+          # hypothetical board is created with the actual move of a pawn to
+          # this location, before it actually happens.
+          # This triggers the prompt for promotion piece before the
+          # promotion occurs.
+      populate(content.promotion_choice.new(content.color), destination)
+    else
+      populate(content, destination)
+    end
   end
 
   def populate(piece, position)
