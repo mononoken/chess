@@ -24,6 +24,10 @@ class Pawn < Piece
     ]
   end
 
+  def promotable?
+    true
+  end
+
   def special_takes
     case color
     when :white

@@ -20,6 +20,10 @@ class Piece
     @first_move_taken = false
   end
 
+  def promotable?
+    false
+  end
+
   def first_move_taken?
     first_move_taken
   end
