@@ -8,6 +8,7 @@ RSpec.describe Board do
   subject(:board) { described_class.new(files:) }
   let(:files) { Array.new(2) { Array.new(2) { Square.new } } }
 
+  # Promotion functionality has been added that is not tested.
   describe '#move' do
     context 'when origin square is populated' do
       let(:rook) { instance_double(Rook) }

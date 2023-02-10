@@ -15,7 +15,7 @@ class Board
   # Instantiate a notional board that makes the given move.
   def self.future_board(board, origin, destination)
     future_board = new(files: Marshal.load(Marshal.dump(board.files)))
-    future_board.move(origin, destination)
+    future_board.hypothetical_move(origin, destination)
     future_board
   end
 
@@ -39,16 +39,17 @@ class Board
     content = square(origin).empty
 
     if content.promotable? && content.promotion_position?(destination)
-          # PROBLEM: This method currently conflicts with future_board.
-          # When filtering out moves that would check own king,
-          # hypothetical board is created with the actual move of a pawn to
-          # this location, before it actually happens.
-          # This triggers the prompt for promotion piece before the
-          # promotion occurs.
       populate(content.promotion_choice.new(content.color), destination)
     else
       populate(content, destination)
     end
+  end
+
+  # move without promotion to avoid promotion prompt for future_boards.
+  def hypothetical_move(origin, destination)
+    content = square(origin).empty
+
+    populate(content, destination)
   end
 
   def populate(piece, position)
