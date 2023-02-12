@@ -20,10 +20,6 @@ class Positions
     map(&:algebraic)
   end
 
-  def position_from_a(array)
-    find { |position| position.to_a == array }
-  end
-
   def piece_position(piece)
     find { |position| position.square.content == piece }
   end
