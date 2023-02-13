@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Monkeypatch String to allow for specifying RGB color of string print.
+# Monkeypatch String to allow for specifying RGB color for string print.
 module ColorableString
   RGB_COLOR_MAP = {
     black: '0;0;0',

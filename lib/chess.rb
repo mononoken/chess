@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative './chess_errors'
 require_relative './board'
 require_relative './pieces/pieces'
 require_relative './movement'
@@ -7,17 +8,7 @@ require_relative './players'
 
 # Runs game of chess until end condition is met.
 class Chess
-  class InvalidOriginError < StandardError
-    def message
-      'Invalid origin selected.'
-    end
-  end
-
-  class InvalidDestinationError < StandardError
-    def message
-      'Invalid destination selected.'
-    end
-  end
+  include ChessErrors
 
   attr_reader :board, :movement, :players
 

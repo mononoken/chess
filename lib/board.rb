@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
+require_relative './chess_errors'
 require_relative './square'
 require_relative './check_status'
 require_relative './positions'
 
 # Stores and manipulates Squares in a 2-D array, organized into 'files'.
 class Board
-  class EmptyOriginError < StandardError
-    def message
-      'Move sent to an empty origin.'
-    end
-  end
-
   # Instantiate a notional board that makes the given move.
   def self.future_board(board, origin, destination)
     future_board = new(files: Marshal.load(Marshal.dump(board.files)))
@@ -19,6 +14,7 @@ class Board
     future_board
   end
 
+  include ChessErrors
   include CheckStatus
 
   attr_reader :files, :positions
@@ -53,6 +49,11 @@ class Board
   end
 
   def populate(piece, position)
+    square(position).fill(piece)
+  end
+
+  # IMPLEMENT? FIX_ME
+  def populate_algebraic(piece, algebraic_position)
     square(position).fill(piece)
   end
 

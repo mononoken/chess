@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 
+require_relative './chess_errors'
+
 # Represent a location on a chess board.
 # Files are columns (vertical); ranks are rows (horizontal).
 class Position
   FILE_ALGEBRAICS = %w[a b c d e f g h].freeze
   RANK_ALGEBRAICS = %w[1 2 3 4 5 6 7 8].freeze
 
-  class InvalidNotationError < StandardError
-    def message
-      'Invalid notation selected.'
-    end
-  end
-
   def self.from_a(array)
     new(file_index: array[0], rank_index: array[1])
   end
 
   def self.from_algebraic(algebraic_notation)
+    raise InvalidNotationError if algebraic_invalid?(algebraic_notation)
+
     new(
       file_index: FILE_ALGEBRAICS.index(algebraic_notation[0]),
       rank_index: RANK_ALGEBRAICS.index(algebraic_notation[1])
     )
   end
+
+  def self.algebraic_invalid?(algebraic)
+    FILE_ALGEBRAICS.none?(algebraic[0]) || RANK_ALGEBRAICS.none?(algebraic[1])
+  end
+
+  include ChessErrors
 
   attr_reader :file_index, :rank_index
 
@@ -54,7 +58,7 @@ class Position
   end
 
   def step(step)
-    Position.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
+    self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
   end
 
   def file_algebraic
