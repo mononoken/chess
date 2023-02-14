@@ -4,6 +4,38 @@ require_relative './../../lib/chess'
 require_relative './../../lib/pieces/pawn'
 
 RSpec.describe 'Solo Pawn API' do
+  fcontext 'when enemy piece can be taken by pawn on one side' do
+    let(:board) { Board.new }
+    let(:chess) { Chess.new(board:) }
+    let(:pawn) { Pawn.new(:white) }
+    let(:bpiece) { Piece.new(:black) }
+
+    let(:b3) { board.positions.position(:b3) }
+    let(:a4) { board.positions.position(:a4) }
+    let(:b4) { board.positions.position(:b4) }
+    let(:c4) { board.positions.position(:c4) }
+
+    before do
+      board.populate(pawn, b3)
+      board.populate(bpiece, c4)
+    end
+
+    it 'allows pawn to take piece' do
+      expect { chess.make_move(b3, c4) }
+        .not_to raise_error
+    end
+
+    it 'does not allow pawn to make take movement to empty square' do
+      expect { chess.make_move(b3, a4) }
+        .to raise_error
+    end
+
+    it 'allows pawn to make normal step' do
+      expect { chess.make_move(b3, b4) }
+        .not_to raise_error
+    end
+  end
+
   it 'accepts special start move' do
     board = Board.new
 

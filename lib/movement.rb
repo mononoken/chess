@@ -45,6 +45,14 @@ class Movement
     paths.flatten(1)
   end
 
+  def special_takes_paths(path = Path)
+    special_takes.map { |take| path.positions(origin:, board:, step: take) }
+  end
+
+  def special_takes
+    piece.special_takes
+  end
+
   def paths(path = Path)
     step_directions.map { |step| path.positions(origin:, board:, step:) }
   end
