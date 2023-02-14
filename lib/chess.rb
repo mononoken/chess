@@ -3,18 +3,16 @@
 require_relative './chess_errors'
 require_relative './board'
 require_relative './pieces/pieces'
-require_relative './movement'
 require_relative './players'
 
 # Runs game of chess until end condition is met.
 class Chess
   include ChessErrors
 
-  attr_reader :board, :movement, :players
+  attr_reader :board, :players
 
-  def initialize(board: Board.new(piece_types: Pieces.piece_types), movement: Movement, players: Players.new)
+  def initialize(board: Board.new(piece_types: Pieces.piece_types), players: Players.new)
     @board = board
-    @movement = movement
     @players = players
     # Show instructions
   end

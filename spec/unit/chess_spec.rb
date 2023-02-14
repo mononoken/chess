@@ -3,8 +3,7 @@
 require_relative './../../lib/chess'
 
 RSpec.describe Chess do
-  subject(:chess) { described_class.new(board:, movement:) }
-  let(:movement) { class_double(Movement) }
+  subject(:chess) { described_class.new(board:) }
 
   xdescribe '#valid_algebraic?' do
     let(:board) { instance_double(Board) }
