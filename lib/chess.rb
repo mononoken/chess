@@ -34,7 +34,7 @@ class Chess
   end
 
   def make_move(origin, destination)
-    raise InvalidDestinationError unless movement.valid_destination?(destination, origin, board)
+    raise InvalidDestinationError unless destination.valid_destination?(origin, board)
 
     board.move(origin, destination)
   end

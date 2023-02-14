@@ -52,12 +52,12 @@ RSpec.describe Chess do
   describe '#make_move' do
     context 'when an invalid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }
-      let(:origin) { [4, 2] }
-      let(:destination) { [5, 5] }
+      let(:origin) { instance_double(Position) }
+      let(:destination) { instance_double(Position) }
 
       before do
-        allow(movement).to receive(:valid_destination?)
-          .with(destination, origin, board)
+        allow(destination).to receive(:valid_destination?)
+          .with(origin, board)
           .and_return(false)
       end
 
@@ -75,12 +75,12 @@ RSpec.describe Chess do
 
     context 'when a valid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }
-      let(:origin) { [0, 0] }
-      let(:destination) { [7, 0] }
+      let(:origin) { instance_double(Position) }
+      let(:destination) { instance_double(Position) }
 
       before do
-        allow(movement).to receive(:valid_destination?)
-          .with(destination, origin, board)
+        allow(destination).to receive(:valid_destination?)
+          .with(origin, board)
           .and_return(true)
       end
 
