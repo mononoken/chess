@@ -41,13 +41,9 @@ class Chess
 
   private
 
-  def valid_destination?(destination, origin, board)
-    movement.valid_destination?(destination, origin, board)
-  end
-
   def player_origin
     loop do
-      puts 'Enter origin'
+      puts 'Enter origin using algebraic coordinates (e.g. d2)'
       input = gets.chomp
       origin = board.positions.position(input.to_sym)
 
@@ -57,12 +53,11 @@ class Chess
 
   def player_destination(origin)
     loop do
-      puts 'Enter destination'
+      puts 'Enter destination using algebraic coordinates (e.g. d4)'
       input = gets.chomp
-      destination = Position.from_algebraic(input)
-      # destination = board.positions.position(input.to_sym)
+      destination = board.positions.position(input.to_sym)
 
-      return destination if valid_destination?(destination, origin, board)
+      return destination if destination.valid_destination?(origin, board)
     end
   end
 end

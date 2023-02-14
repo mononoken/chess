@@ -2,14 +2,10 @@
 
 require_relative './chess_errors'
 
-# Better name?
+# Check if object meets the valid_origin? requirement.
 module Originable
   def valid_origin?(player_color, board)
     valid_color?(player_color) && destinations?(board)
-  end
-
-  def valid_destination?(origin, board)
-
   end
 
   def valid_color?(player_color)
@@ -22,6 +18,15 @@ module Originable
 
   def destinations(board, movement = Movement)
     movement.valid_destinations(self, board)
+  end
+end
+
+require_relative './movement'
+
+# Check if object meets the valid_destination? requirement.
+module Destinationable
+  def valid_destination?(origin, board, movement = Movement)
+    movement.valid_destination?(self, origin, board)
   end
 end
 
@@ -50,6 +55,7 @@ class Position
 
   include ChessErrors
   include Originable
+  include Destinationable
 
   attr_reader :file_index, :rank_index
 
