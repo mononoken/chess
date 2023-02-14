@@ -3,60 +3,55 @@
 require_relative './../../lib/chess'
 require_relative './../../lib/pieces/pieces'
 
-# RSpec.describe 'Castling API' do
-#   context 'when Ra1 and Ke1 have not moved' do
-#     let(:board) { Board.new }
-#     let(:game) { Chess.new(board:) }
+RSpec.describe 'Castling API' do
+  context 'when Ra1 and Ke1 have not moved and e1 moves to c1' do
+    let(:board) { Board.new }
+    let(:chess) { Chess.new(board:) }
 
-#     let(:king) { King.new(:white) }
-#     let(:rook) { Rook.new(:white) }
+    let(:king) { King.new(:white) }
+    let(:rook) { Rook.new(:white) }
 
-#     before do
-#       board.populate(king, Position.)
-#     end
+    let(:a1) { board.positions.position(:a1) }
+    let(:c1) { board.positions.position(:c1) }
+    let(:d1) { board.positions.position(:d1) }
+    let(:e1) { board.positions.position(:e1) }
 
-#     it 'moves Rd1 and Kc1' do
+    before do
+      board.populate(king, e1)
+      board.populate(rook, a1)
+    end
 
-#     end
-#   end
+    fit 'accepts c1 as valid move for e1' do
+      expect { chess.make_move(e1, c1) }
+        .not_to raise_error
+    end
 
-#   it 'only accepts valid rook moves' do
-#     board = Board.new
+    xit 'changes content of a1 to nil' do
+      expect { chess.make_move(e1, c1) }
+        .to change(a1.square.content)
+        .from(rook)
+        .to(nil)
+    end
 
-#     game = Chess.new(board:)
+    xit 'changes content of c1 to king' do
+      expect { chess.make_move(e1, c1) }
+        .to change(c1.square.content)
+        .from(nil)
+        .to(king)
+    end
 
-#     rook = Rook.new
+    xit 'changes content of d1 to rook' do
+      expect { chess.make_move(e1, c1) }
+        .to change(d1.square.content)
+        .from(nil)
+        .to(rook)
+    end
 
-#     origin = Position.from_a([4, 2])
-
-#     board.populate(rook, origin)
-
-#     invalid_destination = Position.from_a([5, 5])
-
-#     expect { game.make_move(origin, invalid_destination) }
-#       .to raise_error(Chess::InvalidDestinationError)
-
-#     valid_destination = Position.from_a([4, 4])
-
-#     expect { game.make_move(origin, valid_destination) }
-#       .not_to raise_error
-#   end
-
-#   it 'moves rook across board' do
-#     board = Board.new
-
-#     game = Chess.new(board:)
-
-#     rook = Rook.new
-
-#     board.populate(rook, Position.from_a([0, 0]))
-
-#     game.make_move(Position.from_a([0, 0]), Position.from_a([0, 1]))
-#     game.make_move(Position.from_a([0, 1]), Position.from_a([0, 3]))
-#     game.make_move(Position.from_a([0, 3]), Position.from_a([0, 7]))
-
-#     last_square = board.files[0][7]
-
-#     expect(last_square.content).to eq(rook)
-#   end
-# end
+    xit 'changes content of e1 to nil' do
+      expect { chess.make_move(e1, c1) }
+        .to change(e1.square.content)
+        .from(king)
+        .to(nil)
+    end
+  end
+end

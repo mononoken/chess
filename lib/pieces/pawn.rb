@@ -3,8 +3,6 @@
 require_relative './piece'
 require_relative './pieces'
 
-require 'pry-byebug'
-
 class Pawn < Piece
   def self.start_positions
     [
