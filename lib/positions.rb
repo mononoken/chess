@@ -16,12 +16,16 @@ class Positions
     @positions = positions
   end
 
-  def algebraic
+  def position(algebraic)
+    find { |position| position.algebraic == algebraic } || NullPosition.new
+  end
+
+  def algebraics
     map(&:algebraic)
   end
 
   def piece_position(piece)
-    find { |position| position.square.content == piece }
+    find { |position| position.square.content == piece } || NullPosition.new
   end
 
   def occupied_positions(color = nil)

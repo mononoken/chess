@@ -25,8 +25,8 @@ class Board
     init_piece_types(piece_types)
   end
 
-  def positions_algebraic
-    positions.algebraic
+  def positions_algebraics
+    positions.algebraics
   end
 
   def move(origin, destination)

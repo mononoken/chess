@@ -45,29 +45,13 @@ class Chess
     movement.valid_destination?(destination, origin, board)
   end
 
-  def valid_origin?(origin, player_color)
-    valid_algebraic?(origin) && valid_color?(origin, player_color) && destinations?(origin, board)
-  end
-
-  def destinations?(origin, board)
-    movement.valid_destinations(origin, board).any?
-  end
-
-  def valid_color?(origin, player_color)
-    board.piece(origin)&.color == player_color
-  end
-
-  def valid_algebraic?(origin)
-    board.positions_algebraic.any?(origin.algebraic)
-  end
-
   def player_origin
     loop do
       puts 'Enter origin'
       input = gets.chomp
-      origin = Position.from_algebraic(input)
+      origin = board.positions.position(input.to_sym)
 
-      return origin if valid_origin?(origin, players.current)
+      return origin if origin.valid_origin?(players.current, board)
     end
   end
 
@@ -76,6 +60,7 @@ class Chess
       puts 'Enter destination'
       input = gets.chomp
       destination = Position.from_algebraic(input)
+      # destination = board.positions.position(input.to_sym)
 
       return destination if valid_destination?(destination, origin, board)
     end

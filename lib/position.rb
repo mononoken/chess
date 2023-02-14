@@ -2,7 +2,30 @@
 
 require_relative './chess_errors'
 
-# Represent a location on a chess board.
+# Better name?
+module Originable
+  def valid_origin?(player_color, board)
+    valid_color?(player_color) && destinations?(board)
+  end
+
+  def valid_destination?(origin, board)
+
+  end
+
+  def valid_color?(player_color)
+    square.content&.color == player_color
+  end
+
+  def destinations?(board)
+    destinations(board).any?
+  end
+
+  def destinations(board, movement = Movement)
+    movement.valid_destinations(self, board)
+  end
+end
+
+# Represent a location on a chess board that points to a Square object.
 # Files are columns (vertical); ranks are rows (horizontal).
 class Position
   FILE_ALGEBRAICS = %w[a b c d e f g h].freeze
@@ -26,6 +49,7 @@ class Position
   end
 
   include ChessErrors
+  include Originable
 
   attr_reader :file_index, :rank_index
 
@@ -67,5 +91,15 @@ class Position
 
   def rank_algebraic
     RANK_ALGEBRAICS[rank_index]
+  end
+end
+
+class NullPosition
+  def method_missing(method, *args, &block)
+    respond_to?(method) ? nil : super
+  end
+
+  def respond_to_missing?(_name, _include_private = false)
+    true
   end
 end
