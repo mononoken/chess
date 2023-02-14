@@ -100,6 +100,7 @@ class Position
   end
 end
 
+# Nullobject pattern for Position that is instantiated in Positions.
 class NullPosition
   def method_missing(method, *args, &block)
     respond_to?(method) ? nil : super

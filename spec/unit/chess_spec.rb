@@ -5,49 +5,6 @@ require_relative './../../lib/chess'
 RSpec.describe Chess do
   subject(:chess) { described_class.new(board:) }
 
-  xdescribe '#valid_algebraic?' do
-    let(:board) { instance_double(Board) }
-    let(:origin) { double }
-    let(:origin_algebraic) { double }
-    let(:array_of_algebraic_positions) { instance_double(Array) }
-
-    before :each do
-      allow(board).to receive(:positions_algebraic)
-        .and_return(array_of_algebraic_positions)
-
-      allow(origin).to receive(:algebraic)
-        .and_return(origin_algebraic)
-    end
-
-    context 'when origin is in board.positions_algebraic' do
-      before do
-        allow(array_of_algebraic_positions).to receive(:any?)
-          .with(origin_algebraic)
-          .and_return(true)
-      end
-
-      it 'returns true' do
-        result = chess.valid_algebraic?(origin)
-
-        expect(result).to be(true)
-      end
-    end
-
-    context 'when origin is not in board.positions_algebraic' do
-      before do
-        allow(array_of_algebraic_positions).to receive(:any?)
-          .with(origin_algebraic)
-          .and_return(false)
-      end
-
-      it 'returns true' do
-        result = chess.valid_algebraic?(origin)
-
-        expect(result).to be(false)
-      end
-    end
-  end
-
   describe '#make_move' do
     context 'when an invalid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }

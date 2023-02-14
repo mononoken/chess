@@ -56,7 +56,7 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error
   end
 
-  xit 'moves pawn across board' do
+  it 'moves pawn across board' do
     board = Board.new
 
     game = Chess.new(board:)
