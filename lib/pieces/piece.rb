@@ -44,10 +44,6 @@ class Piece
     raise "#{self.class} must implement #step_directions."
   end
 
-  # def special_first_step
-  #   []
-  # end
-
   def step_take?
     true
   end

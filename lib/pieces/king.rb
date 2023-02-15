@@ -14,10 +14,6 @@ class King < Piece
     :K
   end
 
-  # def special_first_step
-  #   [[-2, 0], [2, 0]] # These are castling steps.
-  # end
-
   def step_directions
     [[1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0], [-1, 1], [0, 1]]
   end

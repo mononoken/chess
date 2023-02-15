@@ -3,7 +3,7 @@
 require_relative './../../lib/chess'
 require_relative './../../lib/pieces/pieces'
 
-RSpec.xdescribe 'Castling API' do
+RSpec.describe 'Castling API' do
   context 'when Ra1 and Ke1 have not moved and e1 moves to c1' do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
@@ -21,7 +21,7 @@ RSpec.xdescribe 'Castling API' do
       board.populate(rook, a1)
     end
 
-    it 'accepts c1 as valid move for e1' do
+    fit 'accepts c1 as valid move for e1' do
       expect { chess.make_move(e1, c1) }
         .not_to raise_error
     end
