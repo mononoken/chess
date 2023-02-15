@@ -8,11 +8,25 @@ class Path
     new(origin:, board:).positions(step:)
   end
 
+  def self.take_positions(origin:, board:, step:)
+    new(origin:, board:).take_positions(step:)
+  end
+
   attr_reader :origin, :board
 
   def initialize(origin:, board:)
     @origin = origin
     @board = board
+  end
+
+  def take_positions(step:, position: origin, steps: 0)
+    next_position = next_position(position, step)
+
+    if valid_take?(next_position) && within_step_limit?(steps)
+      [next_position]
+    else
+      []
+    end
   end
 
   # Return an array of Position objects based on step using recursion.

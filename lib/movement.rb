@@ -35,12 +35,19 @@ class Movement
     filter_checks_own_king_positions(paths_positions)
   end
 
-  def paths_positions(paths = self.paths)
-    # paths_to_positions(paths) + paths_to_positions(paths(take_directions))
-    paths_to_positions(paths)
+  def paths_positions
+    paths_to_positions(destination_paths)
   end
 
   private
+
+  def destination_paths
+    paths + take_paths
+  end
+
+  def take_paths(path = Path)
+    take_directions.map { |step| path.take_positions(origin:, board:, step:) }
+  end
 
   def take_directions
     piece.take_directions
