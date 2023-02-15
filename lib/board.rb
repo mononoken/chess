@@ -34,11 +34,17 @@ class Board
 
     content = square(origin).empty
 
+    record_move(content)
+
     if content.promotable? && content.promotion_position?(destination)
       populate(content.promotion_choice.new(content.color), destination)
     else
       populate(content, destination)
     end
+  end
+
+  def record_move(piece)
+    piece.take_first_move unless piece.first_move_taken?
   end
 
   # move without promotion to avoid promotion prompt for future_boards.

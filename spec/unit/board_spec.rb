@@ -10,6 +10,10 @@ RSpec.describe Board do
 
   # Promotion functionality has been added that is not tested.
   describe '#move' do
+    before :each do
+      allow(board).to receive(:record_move)
+    end
+
     context 'when origin square is populated' do
       let(:rook) { instance_double(Rook) }
       let(:origin) { instance_double(Position) }
