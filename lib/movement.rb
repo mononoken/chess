@@ -81,11 +81,12 @@ class Movement
   end
 
   def step_directions
-    if piece.first_move_taken?
-      piece.step_directions
-    else
-      piece.step_directions + piece.special_first_step
-    end
+    # if piece.first_move_taken?
+    #   piece.step_directions
+    # else
+    #   piece.step_directions + piece.special_first_step
+    # end
+    piece.step_directions
   end
 
   def piece

@@ -73,21 +73,12 @@ class Pawn < Piece
     end
   end
 
-  def special_first_step
-    case color
-    when :white
-      [[0, 2]]
-    when :black
-      [[0, -2]]
-    end
-  end
-
   def step_take?
     false
   end
 
   def step_limit
-    1
+    first_move_taken? ? 1 : 2
   end
 
   def skin
