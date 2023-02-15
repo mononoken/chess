@@ -24,15 +24,15 @@ class Path
       [next_position] + positions(step:, position: next_position, steps:)
     elsif valid_take?(next_position) && within_step_limit?(steps) && piece.step_take?
       [next_position]
-    elsif valid_take?(next_position) && within_step_limit?(steps) && piece.special_takes?
-      piece.special_takes.filter_map do |step|
-        next_position = next_position(position, step)
-
-        [next_position] if valid_take?(next_position)
-      end.flatten(1)
     else
       []
     end
+  end
+
+  # This method should be renamed.
+  def valid_take?(position)
+    # binding.pry
+    board.occupied_positions.any?(position) && board.piece(position)&.color == piece.opponent_color
   end
 
   private
@@ -43,11 +43,6 @@ class Path
 
   def valid_move?(position)
     within_positions?(position) && unoccupied_position?(position)
-  end
-
-  # This method should be renamed.
-  def valid_take?(position)
-    board.occupied_positions.any?(position) && board.piece(position)&.color == piece.opponent_color
   end
 
   def valid_position?(position)

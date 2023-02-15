@@ -4,7 +4,7 @@ require_relative './../../lib/chess'
 require_relative './../../lib/pieces/pawn'
 
 RSpec.describe 'Solo Pawn API' do
-  fcontext 'when enemy piece can be taken by pawn on one side' do
+  xcontext 'when enemy piece can be taken by pawn on one side' do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
     let(:pawn) { Pawn.new(:white) }

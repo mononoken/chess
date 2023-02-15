@@ -55,7 +55,7 @@ class Pawn < Piece
     true
   end
 
-  def special_takes
+  def take_directions
     case color
     when :white
       [[-1, 1], [1, 1]]

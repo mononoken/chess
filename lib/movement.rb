@@ -36,25 +36,22 @@ class Movement
   end
 
   def paths_positions(paths = self.paths)
+    # paths_to_positions(paths) + paths_to_positions(paths(take_directions))
     paths_to_positions(paths)
   end
 
   private
 
+  def take_directions
+    piece.take_directions
+  end
+
   def paths_to_positions(paths)
     paths.flatten(1)
   end
 
-  def special_takes_paths(path = Path)
-    special_takes.map { |take| path.positions(origin:, board:, step: take) }
-  end
-
-  def special_takes
-    piece.special_takes
-  end
-
-  def paths(path = Path)
-    step_directions.map { |step| path.positions(origin:, board:, step:) }
+  def paths(directions = step_directions, path = Path)
+    directions.map { |step| path.positions(origin:, board:, step:) }
   end
 
   def filter_checks_own_king_positions(positions)
