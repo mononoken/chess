@@ -20,6 +20,10 @@ class Piece
     @first_move_taken = false
   end
 
+  def castling_rights?
+    false
+  end
+
   def promotable?
     false
   end

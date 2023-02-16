@@ -21,7 +21,7 @@ RSpec.describe 'Castling API' do
       board.populate(rook, a1)
     end
 
-    fit 'accepts c1 as valid move for e1' do
+    it 'accepts c1 as valid move for e1' do
       expect { chess.make_move(e1, c1) }
         .not_to raise_error
     end
@@ -52,6 +52,60 @@ RSpec.describe 'Castling API' do
         .to change(e1.square.content)
         .from(king)
         .to(nil)
+    end
+  end
+
+  xcontext 'when Ra1 and Ke1 have not moved but pieces obstruct castling' do
+    let(:board) { Board.new }
+    let(:chess) { Chess.new(board:) }
+
+    let(:king) { King.new(:white) }
+    let(:rook) { Rook.new(:white) }
+
+    let(:knight) { Knight.new(:white) } # Obstructing piece
+
+    let(:a1) { board.positions.position(:a1) }
+    let(:c1) { board.positions.position(:c1) }
+    let(:d1) { board.positions.position(:d1) }
+    let(:e1) { board.positions.position(:e1) }
+
+    let(:b1) { board.positions.position(:b1) }
+
+    before do
+      board.populate(king, e1)
+      board.populate(rook, a1)
+
+      board.populate(knight, b1)
+    end
+
+    it 'rejects c1 move for e1' do
+      expect { chess.make_move(e1, c1) }
+        .to raise_error
+    end
+  end
+
+  xcontext 'when either Ra1 or Ke1 has already moved' do
+    let(:board) { Board.new }
+    let(:chess) { Chess.new(board:) }
+
+    let(:king) { King.new(:white) }
+    let(:rook) { Rook.new(:white) }
+
+    let(:a1) { board.positions.position(:a1) }
+    let(:c1) { board.positions.position(:c1) }
+    let(:d1) { board.positions.position(:d1) }
+    let(:e1) { board.positions.position(:e1) }
+
+    before do
+      board.populate(king, e1)
+      board.populate(rook, a1)
+
+      board.move()
+    end
+
+    it 'rejects c1 move for e1' do
+      expect { chess.make_move(e1, c1) }
+        .to raise_error
     end
   end
 end

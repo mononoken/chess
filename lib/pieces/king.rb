@@ -10,6 +10,10 @@ class King < Piece
     ]
   end
 
+  def castling_rights?
+    first_move_taken? ? false : true
+  end
+
   def self.algebraic
     :K
   end

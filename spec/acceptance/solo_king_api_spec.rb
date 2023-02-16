@@ -9,7 +9,7 @@ RSpec.describe 'Solo King API' do
 
     game = Chess.new(board:)
 
-    king = King.new
+    king = King.new(:white)
 
     origin = Position.from_a([2, 0])
 
@@ -31,7 +31,7 @@ RSpec.describe 'Solo King API' do
 
     game = Chess.new(board:)
 
-    king = King.new
+    king = King.new(:white)
 
     board.populate(king, Position.from_a([2, 2]))
 
