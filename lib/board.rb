@@ -29,6 +29,24 @@ class Board
     positions.algebraics
   end
 
+  def new_move(movement)
+    raise EmptyOriginError if square(movement.origin).empty?
+
+    content = square(movement.origin).empty
+
+    record_move(content)
+
+    if content.promotable? && content.promotion_position?(movement.destination)
+      populate(content.promotion_choice.new(content.color), movement.destination)
+    # if movement.promotion?
+    #   populate(movement.promotion_choice, movement.destination)
+    # elsif movement&.castling?
+      # castling_move(movement)
+    else
+      populate(content, movement.destination)
+    end
+  end
+
   def move(origin, destination)
     raise EmptyOriginError if square(origin).empty?
 
@@ -38,9 +56,6 @@ class Board
 
     if content.promotable? && content.promotion_position?(destination)
       populate(content.promotion_choice.new(content.color), destination)
-    # elsif movement&.castling?(origin.square&.content, self, destination)
-      # simple_move(movement.castling_rook_origin(destination), movement.castlin_rook_destination(destination))
-      # simple_move(movement.castling_king_origin(destination), movement.castling_king_destination(destination))
     else
       populate(content, destination)
     end

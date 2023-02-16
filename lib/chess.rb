@@ -4,6 +4,7 @@ require_relative './chess_errors'
 require_relative './board'
 require_relative './pieces/pieces'
 require_relative './players'
+require_relative './movement'
 
 # Runs game of chess until end condition is met.
 class Chess
@@ -23,20 +24,37 @@ class Chess
   end
 
   def run_rounds
-    run_round until game_over?
+    new_run_round until game_over?
   end
 
   def game_over?
     board.checkmate?(players.current)
   end
 
-  def run_round
+  def new_run_round
     puts board
-    make_move(origin = player_origin, player_destination(origin))
+    new_send_move(build_movement)
     players.swap
   end
 
-  def make_move(origin, destination)
+  def run_round
+    puts board
+    movement = build_movement
+    send_move(movement.origin, movement.destination)
+    players.swap
+  end
+
+  def build_movement(origin = player_origin, destination = player_destination(origin), movement = Movement)
+    movement.new(origin, board, destination)
+  end
+
+  def new_send_move(movement)
+    raise InvalidDestinationError unless movement.destination.valid_destination?(movement.origin, board)
+
+    board.new_move(movement)
+  end
+
+  def send_move(origin, destination)
     raise InvalidDestinationError unless destination.valid_destination?(origin, board)
 
     board.move(origin, destination)

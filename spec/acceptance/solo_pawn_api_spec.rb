@@ -21,17 +21,17 @@ RSpec.describe 'Solo Pawn API' do
     end
 
     it 'allows pawn to take piece' do
-      expect { chess.make_move(b3, c4) }
+      expect { chess.send_move(b3, c4) }
         .not_to raise_error
     end
 
     it 'does not allow pawn to make take movement to empty square' do
-      expect { chess.make_move(b3, a4) }
+      expect { chess.send_move(b3, a4) }
         .to raise_error
     end
 
     it 'allows pawn to make normal step' do
-      expect { chess.make_move(b3, b4) }
+      expect { chess.send_move(b3, b4) }
         .not_to raise_error
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe 'Solo Pawn API' do
 
     special_destination = Position.from_a([1, 3])
 
-    expect { game.make_move(origin, special_destination) }
+    expect { game.send_move(origin, special_destination) }
       .not_to raise_error
   end
 
@@ -62,7 +62,7 @@ RSpec.describe 'Solo Pawn API' do
 
     board.populate(pawn, Position.from_a([1, 6]))
 
-    expect { game.make_move(Position.from_a([1, 6]), Position.from_a([1, 5])) }
+    expect { game.send_move(Position.from_a([1, 6]), Position.from_a([1, 5])) }
       .not_to raise_error(Chess::InvalidDestinationError)
   end
 
@@ -79,12 +79,12 @@ RSpec.describe 'Solo Pawn API' do
 
     invalid_destination = Position.from_a([2, 2])
 
-    expect { game.make_move(origin, invalid_destination) }
+    expect { game.send_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([1, 2])
 
-    expect { game.make_move(origin, valid_destination) }
+    expect { game.send_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -97,11 +97,11 @@ RSpec.describe 'Solo Pawn API' do
 
     board.populate(pawn, Position.from_a(([3, 1])))
 
-    game.make_move(Position.from_a([3, 1]), Position.from_a([3, 2]))
-    game.make_move(Position.from_a([3, 2]), Position.from_a([3, 3]))
-    game.make_move(Position.from_a([3, 3]), Position.from_a([3, 4]))
-    game.make_move(Position.from_a([3, 4]), Position.from_a([3, 5]))
-    game.make_move(Position.from_a([3, 5]), Position.from_a([3, 6]))
+    game.send_move(Position.from_a([3, 1]), Position.from_a([3, 2]))
+    game.send_move(Position.from_a([3, 2]), Position.from_a([3, 3]))
+    game.send_move(Position.from_a([3, 3]), Position.from_a([3, 4]))
+    game.send_move(Position.from_a([3, 4]), Position.from_a([3, 5]))
+    game.send_move(Position.from_a([3, 5]), Position.from_a([3, 6]))
 
     last_square = board.files[3][6]
 

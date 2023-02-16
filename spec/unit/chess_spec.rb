@@ -5,7 +5,7 @@ require_relative './../../lib/chess'
 RSpec.describe Chess do
   subject(:chess) { described_class.new(board:) }
 
-  describe '#make_move' do
+  describe '#send_move' do
     context 'when an invalid destination is selected for a board origin' do
       let(:board) { instance_spy(Board) }
       let(:origin) { instance_double(Position) }
@@ -18,12 +18,12 @@ RSpec.describe Chess do
       end
 
       it 'raises error' do
-        expect { chess.make_move(origin, destination) }
+        expect { chess.send_move(origin, destination) }
           .to raise_error(Chess::InvalidDestinationError)
       end
 
       it 'does not send move to board' do
-        chess.make_move(origin, destination) rescue :EXPECTED_ERROR
+        chess.send_move(origin, destination) rescue :EXPECTED_ERROR
 
         expect(board).not_to have_received(:move)
       end
@@ -41,7 +41,7 @@ RSpec.describe Chess do
       end
 
       it 'sends board move with origin and destination' do
-        chess.make_move(origin, destination)
+        chess.send_move(origin, destination)
 
         expect(board).to have_received(:move)
           .with(origin, destination)

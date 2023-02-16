@@ -52,10 +52,10 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(bishop, bishop_position)
     board.populate(queen, queen_position)
 
-    expect { game.make_move(queen_position, bishop_position) }
+    expect { game.send_move(queen_position, bishop_position) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.make_move(queen_position, Position.from_a([1, 2])) }
+    expect { game.send_move(queen_position, Position.from_a([1, 2])) }
       .not_to raise_error
   end
 
@@ -75,10 +75,10 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     board.populate(bishop, bishop_position)
     board.populate(rook, rook_position)
 
-    expect { game.make_move(rook_position, invalid_destination) }
+    expect { game.send_move(rook_position, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.make_move(rook_position, valid_destination) }
+    expect { game.send_move(rook_position, valid_destination) }
       .not_to raise_error
   end
 end

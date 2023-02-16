@@ -22,33 +22,33 @@ RSpec.describe 'Castling API' do
     end
 
     it 'accepts c1 as valid move for e1' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .not_to raise_error
     end
 
     xit 'changes content of a1 to nil' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to change { a1.square.content }
         .from(rook)
         .to(nil)
     end
 
     xit 'changes content of c1 to king' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to change { c1.square.content }
         .from(nil)
         .to(king)
     end
 
     xit 'changes content of d1 to rook' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to change(d1.square.content)
         .from(nil)
         .to(rook)
     end
 
     xit 'changes content of e1 to nil' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to change { e1.square.content }
         .from(king)
         .to(nil)
@@ -79,7 +79,7 @@ RSpec.describe 'Castling API' do
     end
 
     it 'rejects c1 move for e1' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to raise_error
     end
   end
@@ -104,7 +104,7 @@ RSpec.describe 'Castling API' do
     end
 
     it 'rejects c1 move for e1' do
-      expect { chess.make_move(e1, c1) }
+      expect { chess.send_move(e1, c1) }
         .to raise_error
     end
   end

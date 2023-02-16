@@ -17,12 +17,12 @@ RSpec.describe 'Solo Bishop API' do
 
     invalid_destination = Position.from_a([4, 1])
 
-    expect { game.make_move(origin, invalid_destination) }
+    expect { game.send_move(origin, invalid_destination) }
       .to raise_error(Chess::InvalidDestinationError)
 
     valid_destination = Position.from_a([0, 2])
 
-    expect { game.make_move(origin, valid_destination) }
+    expect { game.send_move(origin, valid_destination) }
       .not_to raise_error
   end
 
@@ -35,9 +35,9 @@ RSpec.describe 'Solo Bishop API' do
 
     board.populate(bishop, Position.from_a([0, 0]))
 
-    game.make_move(Position.from_a([0, 0]), Position.from_a([1, 1]))
-    game.make_move(Position.from_a([1, 1]), Position.from_a([3, 3]))
-    game.make_move(Position.from_a([3, 3]), Position.from_a([7, 7]))
+    game.send_move(Position.from_a([0, 0]), Position.from_a([1, 1]))
+    game.send_move(Position.from_a([1, 1]), Position.from_a([3, 3]))
+    game.send_move(Position.from_a([3, 3]), Position.from_a([7, 7]))
 
     last_square = board.files[7][7]
 
