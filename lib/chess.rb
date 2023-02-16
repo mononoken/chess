@@ -14,7 +14,12 @@ class Chess
   def initialize(board: Board.new(piece_types: Pieces.piece_types), players: Players.new)
     @board = board
     @players = players
-    # Show instructions
+    puts instructions
+  end
+
+  def play
+    run_rounds
+    announce_results
   end
 
   def run_rounds
@@ -57,5 +62,28 @@ class Chess
 
       return destination if destination.valid_destination?(origin, board)
     end
+  end
+
+  def announce_results
+    puts board
+
+    result = if board.checkmate?(:white)
+               'White king is in checkmate. Black wins!'
+             elsif board.checkmate?(:black)
+               'Black king is in checkmate. White wins!'
+             end
+    puts result
+  end
+
+  def instructions
+    <<~HEREDOC
+      Welcome to Chess!
+      This is a terminal chess game that two players can play together.
+      Each player (starting with white) will pick the coordinate of a
+      piece they would like to move, and then the coordinates they want
+      to move the piece to.
+      Coordinates are referenced using Chess algebraic notation.
+      Refer to the grid labels for assistance.
+    HEREDOC
   end
 end

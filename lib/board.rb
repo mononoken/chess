@@ -38,6 +38,9 @@ class Board
 
     if content.promotable? && content.promotion_position?(destination)
       populate(content.promotion_choice.new(content.color), destination)
+    # elsif movement&.castling?(origin.square&.content, self, destination)
+      # simple_move(movement.castling_rook_origin(destination), movement.castlin_rook_destination(destination))
+      # simple_move(movement.castling_king_origin(destination), movement.castling_king_destination(destination))
     else
       populate(content, destination)
     end

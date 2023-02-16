@@ -28,14 +28,14 @@ RSpec.describe 'Castling API' do
 
     xit 'changes content of a1 to nil' do
       expect { chess.make_move(e1, c1) }
-        .to change(a1.square.content)
+        .to change { a1.square.content }
         .from(rook)
         .to(nil)
     end
 
     xit 'changes content of c1 to king' do
       expect { chess.make_move(e1, c1) }
-        .to change(c1.square.content)
+        .to change { c1.square.content }
         .from(nil)
         .to(king)
     end
@@ -49,7 +49,7 @@ RSpec.describe 'Castling API' do
 
     xit 'changes content of e1 to nil' do
       expect { chess.make_move(e1, c1) }
-        .to change(e1.square.content)
+        .to change { e1.square.content }
         .from(king)
         .to(nil)
     end

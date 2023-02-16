@@ -2,8 +2,7 @@
 
 require_relative './path'
 
-require 'pry-byebug'
-
+# Think this may actually become a subclass of Movement.
 module Castling
   WHITE_CASTLING_ALGEBRAICS = %i[c1 g1].freeze
   WHITE_KING_ORIGIN_ALGEBRAIC = :e1
@@ -34,6 +33,10 @@ module Castling
     c8: %i[b8 c8 d8],
     g8: %i[f8 g8]
   }.freeze
+
+  # def castling?(piece, board, destination)
+  #   valid_castling_positions(piece, board).any?(destination)
+  # end
 
   def valid_castling_positions(piece, board)
     castling_positions(piece, board).filter { |position| valid_castling_position?(position, piece, board) }
