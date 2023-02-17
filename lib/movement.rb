@@ -7,22 +7,22 @@ require_relative './castling'
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
 class Movement
   def self.valid_destination?(destination, origin, board)
-    new(origin, board).valid_destination?(destination)
+    new(origin:, board:).valid_destination?(destination)
   end
 
   def self.valid_destinations(origin, board)
-    new(origin, board).valid_destinations
+    new(origin:, board:).valid_destinations
   end
 
   def self.paths_positions(origin, board)
-    new(origin, board).paths_positions
+    new(origin:, board:).paths_positions
   end
 
   include Castling
 
   attr_reader :origin, :board, :destination
 
-  def initialize(origin, board, destination = nil)
+  def initialize(board:, origin:, destination: nil)
     @origin = origin
     @board = board
     @destination = destination
@@ -83,7 +83,7 @@ class Movement
       # This is a bandaid. nil should actually give all attacks.
     else
       board.occupied_positions(color).reduce([]) do |attacked_positions, position|
-        attacked_positions + Movement.valid_destinations(position, board)
+        attacked_positions + self.class.valid_destinations(position, board)
       end.uniq
     end
   end

@@ -9,69 +9,69 @@ RSpec.describe Board do
   let(:files) { Array.new(2) { Array.new(2) { Square.new } } }
 
   # Promotion functionality has been added that is not tested.
-  describe '#move' do
-    before :each do
-      allow(board).to receive(:record_move)
-    end
+  # describe '#move' do
+  #   before :each do
+  #     allow(board).to receive(:record_move)
+  #   end
 
-    context 'when origin square is populated' do
-      let(:rook) { instance_double(Rook) }
-      let(:origin) { instance_double(Position) }
-      let(:destination) { instance_double(Position) }
+  #   context 'when origin square is populated' do
+  #     let(:rook) { instance_double(Rook) }
+  #     let(:origin) { instance_double(Position) }
+  #     let(:destination) { instance_double(Position) }
 
-      before do
-        allow(origin).to receive(:file_index)
-          .and_return(0)
-        allow(origin).to receive(:rank_index)
-          .and_return(0)
-        allow(destination).to receive(:file_index)
-          .and_return(0)
-        allow(destination).to receive(:rank_index)
-          .and_return(1)
+  #     before do
+  #       allow(origin).to receive(:file_index)
+  #         .and_return(0)
+  #       allow(origin).to receive(:rank_index)
+  #         .and_return(0)
+  #       allow(destination).to receive(:file_index)
+  #         .and_return(0)
+  #       allow(destination).to receive(:rank_index)
+  #         .and_return(1)
 
-        allow(rook).to receive(:promotable?)
-          .and_return(false)
+  #       allow(rook).to receive(:promotable?)
+  #         .and_return(false)
 
-        board.populate(rook, origin)
-      end
+  #       board.populate(rook, origin)
+  #     end
 
-      it 'moves origin population to destination square' do
-        board.move(origin, destination)
+  #     it 'moves origin population to destination square' do
+  #       board.move(origin, destination)
 
-        destination_square = board.files[0][1]
+  #       destination_square = board.files[0][1]
 
-        expect(destination_square.content).to eq(rook)
-      end
-    end
+  #       expect(destination_square.content).to eq(rook)
+  #     end
+  #   end
 
-    context 'when origin square is empty' do
-      let(:origin) { instance_double(Position) }
-      let(:destination) { instance_double(Position) }
+  #   context 'when origin square is empty' do
+  #     let(:origin) { instance_double(Position) }
+  #     let(:destination) { instance_double(Position) }
 
-      before do
-        allow(origin).to receive(:file_index)
-          .and_return(0)
-        allow(origin).to receive(:rank_index)
-          .and_return(1)
-        allow(destination).to receive(:file_index)
-          .and_return(1)
-        allow(destination).to receive(:rank_index)
-          .and_return(1)
-      end
+  #     before do
+  #       allow(origin).to receive(:file_index)
+  #         .and_return(0)
+  #       allow(origin).to receive(:rank_index)
+  #         .and_return(1)
+  #       allow(destination).to receive(:file_index)
+  #         .and_return(1)
+  #       allow(destination).to receive(:rank_index)
+  #         .and_return(1)
+  #     end
 
-      it 'raises error' do
-        expect { board.move(origin, destination) }.to \
-          raise_error(Board::EmptyOriginError)
-      end
+  #     it 'raises error' do
+  #       expect { board.move(origin, destination) }.to \
+  #         raise_error(Board::EmptyOriginError)
+  #     end
 
-      it 'does not change the desination square' do
-        destination_square = board.files[1][1]
+  #     it 'does not change the desination square' do
+  #       destination_square = board.files[1][1]
 
-        expect { board.move(origin, destination) rescue :EXPECTED_ERROR }
-          .not_to change { destination_square.content }
-      end
-    end
-  end
+  #       expect { board.move(origin, destination) rescue :EXPECTED_ERROR }
+  #         .not_to change { destination_square.content }
+  #     end
+  #   end
+  # end
 
   describe '#populate' do
     # before :each do

@@ -25,11 +25,15 @@ class Board
     init_piece_types(piece_types)
   end
 
+  def position(algebraic)
+    positions.position(algebraic)
+  end
+
   def positions_algebraics
     positions.algebraics
   end
 
-  def new_move(movement)
+  def move(movement)
     raise EmptyOriginError if square(movement.origin).empty?
 
     content = square(movement.origin).empty
@@ -44,20 +48,6 @@ class Board
       # castling_move(movement)
     else
       populate(content, movement.destination)
-    end
-  end
-
-  def move(origin, destination)
-    raise EmptyOriginError if square(origin).empty?
-
-    content = square(origin).empty
-
-    record_move(content)
-
-    if content.promotable? && content.promotion_position?(destination)
-      populate(content.promotion_choice.new(content.color), destination)
-    else
-      populate(content, destination)
     end
   end
 
@@ -118,8 +108,8 @@ class Board
     end
   end
 
-  def rank_label(rank)
-    position(rank[0]).rank_algebraic
+  def rank_label(rank_array)
+    positions.find_square(rank_array.first).rank_algebraic
   end
 
   def ranks
@@ -128,10 +118,6 @@ class Board
 
   def rank(index)
     files.map { |file| file[index] }
-  end
-
-  def position(square)
-    positions.find { |position| position.square == square }
   end
 
   # Places piece types at start positions if piece_types is given.

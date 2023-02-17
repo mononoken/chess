@@ -17,23 +17,23 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     queen = Queen.new
     rook = Rook.new
 
-    board.populate(bishop, Position.from_a([2, 0]))
-    board.populate(king, Position.from_a([4, 0]))
-    board.populate(knight, Position.from_a([1, 0]))
-    board.populate(queen, Position.from_a([3, 0]))
-    board.populate(rook, Position.from_a([0, 0]))
+    board.populate(bishop,  board.position(:c1))
+    board.populate(king,    board.position(:e1))
+    board.populate(knight,  board.position(:b1))
+    board.populate(queen,   board.position(:d1))
+    board.populate(rook,    board.position(:a1))
 
-    bishop_square = board.files[2][0]
-    king_square = board.files[4][0]
-    knight_square = board.files[1][0]
-    queen_square = board.files[3][0]
-    rook_square = board.files[0][0]
+    bishop_square =         board.files[2][0]
+    king_square =           board.files[4][0]
+    knight_square =         board.files[1][0]
+    queen_square =          board.files[3][0]
+    rook_square =           board.files[0][0]
 
-    expect(bishop_square.content).to eq(bishop)
-    expect(king_square.content).to eq(king)
-    expect(knight_square.content).to eq(knight)
-    expect(queen_square.content).to eq(queen)
-    expect(rook_square.content).to eq(rook)
+    expect(bishop_square.content).to  eq(bishop)
+    expect(king_square.content).to    eq(king)
+    expect(knight_square.content).to  eq(knight)
+    expect(queen_square.content).to   eq(queen)
+    expect(rook_square.content).to    eq(rook)
   end
 
   it 'raises error if piece tries to move to occupied square of same color/player' do
@@ -46,16 +46,20 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     bishop = Bishop.new(piece_color)
     queen = Queen.new(piece_color)
 
-    bishop_position = Position.from_a([2, 0])
-    queen_position = Position.from_a([3, 0])
+    bishop_position = board.position(:c1)
+    queen_position = board.position(:d1)
 
     board.populate(bishop, bishop_position)
     board.populate(queen, queen_position)
 
-    expect { game.send_move(queen_position, bishop_position) }
+    invalid_movement = Movement.new(board:, origin: queen_position, destination: bishop_position)
+
+    expect { game.send_move(invalid_movement) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.send_move(queen_position, Position.from_a([1, 2])) }
+    valid_movement = Movement.new(board:, origin: queen_position, destination: board.position(:b3))
+
+    expect { game.send_move(valid_movement) }
       .not_to raise_error
   end
 
@@ -67,18 +71,22 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     bishop = Bishop.new
     rook = Rook.new
 
-    bishop_position = Position.from_a([2, 0])
-    rook_position = Position.from_a([0, 0])
-    invalid_destination = Position.from_a([7, 0])
-    valid_destination = Position.from_a([0, 7])
+    bishop_position =     board.position(:c1)
+    rook_position =       board.position(:a1)
+    invalid_destination = board.position(:h1)
+    valid_destination =   board.position(:a8)
 
     board.populate(bishop, bishop_position)
     board.populate(rook, rook_position)
 
-    expect { game.send_move(rook_position, invalid_destination) }
+    invalid_movement = Movement.new(board:, origin: rook_position, destination: invalid_destination)
+
+    expect { game.send_move(invalid_movement) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    expect { game.send_move(rook_position, valid_destination) }
+    valid_movement = Movement.new(board:, origin: rook_position, destination: valid_destination)
+
+    expect { game.send_move(valid_movement) }
       .not_to raise_error
   end
 end

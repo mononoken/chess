@@ -8,13 +8,17 @@ RSpec.describe 'Checkmate Game API' do
 
     let(:piece_types) { Pieces.piece_types }
 
-    let(:game) { Chess.new(board:) }
+    let(:chess) { Chess.new(board:) }
 
     before do
-      board.move(Position.from_a([5, 1]), Position.from_a([5, 2]))
-      board.move(Position.from_a([4, 6]), Position.from_a([4, 5]))
-      board.move(Position.from_a([6, 1]), Position.from_a([6, 3]))
-      board.move(Position.from_a([3, 7]), Position.from_a([7, 3]))
+      movements = [
+        Movement.new(board:, origin: board.position(:f2), destination: board.position(:f3)),
+        Movement.new(board:, origin: board.position(:e7), destination: board.position(:e6)),
+        Movement.new(board:, origin: board.position(:g2), destination: board.position(:g4)),
+        Movement.new(board:, origin: board.position(:d8), destination: board.position(:h4))
+      ]
+
+      movements.each { |movement| chess.send_move(movement) }
     end
 
     it 'returns true to checkmate?' do

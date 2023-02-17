@@ -11,23 +11,31 @@ RSpec.describe 'Solo Knight API' do
 
     knight = Knight.new
 
-    origin = Position.from_a([2, 0])
+    origin = board.position(:c1)
 
     board.populate(knight, origin)
 
-    invalid_destination = Position.from_a([2, 1])
+    invalid_destination = board.position(:c2)
 
-    expect { game.send_move(origin, invalid_destination) }
+    invalid_movement = Movement.new(origin:, destination: invalid_destination, board:)
+
+    expect { game.send_move(invalid_movement) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    invalid_destination = Position.from_a([3, 1])
+    invalid_destination = board.position(:d2)
 
-    expect { game.send_move(origin, invalid_destination) }
+    invalid_movement = Movement.new(origin:, destination: invalid_destination, board:)
+
+    invalid_movement = Movement.new(origin:, destination: invalid_destination, board:)
+
+    expect { game.send_move(invalid_movement) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    valid_destination = Position.from_a([3, 2])
+    valid_destination = board.position(:d3)
 
-    expect { game.send_move(origin, valid_destination) }
+    valid_movement = Movement.new(board:, origin:, destination: valid_destination)
+
+    expect { game.send_move(valid_movement) }
       .not_to raise_error
   end
 
@@ -38,11 +46,15 @@ RSpec.describe 'Solo Knight API' do
 
     knight = Knight.new
 
-    board.populate(knight, Position.from_a([2, 2]))
+    board.populate(knight, board.position(:c3))
 
-    game.send_move(Position.from_a([2, 2]), Position.from_a([3, 4]))
-    game.send_move(Position.from_a([3, 4]), Position.from_a([5, 5]))
-    game.send_move(Position.from_a([5, 5]), Position.from_a([4, 3]))
+    movements = [
+      Movement.new(board:, origin: board.position(:c3), destination: board.position(:d5)),
+      Movement.new(board:, origin: board.position(:d5), destination: board.position(:f6)),
+      Movement.new(board:, origin: board.position(:f6), destination: board.position(:e4))
+    ]
+
+    movements.each { |movement| game.send_move(movement) }
 
     last_square = board.files[4][3]
 

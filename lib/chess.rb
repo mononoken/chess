@@ -24,43 +24,35 @@ class Chess
   end
 
   def run_rounds
-    new_run_round until game_over?
+    run_round until game_over?
   end
 
   def game_over?
     board.checkmate?(players.current)
   end
 
-  def new_run_round
-    puts board
-    new_send_move(build_movement)
-    players.swap
-  end
-
   def run_round
     puts board
-    movement = build_movement
-    send_move(movement.origin, movement.destination)
+    send_move(player_movement)
     players.swap
   end
 
-  def build_movement(origin = player_origin, destination = player_destination(origin), movement = Movement)
-    movement.new(origin, board, destination)
-  end
-
-  def new_send_move(movement)
+  def send_move(movement)
+    # This clause may not belong here.
     raise InvalidDestinationError unless movement.destination.valid_destination?(movement.origin, board)
 
-    board.new_move(movement)
-  end
-
-  def send_move(origin, destination)
-    raise InvalidDestinationError unless destination.valid_destination?(origin, board)
-
-    board.move(origin, destination)
+    board.move(movement)
   end
 
   private
+
+  def player_movement
+    build_movement(origin = player_origin, player_destination(origin))
+  end
+
+  def build_movement(origin, destination, movement = Movement)
+    movement.new(board:, origin:, destination:)
+  end
 
   def player_origin
     loop do

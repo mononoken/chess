@@ -11,18 +11,22 @@ RSpec.describe 'Solo Rook API' do
 
     rook = Rook.new
 
-    origin = Position.from_a([4, 2])
+    origin = board.position(:e3)
 
     board.populate(rook, origin)
 
-    invalid_destination = Position.from_a([5, 5])
+    invalid_destination = board.position(:f6)
 
-    expect { game.send_move(origin, invalid_destination) }
+    invalid_movement = Movement.new(origin:, destination: invalid_destination, board:)
+
+    expect { game.send_move(invalid_movement) }
       .to raise_error(Chess::InvalidDestinationError)
 
-    valid_destination = Position.from_a([4, 4])
+    valid_destination = board.position(:e5)
 
-    expect { game.send_move(origin, valid_destination) }
+    valid_movement = Movement.new(board:, origin:, destination: valid_destination)
+
+    expect { game.send_move(valid_movement) }
       .not_to raise_error
   end
 
@@ -33,11 +37,15 @@ RSpec.describe 'Solo Rook API' do
 
     rook = Rook.new
 
-    board.populate(rook, Position.from_a([0, 0]))
+    board.populate(rook, board.position(:a1))
 
-    game.send_move(Position.from_a([0, 0]), Position.from_a([0, 1]))
-    game.send_move(Position.from_a([0, 1]), Position.from_a([0, 3]))
-    game.send_move(Position.from_a([0, 3]), Position.from_a([0, 7]))
+    movements = [
+      Movement.new(board:, origin: board.position(:a1), destination: board.position(:a2)),
+      Movement.new(board:, origin: board.position(:a2), destination: board.position(:a4)),
+      Movement.new(board:, origin: board.position(:a4), destination: board.position(:a8))
+    ]
+
+    movements.each { |movement| game.send_move(movement) }
 
     last_square = board.files[0][7]
 
