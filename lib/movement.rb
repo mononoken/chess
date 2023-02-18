@@ -28,6 +28,10 @@ class Movement
     @destination = destination
   end
 
+  def promotion?
+    piece.promotable? && piece.promotion_position?(destination)
+  end
+
   # Returns true if the provided destination exists in #destinations.
   def valid_destination?(destination)
     if piece.castling_rights?

@@ -41,7 +41,7 @@ class Chess
     # This clause may not belong here.
     raise InvalidDestinationError unless movement.destination.valid_destination?(movement.origin, board)
 
-    board.move(movement)
+    board.process_movement(movement)
   end
 
   private

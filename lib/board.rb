@@ -33,6 +33,17 @@ class Board
     positions.algebraics
   end
 
+  def process_movement(movement)
+    if movement.promotion?
+      # populate(movement.promotion_choice, movement.destination)
+      populate(content.promotion_choice.new(content.color), movement.destination)
+    # elsif movement&.castling?
+      # castling_move(movement)
+    else
+      move(movement)
+    end
+  end
+
   def move(movement)
     raise EmptyOriginError if square(movement.origin).empty?
 
@@ -40,15 +51,7 @@ class Board
 
     record_move(content)
 
-    if content.promotable? && content.promotion_position?(movement.destination)
-      populate(content.promotion_choice.new(content.color), movement.destination)
-    # if movement.promotion?
-    #   populate(movement.promotion_choice, movement.destination)
-    # elsif movement&.castling?
-      # castling_move(movement)
-    else
-      populate(content, movement.destination)
-    end
+    populate(content, movement.destination)
   end
 
   def record_move(piece)
