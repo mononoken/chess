@@ -37,8 +37,9 @@ class Board
     if movement.promotion?
       # populate(movement.promotion_choice, movement.destination)
       populate(content.promotion_choice.new(content.color), movement.destination)
-    # elsif movement&.castling?
-      # castling_move(movement)
+    elsif movement&.castling?
+      move(movement)
+      move(movement.castling_movement)
     else
       move(movement)
     end

@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+require_relative './null_object'
+
+# NullObject for Movement
+class NullMovement < NullObject; end
+
 # Think this may actually become a subclass of Movement.
 module Castling
   WHITE_CASTLING_ALGEBRAICS = %i[c1 g1].freeze
@@ -32,9 +37,31 @@ module Castling
     g8: %i[f8 g8]
   }.freeze
 
-  # def castling?(piece, board, destination)
-  #   valid_castling_positions(piece, board).any?(destination)
-  # end
+  def castling_movement
+    return NullMovement.new unless castling?
+
+    self.class.new(board:, origin: castling_rook_origin, destination: castling_rook_destination)
+  end
+
+  def castling_rook_destination
+    board.positions.find { |position| position.algebraic == castling_rook_destination_algebraic }
+  end
+
+  def castling_rook_destination_algebraic
+    CASTLING_ROOK_DESTINATIONS[destination.algebraic]
+  end
+
+  def castling_rook_origin
+    board.positions.find { |position| position.algebraic == castling_rook_origin_algebraic }
+  end
+
+  def castling_rook_origin_algebraic
+    CASTLING_ROOK_ORIGINS[destination.algebraic]
+  end
+
+  def castling?(piece = self.piece, board = self.board, destination = self.destination)
+    @castling ||= piece.castling_rights? && valid_castling_positions(piece, board).any?(destination)
+  end
 
   def valid_castling_positions(piece, board)
     castling_positions(piece, board).filter { |position| valid_castling_position?(position, piece, board) }
@@ -74,9 +101,9 @@ module Castling
   def castling_king_origin(piece, board)
     case piece.color
     when :white
-      board.positions.position(WHITE_KING_ORIGIN_ALGEBRAIC)
+      board.position(WHITE_KING_ORIGIN_ALGEBRAIC)
     when :black
-      board.position.position(BLACK_KING_ORIGIN_ALGEBRAIC)
+      board.position(BLACK_KING_ORIGIN_ALGEBRAIC)
     end
   end
 

@@ -100,13 +100,7 @@ class Position
   end
 end
 
-# Nullobject pattern for Position that is instantiated in Positions.
-class NullPosition
-  def method_missing(method, *args, &block)
-    respond_to?(method) ? nil : super
-  end
+require_relative './null_object'
 
-  def respond_to_missing?(_name, _include_private = false)
-    true
-  end
-end
+# NullObject for Position
+class NullPosition < NullObject; end
