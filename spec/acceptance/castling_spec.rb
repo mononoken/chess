@@ -44,7 +44,7 @@ RSpec.describe 'Castling API' do
 
     it 'changes content of d1 to rook' do
       expect { chess.send_move(movement) }
-        .to change(d1.square.content)
+        .to change { d1.square.content }
         .from(nil)
         .to(rook)
     end

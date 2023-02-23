@@ -70,11 +70,6 @@ class Board
     square(position).fill(piece)
   end
 
-  # IMPLEMENT? FIX_ME
-  def populate_algebraic(piece, algebraic_position)
-    square(position).fill(piece)
-  end
-
   def piece_position(piece)
     positions.piece_position(piece)
   end

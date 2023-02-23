@@ -33,6 +33,7 @@ class Chess
 
   def run_round
     puts board
+    puts "#{players.current.capitalize}'s turn."
     send_move(player_movement)
     players.swap
   end
@@ -55,22 +56,26 @@ class Chess
   end
 
   def player_origin
+    puts 'Enter origin using algebraic coordinates (e.g. d2)'
     loop do
-      puts 'Enter origin using algebraic coordinates (e.g. d2)'
       input = gets.chomp
       origin = board.positions.position(input.to_sym)
 
       return origin if origin.valid_origin?(players.current, board)
+
+      puts 'Invalid origin! Please enter a valid origin:'
     end
   end
 
   def player_destination(origin)
+    puts 'Enter destination using algebraic coordinates (e.g. d4)'
     loop do
-      puts 'Enter destination using algebraic coordinates (e.g. d4)'
       input = gets.chomp
       destination = board.positions.position(input.to_sym)
 
       return destination if destination.valid_destination?(origin, board)
+
+      puts 'Invalid destination! Please enter a valid destination:'
     end
   end
 
