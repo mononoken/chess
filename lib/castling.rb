@@ -8,8 +8,8 @@ class NullMovement < NullObject; end
 # Think this may actually become a subclass of Movement.
 module Castling
   WHITE_CASTLING_ALGEBRAICS = %i[c1 g1].freeze
-  WHITE_KING_ORIGIN_ALGEBRAIC = :e1
   BLACK_CASTLING_ALGEBRAICS = %i[c8 g8].freeze
+  WHITE_KING_ORIGIN_ALGEBRAIC = :e1
   BLACK_KING_ORIGIN_ALGEBRAIC = :e8
 
   CASTLING_ROOK_ORIGINS = {

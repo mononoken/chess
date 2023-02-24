@@ -9,4 +9,5 @@ group :development do
   gem 'pry',        '0.14.2'
   gem 'pry-byebug', '3.10.1'
   gem 'solargraph', '0.48.0'
+  gem 'simplecov', require: false
 end

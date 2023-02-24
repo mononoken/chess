@@ -1,3 +1,5 @@
 .solargraph.yml
 PSEUDO.md
 LOG.md
+lib/pieces/piece.rb
+coverage

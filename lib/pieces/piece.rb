@@ -33,6 +33,7 @@ class Piece
   end
 
   def take_first_move
+    # first_move_taken? = true
     self.first_move_taken = true
   end
 
