@@ -5,7 +5,128 @@ require_relative './square'
 require_relative './check_status'
 require_relative './positions'
 
-# Stores and manipulates Squares in a 2-D array, organized into 'files'.
+# Process Movement objects to manipulate Positions.
+class NewBoard
+  # Instantiate a notional board that makes the given move.
+  def self.future_board(board, origin, destination)
+    future_board = new(positions: Marshal.load(Marshal.dump(board.positions)))
+    future_board.hypothetical_move(origin, destination)
+    future_board
+  end
+
+  include ChessErrors
+  include CheckStatus
+
+  attr_reader :positions
+
+  def initialize(positions: Positions.new, piece_types: nil)
+    @positions = positions
+    init_piece_types(piece_types)
+  end
+
+  def position(algebraic)
+    positions.position(algebraic)
+  end
+
+  def positions_algebraics
+    positions.algebraics
+  end
+
+  def process_movement(movement)
+    if movement.promotion?
+      # populate(movement.promotion_choice, movement.destination)
+      populate(content.promotion_choice.new(content.color), movement.destination)
+    elsif movement&.castling?
+      move(movement)
+      move(movement.castling_movement)
+    else
+      move(movement)
+    end
+  end
+
+  def move(movement)
+    raise EmptyOriginError if movement.origin.nil_piece?
+
+    content = movement.origin.empty
+
+    record_move(content)
+
+    populate(content, movement.destination)
+  end
+
+  def record_move(piece)
+    piece.take_first_move unless piece.first_move_taken?
+  end
+
+  # move without promotion to avoid promotion prompt for future_boards.
+  def hypothetical_move(origin, destination)
+    populate(origin.empty, destination)
+  end
+
+  def populate(piece, position)
+    position.piece = piece
+  end
+
+  def piece_position(piece)
+    positions.piece_position(piece)
+  end
+
+  def occupied_positions(color = nil)
+    positions.occupied_positions(color)
+  end
+
+  def piece(position)
+    position.piece
+  end
+
+  def to_s
+    rank_color_cycles = [%i[light dark].cycle, %i[dark light].cycle].cycle
+
+    "   a  b  c  d  e  f  g  h\n#{ranks.reverse.map do |rank|
+      "#{rank_label(rank)} #{rank_to_s(rank, rank_color_cycles.next)} #{rank_label(rank)}\n"
+    end.join}   a  b  c  d  e  f  g  h"
+  end
+
+  private
+
+  def rank_to_s(rank, square_color_cycle = %i[dark light].cycle)
+    rank.reduce(+'') do |rank_s, position|
+      rank_s << position.to_s(square_color_cycle&.next)
+    end
+  end
+
+  def rank_label(rank_array)
+    rank_array.first.rank_algebraic
+  end
+
+  def ranks
+    positions.ranks
+  end
+
+  def files
+    positions.files
+  end
+
+  def file(index)
+    files[index]
+  end
+
+  def rank(index)
+    ranks[index]
+  end
+
+  # Places piece types at start positions if piece_types is given.
+  def init_piece_types(piece_types)
+    piece_types&.each { |piece_type| init_start_positions(piece_type) }
+  end
+
+  def init_start_positions(piece_type)
+    piece_type.start_positions.each do |start_position|
+      populate(piece_type.new(start_position.color), Position.from_a(start_position.position))
+    end
+  end
+end
+
 class Board
   # Instantiate a notional board that makes the given move.
   def self.future_board(board, origin, destination)

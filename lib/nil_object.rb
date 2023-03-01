@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Used for NullObject design pattern
-class NullObject
+# Used for NilObject design pattern
+class NilObject
   def method_missing(method, *args, &block)
     respond_to?(method) ? nil : super
   end

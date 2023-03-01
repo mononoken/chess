@@ -6,22 +6,25 @@ require 'forwardable'
 
 # Manage an array of position objects.
 class Positions
+  CHESS_FILE_INDECES = (0..7).to_a.freeze
+  CHESS_RANK_INDECES = (0..7).to_a.freeze
+
   extend Forwardable
   def_delegators :@positions, :any?, :filter, :find, :map, :reject
   include Enumerable
 
   attr_reader :positions
 
-  def initialize(positions)
+  def initialize(positions = default_chess_positions)
     @positions = positions
   end
 
   def position(algebraic)
-    find { |position| position.algebraic == algebraic } || NullPosition.new
+    find { |position| position.algebraic == algebraic } || NilPosition.new
   end
 
   def find_square(square)
-    find { |position| position.square == square } || NullPosition.new
+    find { |position| position.square == square } || NilPosition.new
   end
 
   def algebraics
@@ -29,7 +32,7 @@ class Positions
   end
 
   def piece_position(piece)
-    find { |position| position.square.content == piece } || NullPosition.new
+    find { |position| position.square.content == piece } || NilPosition.new
   end
 
   def occupied_positions(color = nil)
@@ -38,6 +41,24 @@ class Positions
     else
       filter { |position| position.piece_color?(color) }
     end
+  end
+
+  def files
+    positions.group_by(&:file_index)
+  end
+
+  def ranks
+    positions.group_by(&:rank_index)
+  end
+
+  def default_chess_positions
+    chess_index_pairs.map do |file_index, rank_index|
+      NewPosition.new(file_index:, rank_index:)
+    end
+  end
+
+  def chess_index_pairs
+    CHESS_FILE_INDECES.product(CHESS_RANK_INDECES)
   end
 end
 

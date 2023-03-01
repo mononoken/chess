@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './null_object'
+require_relative './nil_object'
 
-# NullObject for Movement
-class NullMovement < NullObject; end
+# NilObject for Movement
+class NilMovement < NilObject; end
 
 # Think this may actually become a subclass of Movement.
 module Castling
@@ -38,7 +38,7 @@ module Castling
   }.freeze
 
   def castling_movement
-    return NullMovement.new unless castling?
+    return NilMovement.new unless castling?
 
     self.class.new(board:, origin: castling_rook_origin, destination: castling_rook_destination)
   end
@@ -70,7 +70,7 @@ module Castling
   def castling_positions(piece, board)
     castling_algebraics(piece).map do |algebraic|
       board.positions.position(algebraic)
-    end.filter { |position| position.class != NullPosition }
+    end.filter { |position| position.class != NilPosition }
   end
 
   def castling_algebraics(piece)

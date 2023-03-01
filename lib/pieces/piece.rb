@@ -88,3 +88,9 @@ class Piece
 
   attr_accessor :first_move_taken
 end
+
+class NilPiece < NilObject
+  def to_s
+    '   '
+  end
+end
