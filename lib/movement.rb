@@ -3,6 +3,8 @@
 require_relative './path'
 require_relative './castling'
 
+require 'pry-byebug'
+
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
 class Movement
@@ -70,6 +72,7 @@ class Movement
   end
 
   def paths(directions = step_directions, path = Path)
+    binding.pry
     directions.map { |step| path.positions(origin:, board:, step:) }
   end
 
@@ -97,6 +100,6 @@ class Movement
   end
 
   def piece
-    @piece ||= board.piece(origin)
+    @piece ||= origin.piece
   end
 end

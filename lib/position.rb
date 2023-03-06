@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require_relative './colorable_string'
 require_relative './chess_errors'
 require_relative './nil_object'
+require_relative './pieces/piece'
 
 # NilObject for Position
 class NilPosition < NilObject; end
@@ -13,15 +15,15 @@ module Originable
   end
 
   def valid_color?(player_color)
-    square.content&.color == player_color
+    piece.color == player_color
   end
 
   def destinations?(board)
     destinations(board).any?
   end
 
-  def destinations(board, movement = Movement)
-    movement.valid_destinations(self, board)
+  def destinations(board, movement_class = Movement)
+    movement_class.valid_destinations(self, board)
   end
 end
 
@@ -29,8 +31,16 @@ require_relative './movement'
 
 # Check if object meets the valid_destination? requirement.
 module Destinationable
-  def valid_destination?(origin, board, movement = Movement)
-    movement.valid_destination?(self, origin, board)
+  def valid_destination?(origin, board, movement_class = Movement)
+    movement_class.valid_destination?(self, origin, board)
+  end
+
+  def valid_destinations(board, movement_class = Movement)
+    movement_class.valid_destinations(self, board)
+  end
+
+  def paths_positions(board, movement_class = Movement)
+    movement_class.paths_positions(self, board)
   end
 end
 
@@ -53,29 +63,31 @@ module Algebraic
 end
 
 # Tracks the piece at a specified file index and rank index pair.
-class NewPosition
-  # Used in Board
-  def self.from_a(array)
-    new(file_index: array[0], rank_index: array[1])
-  end
+class Position
+  using ColorableString
 
   include ChessErrors
   include Algebraic
   include Originable
   include Destinationable
 
-  attr_reader :file_index, :rank_index
+  attr_reader :file_index, :rank_index, :square_color
   attr_accessor :piece
 
   # Files are columns (vertical); ranks are rows (horizontal).
-  def initialize(file_index:, rank_index:, piece: nil)
+  def initialize(file_index:, rank_index:, square_color: nil, piece: NilPiece.new)
     @file_index = file_index
     @rank_index = rank_index
+    @square_color = square_color
     @piece = piece
   end
 
   def fill(piece)
     self.piece = piece
+  end
+
+  def empty?
+    piece.instance_of?(NilPiece)
   end
 
   def empty
@@ -92,46 +104,16 @@ class NewPosition
     other.file_index == file_index && other.rank_index == rank_index
   end
 
-  def step(step)
-    self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
-  end
-end
+  # def step(step)
+  #   self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
+  # end
 
-class Position
-  # Used in Board
-  def self.from_a(array)
-    new(file_index: array[0], rank_index: array[1])
+  def step(step, board)
+    position = self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
+    board.position(position.algebraic)
   end
 
-  include ChessErrors
-  include Algebraic
-  include Originable
-  include Destinationable
-
-  attr_reader :file_index, :rank_index
-
-  def initialize(file_index:, rank_index:, square: nil, piece: nil)
-    @file_index = file_index
-    @rank_index = rank_index
-    @square = square
-    @piece = piece
-  end
-
-  def square(board = nil)
-    return @square if board.nil?
-
-    board.square(self)
-  end
-
-  def piece_color?(color)
-    square.piece_color?(color)
-  end
-
-  def ==(other)
-    other.file_index == file_index && other.rank_index == rank_index
-  end
-
-  def step(step)
-    self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
+  def to_s
+    " #{piece.to_s.chomp("\e[0m")} ".bg_color(square_color)
   end
 end

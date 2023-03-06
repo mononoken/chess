@@ -5,10 +5,10 @@ require_relative './piece'
 class Knight < Piece
   def self.start_positions
     [
-      StartPosition.new(position: [1, 0], color: :white),
-      StartPosition.new(position: [6, 0], color: :white),
-      StartPosition.new(position: [1, 7], color: :black),
-      StartPosition.new(position: [6, 7], color: :black)
+      StartPosition.new(position: [1, 0], algebraic: :b1, color: :white),
+      StartPosition.new(position: [6, 0], algebraic: :g1, color: :white),
+      StartPosition.new(position: [1, 7], algebraic: :b8, color: :black),
+      StartPosition.new(position: [6, 7], algebraic: :g8, color: :black)
     ]
   end
 

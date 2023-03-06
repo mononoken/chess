@@ -51,8 +51,8 @@ class Chess
     build_movement(origin = player_origin, player_destination(origin))
   end
 
-  def build_movement(origin, destination, movement = Movement)
-    movement.new(board:, origin:, destination:)
+  def build_movement(origin, destination, movement_class = Movement)
+    movement_class.new(board:, origin:, destination:)
   end
 
   def player_origin

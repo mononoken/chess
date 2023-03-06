@@ -3,7 +3,7 @@
 require_relative '.././colorable_string'
 
 # Store start positions with their matching color.
-StartPosition = Struct.new(:position, :color, keyword_init: true)
+StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
 
 # Pieces for chess that store piece move behavior.
 class Piece
@@ -91,6 +91,6 @@ end
 
 class NilPiece < NilObject
   def to_s
-    '   '
+    ' '
   end
 end

@@ -45,14 +45,13 @@ class Path
 
   # This method should be renamed.
   def valid_take?(position)
-    # binding.pry
-    board.occupied_positions.any?(position) && board.piece(position)&.color == piece.opponent_color
+    board.occupied_positions.any?(position) && position.piece.color == piece.opponent_color
   end
 
   private
 
   def next_position(position, step)
-    position.step(step)
+    position.step(step, board)
   end
 
   def valid_move?(position)
@@ -86,6 +85,6 @@ class Path
   end
 
   def piece
-    @piece ||= board.piece(origin)
+    @piece ||= origin.piece
   end
 end

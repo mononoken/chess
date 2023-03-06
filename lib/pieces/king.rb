@@ -5,8 +5,8 @@ require_relative './piece'
 class King < Piece
   def self.start_positions
     [
-      StartPosition.new(position: [4, 0], color: :white),
-      StartPosition.new(position: [4, 7], color: :black)
+      StartPosition.new(position: [4, 0], algebraic: :e1, color: :white),
+      StartPosition.new(position: [4, 7], algebraic: :e8, color: :black)
     ]
   end
 

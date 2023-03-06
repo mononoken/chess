@@ -5,10 +5,10 @@ require_relative './piece'
 class Bishop < Piece
   def self.start_positions
     [
-      StartPosition.new(position: [2, 0], color: :white),
-      StartPosition.new(position: [5, 0], color: :white),
-      StartPosition.new(position: [2, 7], color: :black),
-      StartPosition.new(position: [5, 7], color: :black)
+      StartPosition.new(position: [2, 0], algebraic: :c1, color: :white),
+      StartPosition.new(position: [5, 0], algebraic: :f1, color: :white),
+      StartPosition.new(position: [2, 7], algebraic: :c8, color: :black),
+      StartPosition.new(position: [5, 7], algebraic: :f8, color: :black)
     ]
   end
 

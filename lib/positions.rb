@@ -6,11 +6,11 @@ require 'forwardable'
 
 # Manage an array of position objects.
 class Positions
-  CHESS_FILE_INDECES = (0..7).to_a.freeze
-  CHESS_RANK_INDECES = (0..7).to_a.freeze
+  FILE_INDECES = (0..7).to_a.freeze
+  RANK_INDECES = (0..7).to_a.freeze
 
   extend Forwardable
-  def_delegators :@positions, :any?, :filter, :find, :map, :reject
+  def_delegators :@positions, :any?, :filter, :filter_map, :find, :map, :reject
   include Enumerable
 
   attr_reader :positions
@@ -32,12 +32,12 @@ class Positions
   end
 
   def piece_position(piece)
-    find { |position| position.square.content == piece } || NilPosition.new
+    find { |position| position.piece == piece } || NilPosition.new
   end
 
   def occupied_positions(color = nil)
     if color.nil?
-      reject { |position| position.square.empty? }
+      reject(&:empty?)
     else
       filter { |position| position.piece_color?(color) }
     end
@@ -52,32 +52,13 @@ class Positions
   end
 
   def default_chess_positions
-    chess_index_pairs.map do |file_index, rank_index|
-      NewPosition.new(file_index:, rank_index:)
+    color_cycle = %i[
+      dark light dark light dark light dark light
+      light dark light dark light dark light dark
+    ].cycle
+
+    FILE_INDECES.product(RANK_INDECES).map do |file_index, rank_index|
+      Position.new(file_index:, rank_index:, square_color: color_cycle.next)
     end
-  end
-
-  def chess_index_pairs
-    CHESS_FILE_INDECES.product(CHESS_RANK_INDECES)
-  end
-end
-
-# Create instances of Positions.
-module PositionsFactory
-  def self.build(files, positions_class = Positions)
-    positions_class.new(positions_array(files))
-  end
-
-  # Create positions array from 2D array from Chess board files.
-  def self.positions_array(files)
-    files.each_with_object([]).with_index do |(file, positions), file_index|
-      file.each_with_index do |square, rank_index|
-        positions << new_position(file_index:, rank_index:, square:)
-      end
-    end
-  end
-
-  def self.new_position(file_index:, rank_index:, square:, position_class: Position)
-    position_class.new(file_index:, rank_index:, square:)
   end
 end
