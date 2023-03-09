@@ -46,13 +46,14 @@ module CheckStatus
 
   def all_valid_destinations(color)
     positions.filter_map do |position|
-      position.valid_destinations(self) if position.piece.color == color
+      position.valid_destinations(self) if position.piece_color?(color)
     end.flatten(1).uniq
   end
 
+  # This appears to be broken
   def all_attacks(color)
     positions.filter_map do |position|
-      position.paths_positions(self) if position.piece.color == color
+      position.paths_positions(self) if position.piece_color?(color)
     end.flatten(1).uniq
   end
 

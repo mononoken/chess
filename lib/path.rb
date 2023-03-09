@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative './position'
-
 # List valid destination positions in one direction on a board for an origin (with a piece).
 class Path
   def self.positions(origin:, board:, step:)
@@ -12,64 +10,51 @@ class Path
     new(origin:, board:).take_positions(step:)
   end
 
-  attr_reader :origin, :board
+  attr_reader :board, :origin
 
-  def initialize(origin:, board:)
-    @origin = origin
+  def initialize(board:, origin:)
     @board = board
-  end
-
-  def take_positions(step:, position: origin, steps: 0)
-    next_position = next_position(position, step)
-
-    if valid_take?(next_position) && within_step_limit?(steps)
-      [next_position]
-    else
-      []
-    end
+    @origin = origin
   end
 
   # Return an array of Position objects based on step using recursion.
   def positions(step:, position: origin, steps: 0)
-    next_position = next_position(position, step)
+    return [] unless within_step_limit?(steps)
 
-    if valid_move?(next_position) && within_step_limit?(steps)
+    next_position = position.step(step, board)
+
+    if valid_move?(next_position)
       steps += 1
       [next_position] + positions(step:, position: next_position, steps:)
-    elsif valid_take?(next_position) && within_step_limit?(steps) && piece.step_take?
+    elsif valid_take?(next_position) && piece.step_take?
       [next_position]
     else
       []
     end
   end
 
-  # This method should be renamed.
-  def valid_take?(position)
-    board.occupied_positions.any?(position) && position.piece.color == piece.opponent_color
+  def take_positions(step:, position: origin, steps: 0)
+    positions(step:, position:, steps:).filter do |a_position|
+      a_position.piece_color?(piece.opponent_color)
+    end
   end
 
   private
 
-  def next_position(position, step)
-    position.step(step, board)
+  # This method should be renamed.
+  def valid_take?(position)
+    # empty check should not be necessary
+    !position.empty? && position.piece_color?(piece.opponent_color)
   end
 
   def valid_move?(position)
-    within_positions?(position) && unoccupied_position?(position)
-  end
-
-  def valid_position?(position)
-    within_positions?(position) && board.occupied_positions.none?(position)
+    within_positions?(position) && position.empty?
   end
 
   def within_step_limit?(steps)
     return true if step_limit.nil?
 
     steps < step_limit
-  end
-
-  def unoccupied_position?(position)
-    board.occupied_positions.none?(position)
   end
 
   def within_positions?(position)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './path'
+require_relative './position'
 require_relative './castling'
 
 require 'pry-byebug'
@@ -16,17 +17,18 @@ class Movement
     new(origin:, board:).valid_destinations
   end
 
+  # This appears to be broken
   def self.paths_positions(origin, board)
     new(origin:, board:).paths_positions
   end
 
   include Castling
 
-  attr_reader :origin, :board, :destination
+  attr_reader :board, :origin, :destination
 
-  def initialize(board:, origin:, destination: nil)
-    @origin = origin
+  def initialize(board:, origin:, destination: NilPosition.new)
     @board = board
+    @origin = origin
     @destination = destination
   end
 
@@ -71,9 +73,10 @@ class Movement
     paths.flatten(1)
   end
 
-  def paths(directions = step_directions, path = Path)
-    binding.pry
-    directions.map { |step| path.positions(origin:, board:, step:) }
+  def paths(directions = step_directions, path_class = Path)
+    binding.pry if directions.nil?
+
+    directions.map { |step| path_class.positions(origin:, board:, step:) }
   end
 
   def filter_checks_own_king_positions(positions)

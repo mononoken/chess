@@ -86,6 +86,10 @@ class Position
     self.piece = piece
   end
 
+  def piece_color?(color)
+    piece.color == color
+  end
+
   def empty?
     piece.instance_of?(NilPiece)
   end

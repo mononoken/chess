@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './position'
+require_relative './pieces/piece'
 
 require 'forwardable'
 
@@ -58,7 +59,8 @@ class Positions
     ].cycle
 
     FILE_INDECES.product(RANK_INDECES).map do |file_index, rank_index|
-      Position.new(file_index:, rank_index:, square_color: color_cycle.next)
+      Position.new(file_index:, rank_index:, piece: NilPiece.new,
+                   square_color: color_cycle.next)
     end
   end
 end
