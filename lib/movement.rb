@@ -73,12 +73,12 @@ class Movement
     paths.flatten(1)
   end
 
+  # step_directions is failing because steps are arrays
   def paths(directions = step_directions, path_class = Path)
-    binding.pry if directions.nil?
-
     directions.map { |step| path_class.positions(origin:, board:, step:) }
   end
 
+  # Problem here with :black player auto checkmate
   def filter_checks_own_king_positions(positions)
     positions.filter { |position| !destination_checks_own_king?(position) }
   end

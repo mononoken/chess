@@ -24,9 +24,14 @@ class Positions
     find { |position| position.algebraic == algebraic } || NilPosition.new
   end
 
-  def find_square(square)
-    find { |position| position.square == square } || NilPosition.new
+  # DELETE_ME
+  def position_position(position)
+    find { |a_position| a_position == position } || NilPosition.new
   end
+
+  # def find_square(square)
+  #   find { |position| position.square == square } || NilPosition.new
+  # end
 
   def algebraics
     map(&:algebraic)

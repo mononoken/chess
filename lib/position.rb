@@ -14,6 +14,8 @@ module Originable
     valid_color?(player_color) && destinations?(board)
   end
 
+  private
+
   def valid_color?(player_color)
     piece.color == player_color
   end
@@ -35,6 +37,7 @@ module Destinationable
     movement_class.valid_destination?(self, origin, board)
   end
 
+  # FIX_ME: Currently, pieces are able to jump outside of border to the other side of board.
   def valid_destinations(board, movement_class = Movement)
     movement_class.valid_destinations(self, board)
   end
@@ -82,12 +85,12 @@ class Position
     @piece = piece
   end
 
-  def fill(piece)
-    self.piece = piece
+  def nil_piece?
+    piece.is_a?(NilPiece)
   end
 
-  def piece_color?(color)
-    piece.color == color
+  def fill(piece)
+    self.piece = piece
   end
 
   def empty?
@@ -113,8 +116,11 @@ class Position
   # end
 
   def step(step, board)
+    # Is this where step is fucking up? Possibly in algebraic
     position = self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
     board.position(position.algebraic)
+    # board.positions.find { |board_position| board_position == position }
+    board.positions.position_position(position)
   end
 
   def to_s

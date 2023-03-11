@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require_relative './chess_errors'
-require_relative './square'
 require_relative './check_status'
 require_relative './positions'
 
-# Process Movement objects to manipulate Positions.
+# Processes Movement objects to manipulate Positions.
 class Board
   include ChessErrors
   include CheckStatus

@@ -95,7 +95,7 @@ module Castling
 
   # first_move_taken? rename to inverse and shorten name?
   def castling_pieces_unmoved?(castling_algebraic, piece, board)
-    !castling_king_origin(piece, board)&.square&.content&.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic])&.square&.content&.first_move_taken?
+    !castling_king_origin(piece, board).piece.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic]).piece.first_move_taken?
   end
 
   def castling_king_origin(piece, board)
@@ -110,7 +110,7 @@ module Castling
   def no_pieces_between?(castling_algebraic, board)
     CASTLING_BETWEEN_POSITIONS[castling_algebraic].map do |algebraic|
       board.positions.position(algebraic)
-    end.all? { |position| position.square.empty? }
+    end.all? { |position| position.nil_piece? }
   end
 
   # def king_in_check?

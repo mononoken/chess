@@ -9,7 +9,9 @@ module CheckStatus
   # Instantiate a notional board that makes the given move.
   def future_board(origin, destination)
     future_board = self.class.new(positions: Marshal.load(Marshal.dump(positions)))
-    future_board.hypothetical_move(origin, destination)
+    future_origin = future_board.position(origin.algebraic)
+    future_destination = future_board.position(destination.algebraic)
+    future_board.hypothetical_move(future_origin, future_destination)
     future_board
   end
 
@@ -18,9 +20,17 @@ module CheckStatus
     populate(origin.empty, destination)
   end
 
+  # Possible problem creator
   def checkmate?(piece_color)
     check?(piece_color) && all_valid_destinations(piece_color).empty?
   end
+
+  # def checkmate?(piece_color)
+  #   result = check?(piece_color) && all_valid_destinations(piece_color).empty?
+
+  #   binding.pry if result == true
+  #   result
+  # end
 
   # def check?(piece_color)
   #   king = king(piece_color)
@@ -31,9 +41,16 @@ module CheckStatus
 
   def check?(piece_color)
     king = king(piece_color)
-    return false if king.nil?
+    return false if king.nil? || king.is_a?(NilPiece)
 
     all_attacks(king.opponent_color).any?(piece_position(king))
+  end
+
+  # This appears to be broken
+  def all_attacks(color)
+    positions.filter_map do |position|
+      position.paths_positions(self) if position.piece_color?(color)
+    end.flatten(1).uniq
   end
 
   def piece_position(piece)
@@ -47,13 +64,6 @@ module CheckStatus
   def all_valid_destinations(color)
     positions.filter_map do |position|
       position.valid_destinations(self) if position.piece_color?(color)
-    end.flatten(1).uniq
-  end
-
-  # This appears to be broken
-  def all_attacks(color)
-    positions.filter_map do |position|
-      position.paths_positions(self) if position.piece_color?(color)
     end.flatten(1).uniq
   end
 
