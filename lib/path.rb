@@ -34,8 +34,12 @@ class Path
   end
 
   def take_positions(step:, position: origin, steps: 0)
-    positions(step:, position:, steps:).filter do |a_position|
-      a_position.piece_color?(piece.opponent_color)
+    next_position = position.step(step, board)
+
+    if valid_take?(next_position) && within_step_limit?(steps)
+      [next_position]
+    else
+      []
     end
   end
 

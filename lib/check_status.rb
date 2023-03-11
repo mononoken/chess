@@ -20,24 +20,9 @@ module CheckStatus
     populate(origin.empty, destination)
   end
 
-  # Possible problem creator
   def checkmate?(piece_color)
     check?(piece_color) && all_valid_destinations(piece_color).empty?
   end
-
-  # def checkmate?(piece_color)
-  #   result = check?(piece_color) && all_valid_destinations(piece_color).empty?
-
-  #   binding.pry if result == true
-  #   result
-  # end
-
-  # def check?(piece_color)
-  #   king = king(piece_color)
-  #   # return false if king.nil? Remove because of NilPiece
-
-  #   all_attacks(king.opponent_color).any?(piece_position(king))
-  # end
 
   def check?(piece_color)
     king = king(piece_color)

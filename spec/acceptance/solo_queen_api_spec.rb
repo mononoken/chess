@@ -47,8 +47,8 @@ RSpec.describe 'Solo Queen API' do
 
     movements.each { |movement| game.send_move(movement) }
 
-    last_square = board.files[0][4]
+    last_position = board.position(:a5)
 
-    expect(last_square.content).to eq(queen)
+    expect(last_position.piece).to eq(queen)
   end
 end

@@ -4,8 +4,6 @@ require_relative './path'
 require_relative './position'
 require_relative './castling'
 
-require 'pry-byebug'
-
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
 class Movement
@@ -17,7 +15,6 @@ class Movement
     new(origin:, board:).valid_destinations
   end
 
-  # This appears to be broken
   def self.paths_positions(origin, board)
     new(origin:, board:).paths_positions
   end
@@ -46,7 +43,6 @@ class Movement
   end
 
   # Array of valid move destination positions for the piece of the origin.
-  # Conditional should be removable here, right?
   def valid_destinations
     filter_checks_own_king_positions(paths_positions)
   end
@@ -61,24 +57,22 @@ class Movement
     paths + take_paths
   end
 
-  def take_paths(path = Path)
-    take_directions.map { |step| path.take_positions(origin:, board:, step:) }
+  def paths_to_positions(paths)
+    paths.flatten(1)
+  end
+
+  def take_paths(path_class = Path)
+    take_directions.map { |step| path_class.take_positions(origin:, board:, step:) }
   end
 
   def take_directions
     piece.take_directions
   end
 
-  def paths_to_positions(paths)
-    paths.flatten(1)
+  def paths(path_class = Path)
+    step_directions.map { |step| path_class.positions(origin:, board:, step:) }
   end
 
-  # step_directions is failing because steps are arrays
-  def paths(directions = step_directions, path_class = Path)
-    directions.map { |step| path_class.positions(origin:, board:, step:) }
-  end
-
-  # Problem here with :black player auto checkmate
   def filter_checks_own_king_positions(positions)
     positions.filter { |position| !destination_checks_own_king?(position) }
   end

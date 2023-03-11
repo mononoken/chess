@@ -47,8 +47,8 @@ RSpec.describe 'new Solo Bishop API' do
 
     movements.each { |movement| game.send_move(movement) }
 
-    last_square = board.files[7][7]
+    last_position = board.position(:h8)
 
-    expect(last_square.content).to eq(bishop)
+    expect(last_position.piece).to eq(bishop)
   end
 end

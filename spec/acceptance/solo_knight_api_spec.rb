@@ -56,8 +56,8 @@ RSpec.describe 'Solo Knight API' do
 
     movements.each { |movement| game.send_move(movement) }
 
-    last_square = board.files[4][3]
+    last_position = board.position(:e4)
 
-    expect(last_square.content).to eq(knight)
+    expect(last_position.piece).to eq(knight)
   end
 end

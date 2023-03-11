@@ -112,10 +112,4 @@ module Castling
       board.positions.position(algebraic)
     end.all? { |position| position.nil_piece? }
   end
-
-  # def king_in_check?
-  # end
-
-  # def king_will_be_in_check?
-  # end
 end

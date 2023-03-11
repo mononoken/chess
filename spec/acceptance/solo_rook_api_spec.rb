@@ -47,8 +47,8 @@ RSpec.describe 'Solo Rook API' do
 
     movements.each { |movement| game.send_move(movement) }
 
-    last_square = board.files[0][7]
+    last_position = board.position(:a8)
 
-    expect(last_square.content).to eq(rook)
+    expect(last_position.piece).to eq(rook)
   end
 end

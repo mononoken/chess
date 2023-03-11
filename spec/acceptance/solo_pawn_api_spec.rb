@@ -119,8 +119,8 @@ RSpec.describe 'Solo Pawn API' do
 
     movements.each { |movement| game.send_move(movement) }
 
-    last_square = board.files[3][6]
+    last_position = board.position(:d7)
 
-    expect(last_square.content).to eq(pawn)
+    expect(last_position.piece).to eq(pawn)
   end
 end
