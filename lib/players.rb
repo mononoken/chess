@@ -8,6 +8,10 @@ class Players
     @current = current
   end
 
+  def other
+    current == :white ? :black : :white
+  end
+
   def swap
     self.current = current == :white ? :black : :white
   end

@@ -28,7 +28,7 @@ class Chess
   end
 
   def game_over?
-    board.checkmate?(players.current)
+    board.checkmate?(players.current) || board.stalemate?(players.current)
   end
 
   def run_round
@@ -82,12 +82,21 @@ class Chess
   def announce_results
     puts board
 
-    result = if board.checkmate?(:white)
-               'White king is in checkmate. Black wins!'
-             elsif board.checkmate?(:black)
-               'Black king is in checkmate. White wins!'
+    result = if board.checkmate?(players.current)
+               checkmate_message
+             elsif board.stalemate?(players.current)
+               stalemate_message
              end
+
     puts result
+  end
+
+  def checkmate_message
+    "#{players.current.capitalize} is in checkmate. #{players.other.capitalize} wins!"
+  end
+
+  def stalemate_message
+    "#{players.current.capitalize} is in stalemate. Draw!"
   end
 
   def instructions

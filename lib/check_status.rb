@@ -24,6 +24,10 @@ module CheckStatus
     check?(piece_color) && all_valid_destinations(piece_color).empty?
   end
 
+  def stalemate?(piece_color)
+    !check?(piece_color) && all_valid_destinations(piece_color).empty?
+  end
+
   def check?(piece_color)
     king = king(piece_color)
     return false if king.nil? || king.is_a?(NilPiece)
