@@ -5,10 +5,12 @@ require_relative './board'
 require_relative './pieces/pieces'
 require_relative './players'
 require_relative './movement'
+require_relative './serializable'
 
 # Runs game of chess until end condition is met.
 class Chess
   include ChessErrors
+  include Serializable
 
   attr_reader :board, :players
 
@@ -57,8 +59,12 @@ class Chess
 
   def player_origin
     puts 'Enter origin using algebraic coordinates (e.g. d2)'
+    puts "Or enter 's' to save game."
     loop do
-      input = gets.chomp
+      input = gets.chomp.downcase
+
+      return save_game if input == 's'
+
       origin = board.positions.position(input.to_sym)
 
       return origin if origin.valid_origin?(players.current, board)
