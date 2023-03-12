@@ -17,23 +17,23 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     queen = Queen.new
     rook = Rook.new
 
-    board.populate(bishop,  board.position(:c1))
-    board.populate(king,    board.position(:e1))
-    board.populate(knight,  board.position(:b1))
-    board.populate(queen,   board.position(:d1))
-    board.populate(rook,    board.position(:a1))
+    bishop_position =       board.position(:c1)
+    king_position =         board.position(:e1)
+    knight_position =       board.position(:b1)
+    queen_position =        board.position(:d1)
+    rook_position =         board.position(:a1)
 
-    bishop_square =         board.files[2][0]
-    king_square =           board.files[4][0]
-    knight_square =         board.files[1][0]
-    queen_square =          board.files[3][0]
-    rook_square =           board.files[0][0]
+    board.populate(bishop,  bishop_position)
+    board.populate(king,    king_position)
+    board.populate(knight,  knight_position)
+    board.populate(queen,   queen_position)
+    board.populate(rook,    rook_position)
 
-    expect(bishop_square.content).to  eq(bishop)
-    expect(king_square.content).to    eq(king)
-    expect(knight_square.content).to  eq(knight)
-    expect(queen_square.content).to   eq(queen)
-    expect(rook_square.content).to    eq(rook)
+    expect(bishop_position.piece).to  eq(bishop)
+    expect(king_position.piece).to    eq(king)
+    expect(knight_position.piece).to  eq(knight)
+    expect(queen_position.piece).to   eq(queen)
+    expect(rook_position.piece).to    eq(rook)
   end
 
   it 'raises error if piece tries to move to occupied square of same color/player' do

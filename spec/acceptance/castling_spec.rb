@@ -28,32 +28,32 @@ RSpec.describe 'Castling API' do
         .not_to raise_error
     end
 
-    it 'changes content of a1 to nil' do
+    it 'changes content of a1 to instance of NilPiece' do
       expect { chess.send_move(movement) }
-        .to change { a1.square.content }
+        .to change { a1.piece }
         .from(rook)
-        .to(nil)
+        .to be_a(NilPiece)
     end
 
     it 'changes content of c1 to king' do
       expect { chess.send_move(movement) }
-        .to change { c1.square.content }
-        .from(nil)
+        .to change { c1.piece }
+        .from(NilPiece)
         .to(king)
     end
 
     it 'changes content of d1 to rook' do
       expect { chess.send_move(movement) }
-        .to change { d1.square.content }
-        .from(nil)
+        .to change { d1.piece }
+        .from(NilPiece)
         .to(rook)
     end
 
     it 'changes content of e1 to nil' do
       expect { chess.send_move(movement) }
-        .to change { e1.square.content }
+        .to change { e1.piece }
         .from(king)
-        .to(nil)
+        .to(NilPiece)
     end
   end
 

@@ -11,8 +11,7 @@ RSpec.describe 'Check Movement API' do
   context 'when board is 3x3' do
     let(:game) { Chess.new(board:) }
 
-    let(:squares_3x3) { Array.new(3) { Array.new(3) { Square.new } } }
-    let(:board) { Board.new(files: squares_3x3) }
+    let(:board) { Board.new }
 
     let(:white_king) { King.new(:white) }
     let(:white_rook) { Rook.new(:white) }
