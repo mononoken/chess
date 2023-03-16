@@ -2,7 +2,6 @@
 
 require 'yaml'
 
-# From Hangman project
 module SaveConstants
   SAVE_DIR = 'saves'
 end
@@ -21,7 +20,7 @@ module Serializable
     def prompt_load
       return if Dir.glob("#{SAVE_DIR}/*").empty?
 
-      puts "Type 'L' to load. Otherwise enter any key."
+      puts "Type 'L' to load. Otherwise enter any key to start a new game."
       gets.chomp.downcase == 'l'
     end
 
@@ -91,10 +90,10 @@ class SaveName
   end
 
   def save_exists_error(name)
-    [
-      "Save name, '#{name}', has been previously used.",
-      'Do you wish to overwrite previous save? (y/n)'
-    ]
+    <<~HEREDOC
+      Save name, '#{name}', has been previously used.
+      Do you wish to overwrite previous save? (y/n)
+    HEREDOC
   end
 
   def valid_name
@@ -119,7 +118,7 @@ class LoadName < SaveName
   end
 
   def request_name
-    puts 'Please pick a save file. Type the save file name as shown in the list.'
+    puts 'Pick a save file. Type the save file name as shown in the list.'
     gets.chomp.downcase
   end
 

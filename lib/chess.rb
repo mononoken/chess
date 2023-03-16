@@ -9,6 +9,18 @@ require_relative './serializable'
 
 # Runs game of chess until end condition is met.
 class Chess
+  def self.instructions
+    <<~HEREDOC
+      Welcome to Chess!
+      This is a terminal chess game that two players can play together.
+      Each player (starting with white) will pick the coordinate of a
+      piece they would like to move, and then the coordinates they want
+      to move the piece to.
+      Coordinates are referenced using Chess algebraic notation.
+      Refer to the grid labels for assistance.
+    HEREDOC
+  end
+
   include ChessErrors
   include Serializable
 
@@ -17,7 +29,6 @@ class Chess
   def initialize(board: Board.new(piece_types: Pieces.piece_types), players: Players.new)
     @board = board
     @players = players
-    puts instructions
   end
 
   def play
@@ -103,17 +114,5 @@ class Chess
 
   def stalemate_message
     "#{players.current.capitalize} is in stalemate. Draw!"
-  end
-
-  def instructions
-    <<~HEREDOC
-      Welcome to Chess!
-      This is a terminal chess game that two players can play together.
-      Each player (starting with white) will pick the coordinate of a
-      piece they would like to move, and then the coordinates they want
-      to move the piece to.
-      Coordinates are referenced using Chess algebraic notation.
-      Refer to the grid labels for assistance.
-    HEREDOC
   end
 end
