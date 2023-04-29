@@ -2,8 +2,10 @@
 
 require_relative './piece'
 require_relative './pieces'
+require_relative '../en_passant'
 
 module Promotable
+  # FIX_ME this file requires pieces.rb but pieces.rb also requires it.
   def promotion_choice(pieces_class = Pieces)
     loop do
       puts 'Pick promotion piece: Q(ueen) (K)N(ight) B(ishop) R(ook)'
@@ -58,6 +60,8 @@ class Pawn < Piece
   end
 
   include Promotable
+  include EnPassant::PassantVictim
+  include EnPassant::Passanter
 
   def take_directions
     case color

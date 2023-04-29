@@ -24,7 +24,20 @@ class Positions
     find { |position| position.algebraic == algebraic } || NilPosition.new
   end
 
-  # DELETE_ME
+  # Return position that has indeces matching the delta from step on position.
+  def relative_position(position, step)
+    return NilPosition.new if position.is_a?(NilPosition)
+
+    file_index = position.file_index + step[0]
+    rank_index = position.rank_index + step[1]
+
+    positions.find do |a_position|
+      a_position.file_index == file_index &&
+        a_position.rank_index == rank_index
+    end || NilPosition.new
+  end
+
+  # DELETE_ME if unused
   def position_position(position)
     find { |a_position| a_position == position } || NilPosition.new
   end

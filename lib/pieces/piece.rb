@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '.././colorable_string'
+require_relative '../en_passant'
 
 # Store start positions with their matching color.
 StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
@@ -8,6 +9,9 @@ StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
 # Pieces for chess that store piece move behavior.
 class Piece
   using ColorableString
+
+  include EnPassant::NonPassanter
+  include EnPassant::NonPassantVictim
 
   def self.start_positions
     []

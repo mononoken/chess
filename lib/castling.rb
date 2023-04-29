@@ -43,6 +43,16 @@ module Castling
     self.class.new(board:, origin: castling_rook_origin, destination: castling_rook_destination)
   end
 
+  def castling?(piece = self.piece, board = self.board, destination = self.destination)
+    @castling ||= piece.castling_rights? && valid_castling_positions(piece, board).any?(destination)
+  end
+
+  def valid_castling_positions(piece, board)
+    castling_positions(piece, board).filter { |position| valid_castling_position?(position, piece, board) }
+  end
+
+  private
+
   def castling_rook_destination
     board.positions.find { |position| position.algebraic == castling_rook_destination_algebraic }
   end
@@ -57,14 +67,6 @@ module Castling
 
   def castling_rook_origin_algebraic
     CASTLING_ROOK_ORIGINS[destination.algebraic]
-  end
-
-  def castling?(piece = self.piece, board = self.board, destination = self.destination)
-    @castling ||= piece.castling_rights? && valid_castling_positions(piece, board).any?(destination)
-  end
-
-  def valid_castling_positions(piece, board)
-    castling_positions(piece, board).filter { |position| valid_castling_position?(position, piece, board) }
   end
 
   def castling_positions(piece, board)
@@ -95,7 +97,8 @@ module Castling
 
   # first_move_taken? rename to inverse and shorten name?
   def castling_pieces_unmoved?(castling_algebraic, piece, board)
-    !castling_king_origin(piece, board).piece.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic]).piece.first_move_taken?
+    !castling_king_origin(piece,
+                          board).piece.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic]).piece.first_move_taken?
   end
 
   def castling_king_origin(piece, board)

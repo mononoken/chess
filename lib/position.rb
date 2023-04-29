@@ -6,7 +6,11 @@ require_relative './nil_object'
 require_relative './pieces/piece'
 
 # NilObject for Position
-class NilPosition < NilObject; end
+class NilPosition < NilObject
+  def piece
+    NilPiece.new
+  end
+end
 
 # Check if object meets the valid_origin? requirement.
 module Originable
@@ -116,7 +120,6 @@ class Position
   # end
 
   def step(step, board)
-    # Is this where step is fucking up? Possibly in algebraic
     position = self.class.new(file_index: file_index + step[0], rank_index: rank_index + step[1])
     board.position(position.algebraic)
     # board.positions.find { |board_position| board_position == position }

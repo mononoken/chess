@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 require_relative './path'
-require_relative './position'
+# require_relative './position'
 require_relative './castling'
+require_relative './en_passant'
+
+require 'pry-byebug'
 
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
@@ -20,6 +23,7 @@ class Movement
   end
 
   include Castling
+  include EnPassant::PassantMovement
 
   attr_reader :board, :origin, :destination
 
@@ -35,8 +39,12 @@ class Movement
 
   # Returns true if the provided destination exists in #destinations.
   def valid_destination?(destination)
+    # binding.pry
+
     if piece.castling_rights?
       valid_destinations.any?(destination) || valid_castling_positions(piece, board).any?(destination)
+    elsif passant_victim?
+      valid_destinations.any?(destination) || valid_passant_destinations(piece, board).any?(destination)
     else
       valid_destinations.any?(destination)
     end
@@ -69,7 +77,7 @@ class Movement
     piece.take_directions
   end
 
-  def paths(path_class = Path)
+  def paths(step_directions = self.step_directions, path_class = Path)
     step_directions.map { |step| path_class.positions(origin:, board:, step:) }
   end
 

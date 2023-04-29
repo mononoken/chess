@@ -3,11 +3,13 @@
 require_relative './chess_errors'
 require_relative './check_status'
 require_relative './positions'
+require_relative './en_passant'
 
 # Processes Movement objects to manipulate Positions.
 class Board
   include ChessErrors
   include CheckStatus
+  include EnPassant::PassantRecorder
 
   attr_reader :positions
 
@@ -27,16 +29,32 @@ class Board
     elsif movement&.castling?
       move(movement)
       move(movement.castling_movement)
+    elsif movement.en_passant?
+      move(movement)
+      movement.capture_passant_victim
     else
       move(movement)
     end
   end
+
+  # def process_movement(movement)
+  #   if movement.promotion?
+  #     # populate(movement.promotion_choice, movement.destination)
+  #     populate(content.promotion_choice.new(content.color), movement.destination)
+  #   elsif movement&.castling?
+  #     move(movement)
+  #     move(movement.castling_movement)
+  #   else
+  #     move(movement)
+  #   end
+  # end
 
   def move(movement)
     raise EmptyOriginError if movement.origin.nil_piece?
 
     content = movement.origin.empty
 
+    record_passantable(content)
     record_first_move(content)
 
     populate(content, movement.destination)
@@ -56,15 +74,15 @@ class Board
 
   def to_s
     "   a  b  c  d  e  f  g  h\n" +
-    "#{rank_to_s_with_label(ranks[7])}\n" +
-    "#{rank_to_s_with_label(ranks[6])}\n" +
-    "#{rank_to_s_with_label(ranks[5])}\n" +
-    "#{rank_to_s_with_label(ranks[4])}\n" +
-    "#{rank_to_s_with_label(ranks[3])}\n" +
-    "#{rank_to_s_with_label(ranks[2])}\n" +
-    "#{rank_to_s_with_label(ranks[1])}\n" +
-    "#{rank_to_s_with_label(ranks[0])}\n" +
-    "   a  b  c  d  e  f  g  h"
+      "#{rank_to_s_with_label(ranks[7])}\n" +
+      "#{rank_to_s_with_label(ranks[6])}\n" +
+      "#{rank_to_s_with_label(ranks[5])}\n" +
+      "#{rank_to_s_with_label(ranks[4])}\n" +
+      "#{rank_to_s_with_label(ranks[3])}\n" +
+      "#{rank_to_s_with_label(ranks[2])}\n" +
+      "#{rank_to_s_with_label(ranks[1])}\n" +
+      "#{rank_to_s_with_label(ranks[0])}\n" +
+      '   a  b  c  d  e  f  g  h'
   end
 
   private
