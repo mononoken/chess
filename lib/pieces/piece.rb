@@ -6,6 +6,15 @@ require_relative '../en_passant'
 # Store start positions with their matching color.
 StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
 
+class NilPiece < NilObject
+  include EnPassant::NonPassanter
+  include EnPassant::NonPassantVictim
+
+  def to_s
+    ' '
+  end
+end
+
 # Pieces for chess that store piece move behavior.
 class Piece
   using ColorableString
@@ -91,10 +100,4 @@ class Piece
   private
 
   attr_accessor :first_move_taken
-end
-
-class NilPiece < NilObject
-  def to_s
-    ' '
-  end
 end

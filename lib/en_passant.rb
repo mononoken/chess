@@ -13,9 +13,7 @@ module EnPassant
   end
 
   module NonPassantVictim
-    def passsantable
-      false
-    end
+    attr_accessor :passantable
 
     def passantable?
       false
@@ -29,6 +27,7 @@ module EnPassant
     end
   end
 
+  # Behavior for pieces that cannot make the En Passant movement.
   module NonPassanter
     def passant_rights?
       false
@@ -44,11 +43,23 @@ module EnPassant
 
       piece.passantable = true
     end
+
+    def reset_passantables(pieces)
+      pieces.each { |piece| reset_passantable(piece) }
+    end
+
+    private
+
+    def reset_passantable(piece)
+      piece.passantable = false
+    end
   end
 
   # Movement behavior for movements with origin piece as a passanter.
   module PassantMovement
     def en_passant?
+      return false unless piece.passant_rights?
+
       destination == passant_destination
     end
 
@@ -97,7 +108,9 @@ module EnPassant
     end
 
     def passant_victim_position(board = self.board)
-      board.positions.find { |position| position.piece.passantable? } || NilPosition.new
+      @passant_victim_position ||= board.positions.find do |position|
+        position.piece.passantable?
+      end || NilPosition.new
     end
   end
 end

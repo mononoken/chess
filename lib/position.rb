@@ -28,8 +28,14 @@ module Originable
     destinations(board).any?
   end
 
+  # def destinations(board, movement_class = Movement)
+  #   movement_class.valid_destinations(self, board)
+  # end
+
   def destinations(board, movement_class = Movement)
-    movement_class.valid_destinations(self, board)
+    # movement_class.valid_destinations(self, board)
+
+    movement_class.valid_destinations_for_origin(self, board)
   end
 end
 

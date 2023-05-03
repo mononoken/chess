@@ -49,8 +49,13 @@ class Board
   #   end
   # end
 
+  # Currently passant victim is not properly captured. I am estimating the
+  # cause is that passantable is being reset and the victim is lost before
+  # capture is executed.
   def move(movement)
     raise EmptyOriginError if movement.origin.nil_piece?
+
+    reset_passantables(positions.map(&:piece))
 
     content = movement.origin.empty
 
