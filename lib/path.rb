@@ -17,7 +17,7 @@ class Path
     @origin = origin
   end
 
-  # Return an array of Position objects based on step using recursion.
+  # Return array of positions along the given step parameters.
   def positions(step:, position: origin, steps: 0)
     return [] unless within_step_limit?(steps)
 
@@ -33,6 +33,7 @@ class Path
     end
   end
 
+  # Return array of positions that would capture enemy piece.
   def take_positions(step:, position: origin, steps: 0)
     next_position = position.step(step, board)
 
@@ -45,10 +46,8 @@ class Path
 
   private
 
-  # This method should be renamed.
   def valid_take?(position)
-    # empty check should not be necessary
-    !position.empty? && position.piece_color?(piece.opponent_color)
+    position.piece_color?(piece.opponent_color)
   end
 
   def valid_move?(position)
@@ -62,11 +61,7 @@ class Path
   end
 
   def within_positions?(position)
-    all_positions.any?(position)
-  end
-
-  def all_positions
-    @all_positions ||= board.positions
+    board.positions.any?(position)
   end
 
   def step_limit
