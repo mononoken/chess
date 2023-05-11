@@ -27,13 +27,6 @@ module EnPassant
     end
   end
 
-  # Behavior for pieces that cannot make the En Passant movement.
-  module NonPassanter
-    def passant_rights?
-      false
-    end
-  end
-
   # Behavior that adds recording passant victims when moved.
   module PassantRecorder
     def record_passantable(piece)
@@ -58,7 +51,7 @@ module EnPassant
   # Movement behavior for movements with origin piece as a passanter.
   module PassantMovement
     def en_passant?
-      return false unless piece.passant_rights?
+      return false unless piece.respond_to?(:passant_rights?)
 
       destination == passant_destination
     end
@@ -97,7 +90,7 @@ module EnPassant
 
     def valid_passanter_origins(board)
       passanter_origins(passant_victim_position(board), board).filter do |origin|
-        origin.piece.passant_rights?
+        origin.piece&.passant_rights?
       end
     end
 

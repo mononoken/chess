@@ -5,7 +5,27 @@ require_relative './path'
 require_relative './castling'
 require_relative './en_passant'
 
-require 'pry-byebug'
+# List all valid destination positions on a board for an origin (with a piece).
+# Note that in this project 'movement' is used as a noun and 'move' as a verb.
+class Movement
+  attr_accessor :origin, :destination, :action
+
+  def initialize(origin:, destination:, action:)
+    @origin = origin
+    @destination = destination
+    @action = action
+  end
+
+  private
+
+  def directions
+    piece.directions
+  end
+
+  def piece
+    @piece ||= origin.piece
+  end
+end
 
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.

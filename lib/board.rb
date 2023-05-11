@@ -23,6 +23,10 @@ class Board
   end
 
   def process_movement(movement)
+    # movement.actions.map(&:call)
+  end
+
+  def process_movement(movement)
     if movement.promotion?
       # populate(movement.promotion_choice, movement.destination)
       populate(content.promotion_choice.new(content.color), movement.destination)
@@ -37,21 +41,6 @@ class Board
     end
   end
 
-  # def process_movement(movement)
-  #   if movement.promotion?
-  #     # populate(movement.promotion_choice, movement.destination)
-  #     populate(content.promotion_choice.new(content.color), movement.destination)
-  #   elsif movement&.castling?
-  #     move(movement)
-  #     move(movement.castling_movement)
-  #   else
-  #     move(movement)
-  #   end
-  # end
-
-  # Currently passant victim is not properly captured. I am estimating the
-  # cause is that passantable is being reset and the victim is lost before
-  # capture is executed.
   def move(movement)
     raise EmptyOriginError if movement.origin.nil_piece?
 
