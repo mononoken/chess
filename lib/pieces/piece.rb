@@ -7,8 +7,6 @@ require_relative '../en_passant'
 StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
 
 class NilPiece < NilObject
-  include EnPassant::NonPassantVictim
-
   def to_s
     ' '
   end
@@ -17,8 +15,6 @@ end
 # Pieces for chess that store piece move behavior.
 class Piece
   using ColorableString
-
-  include EnPassant::NonPassantVictim
 
   def self.start_positions
     []
