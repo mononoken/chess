@@ -37,6 +37,10 @@ module Castling
     g8: %i[f8 g8]
   }.freeze
 
+  def castling_extra_action
+    -> { board.move(castling_movement) }
+  end
+
   def castling_movement
     return NilMovement.new unless castling?
 

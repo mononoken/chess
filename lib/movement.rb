@@ -1,31 +1,8 @@
 # frozen_string_literal: true
 
 require_relative './path'
-# require_relative './position'
 require_relative './castling'
 require_relative './en_passant'
-
-# List all valid destination positions on a board for an origin (with a piece).
-# Note that in this project 'movement' is used as a noun and 'move' as a verb.
-class Movement
-  attr_accessor :origin, :destination, :action
-
-  def initialize(origin:, destination:, action:)
-    @origin = origin
-    @destination = destination
-    @action = action
-  end
-
-  private
-
-  def directions
-    piece.directions
-  end
-
-  def piece
-    @piece ||= origin.piece
-  end
-end
 
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
@@ -57,6 +34,10 @@ class Movement
     @board = board
     @origin = origin
     @destination = destination
+  end
+
+  def actions
+    @actions ||= default_actions.concat(special_actions)
   end
 
   def promotion?
@@ -109,6 +90,21 @@ class Movement
 
   private
 
+  def default_actions
+    move_action = -> { board.move(self) }
+
+    [move_action]
+  end
+
+  def special_actions
+    special_actions = []
+
+    special_actions.push(castling_extra_action) if castling?
+    special_actions.push(passant_extra_action) if en_passant?
+
+    special_actions
+  end
+
   def destination_paths
     paths + take_paths
   end
@@ -153,6 +149,6 @@ class Movement
   end
 
   def piece
-    @piece ||= origin.piece
+    origin.piece
   end
 end

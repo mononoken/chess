@@ -22,22 +22,32 @@ class Board
     positions.position(algebraic)
   end
 
-  def process_movement(movement)
-    # movement.actions.map(&:call)
-  end
+  # def process_movement(movement)
+  #   if movement.promotion?
+  #     # populate(movement.promotion_choice, movement.destination)
+  #     populate(content.promotion_choice.new(content.color), movement.destination)
+  #   elsif movement&.castling?
+  #     move(movement)
+  #     move(movement.castling_movement)
+  #   elsif movement.en_passant?
+  #     move(movement)
+  #     movement.capture_victim_action
+  #   else
+  #     move(movement)
+  #   end
+  # end
 
   def process_movement(movement)
+    # movement.actions.map(&:call)
     if movement.promotion?
       # populate(movement.promotion_choice, movement.destination)
       populate(content.promotion_choice.new(content.color), movement.destination)
     elsif movement&.castling?
-      move(movement)
-      move(movement.castling_movement)
+      movement.actions.each(&:call)
     elsif movement.en_passant?
-      move(movement)
-      movement.capture_passant_victim
+      movement.actions.each(&:call)
     else
-      move(movement)
+      movement.actions.each(&:call)
     end
   end
 

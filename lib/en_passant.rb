@@ -62,8 +62,8 @@ module EnPassant
       passant_victim_position.piece.passantable?
     end
 
-    def capture_passant_victim
-      passant_victim_position.empty
+    def passant_extra_action
+      -> { passant_victim_position.empty }
     end
 
     private
