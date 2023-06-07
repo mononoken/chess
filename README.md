@@ -1,6 +1,6 @@
 # # Chess (CLI)
 
-![A screenshot showing a preview of the project.](./screenshot.png "Chess CLI Preview")
+![A screenshot showing a preview of the project.](./chess-screenshot.png "Chess CLI Preview")
 
 This project allows two players to play Chess against each other using a CLI (command-line interface) on one machine. The players take turns inputting the positions of pieces and where they want to move them. The positions are picked using [chess algebraic notation](<https://en.wikipedia.org/wiki/Algebraic_notation_(chess)>).
 
