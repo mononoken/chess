@@ -4,7 +4,7 @@
 
 This project allows two players to play Chess against each other using a CLI (command-line interface) on one machine. The players take turns inputting the positions of pieces and where they want to move them. The positions are picked using [chess algebraic notation](<https://en.wikipedia.org/wiki/Algebraic_notation_(chess)>).
 
-[Click here to see a live-preview hosted on Replit).](https://replit.com/@mononoken/chess)
+[Click here to see a live-preview hosted on Replit.](https://replit.com/@mononoken/chess)
 
 ## Table of Contents
 
@@ -32,7 +32,7 @@ Some design patterns were played with in this project. One of these patterns was
 
 ## Acknowledgements
 
-- Lucas, my [First Ruby Friend] mentor. Thank you so much for meeting with me regularly and advising me on this project! Your help was and has been invaluable!
+- Lucas, my [First Ruby Friend](https://firstrubyfriend.org) mentor. Thank you so much for meeting with me regularly and advising me on this project! Your help was and has been invaluable!
 - [The Odin Project](https://www.theodinproject.com), my primary guide in the vast sea of web-development learning.
   - For providing this project idea ([see the instructions for this assignment here](https://www.theodinproject.com/lessons/ruby-ruby-final-project))
   - And the Discord community!
