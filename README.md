@@ -28,7 +28,7 @@ The project began with the premise of TDD, but it eventually evolved away from i
 
 A big lesson taken from this project was learning to get features working and moving on. The temptation to refactor and refactor and refactor to seek the _ultimate OOP dream_ was high.
 
-Some design patterns were played with in this project. One of these patterns was the [Null Object Pattern](https://en.wikipedia.org/wiki/Null_object_pattern) that was discovered after abusing safe navigation (`&.`) frequently. Another was [pipelining](https://en.wikipedia.org/wiki/Pipeline_%28software%29) (see `Board#process_movement`).
+Some design patterns were played with in this project. One of these patterns was the [Null Object Pattern](https://en.wikipedia.org/wiki/Null_object_pattern) that was discovered after abusing safe navigation (`&.`) frequently. Another was [pipelining](https://en.wikipedia.org/wiki/Pipeline_%28software%29) (see `Chess#send_move`).
 
 ## Acknowledgements
 

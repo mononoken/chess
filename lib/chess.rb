@@ -52,10 +52,9 @@ class Chess
   end
 
   def send_move(movement)
-    # This clause may not belong here.
     raise InvalidDestinationError unless movement.destination.valid_destination?(movement.origin, board)
 
-    board.process_movement(movement)
+    movement.actions.each(&:call)
   end
 
   private

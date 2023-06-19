@@ -22,33 +22,6 @@ class Board
     positions.position(algebraic)
   end
 
-  # def process_movement(movement)
-  #   if movement.promotion?
-  #     # populate(movement.promotion_choice, movement.destination)
-  #     populate(content.promotion_choice.new(content.color), movement.destination)
-  #   elsif movement&.castling?
-  #     move(movement)
-  #     move(movement.castling_movement)
-  #   elsif movement.en_passant?
-  #     move(movement)
-  #     movement.capture_victim_action
-  #   else
-  #     move(movement)
-  #   end
-  # end
-
-  def process_movement(movement)
-    if movement.promotion?
-      movement.actions.each(&:call)
-    elsif movement&.castling?
-      movement.actions.each(&:call)
-    elsif movement.en_passant?
-      movement.actions.each(&:call)
-    else
-      movement.actions.each(&:call)
-    end
-  end
-
   def move(movement)
     raise EmptyOriginError if movement.origin.nil_piece?
 
@@ -76,15 +49,15 @@ class Board
 
   def to_s
     "   a  b  c  d  e  f  g  h\n" \
-      "#{rank_to_s_with_label(ranks[7])}\n" \
-      "#{rank_to_s_with_label(ranks[6])}\n" \
-      "#{rank_to_s_with_label(ranks[5])}\n" \
-      "#{rank_to_s_with_label(ranks[4])}\n" \
-      "#{rank_to_s_with_label(ranks[3])}\n" \
-      "#{rank_to_s_with_label(ranks[2])}\n" \
-      "#{rank_to_s_with_label(ranks[1])}\n" \
-      "#{rank_to_s_with_label(ranks[0])}\n" \
-      "   a  b  c  d  e  f  g  h"
+    "#{rank_to_s_with_label(ranks[7])}\n" \
+    "#{rank_to_s_with_label(ranks[6])}\n" \
+    "#{rank_to_s_with_label(ranks[5])}\n" \
+    "#{rank_to_s_with_label(ranks[4])}\n" \
+    "#{rank_to_s_with_label(ranks[3])}\n" \
+    "#{rank_to_s_with_label(ranks[2])}\n" \
+    "#{rank_to_s_with_label(ranks[1])}\n" \
+    "#{rank_to_s_with_label(ranks[0])}\n" \
+    "   a  b  c  d  e  f  g  h"
   end
 
   private
