@@ -3,6 +3,7 @@
 require_relative "./path"
 require_relative "./castling"
 require_relative "./en_passant"
+require_relative "./promotion"
 
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.
@@ -27,6 +28,7 @@ class Movement
 
   include Castling
   include EnPassant::PassantMovement
+  include Promotion::Promoter
 
   attr_reader :board, :origin, :destination
 
@@ -38,10 +40,6 @@ class Movement
 
   def actions
     @actions ||= default_actions.concat(special_actions)
-  end
-
-  def promotion?
-    piece.promotable? && piece.promotion_position?(destination)
   end
 
   # Returns true if the provided destination exists in #destinations.
@@ -101,8 +99,17 @@ class Movement
 
     special_actions.push(castling_extra_action) if castling?
     special_actions.push(passant_extra_action) if en_passant?
+    special_actions.push(promotion_action) if promotion?
 
     special_actions
+  end
+
+  # Move this to its own module
+  def promotion_action
+    -> {
+      populate(content.promotion_choice.new(content.color),
+        movement.destination)
+    }
   end
 
   def destination_paths

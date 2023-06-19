@@ -38,10 +38,8 @@ class Board
   # end
 
   def process_movement(movement)
-    # movement.actions.map(&:call)
     if movement.promotion?
-      # populate(movement.promotion_choice, movement.destination)
-      populate(content.promotion_choice.new(content.color), movement.destination)
+      movement.actions.each(&:call)
     elsif movement&.castling?
       movement.actions.each(&:call)
     elsif movement.en_passant?
