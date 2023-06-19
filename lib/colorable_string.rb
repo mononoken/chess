@@ -3,10 +3,10 @@
 # Monkeypatch String to allow for specifying RGB color for string print.
 module ColorableString
   RGB_COLOR_MAP = {
-    black: '0;0;0',
-    white: '255;255;255',
-    light: '255;207;159',
-    dark: '210;140;69'
+    black: "0;0;0",
+    white: "255;255;255",
+    light: "255;207;159",
+    dark: "210;140;69"
   }.freeze
 
   refine String do

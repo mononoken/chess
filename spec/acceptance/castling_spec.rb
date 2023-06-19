@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
-require_relative './../../lib/pieces/pieces'
+require_relative "./../../lib/chess"
+require_relative "./../../lib/pieces/pieces"
 
-RSpec.describe 'Castling API' do
-  context 'when Ra1 and Ke1 have not moved and e1 moves to c1' do
+RSpec.describe "Castling API" do
+  context "when Ra1 and Ke1 have not moved and e1 moves to c1" do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
 
@@ -23,33 +23,33 @@ RSpec.describe 'Castling API' do
       board.populate(rook, a1)
     end
 
-    it 'accepts c1 as valid move for e1' do
+    it "accepts c1 as valid move for e1" do
       expect { chess.send_move(movement) }
         .not_to raise_error
     end
 
-    it 'changes content of a1 to instance of NilPiece' do
+    it "changes content of a1 to instance of NilPiece" do
       expect { chess.send_move(movement) }
         .to change { a1.piece }
         .from(rook)
         .to be_a(NilPiece)
     end
 
-    it 'changes content of c1 to king' do
+    it "changes content of c1 to king" do
       expect { chess.send_move(movement) }
         .to change { c1.piece }
         .from(NilPiece)
         .to(king)
     end
 
-    it 'changes content of d1 to rook' do
+    it "changes content of d1 to rook" do
       expect { chess.send_move(movement) }
         .to change { d1.piece }
         .from(NilPiece)
         .to(rook)
     end
 
-    it 'changes content of e1 to nil' do
+    it "changes content of e1 to nil" do
       expect { chess.send_move(movement) }
         .to change { e1.piece }
         .from(king)
@@ -57,7 +57,7 @@ RSpec.describe 'Castling API' do
     end
   end
 
-  xcontext 'when Ra1 and Ke1 have not moved but pieces obstruct castling' do
+  xcontext "when Ra1 and Ke1 have not moved but pieces obstruct castling" do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
 
@@ -82,13 +82,13 @@ RSpec.describe 'Castling API' do
       board.populate(knight, b1)
     end
 
-    it 'rejects c1 move for e1' do
+    it "rejects c1 move for e1" do
       expect { chess.send_move(movement) }
         .to raise_error
     end
   end
 
-  xcontext 'when either Ra1 or Ke1 has already moved' do
+  xcontext "when either Ra1 or Ke1 has already moved" do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
 
@@ -106,10 +106,10 @@ RSpec.describe 'Castling API' do
       board.populate(king, e1)
       board.populate(rook, a1)
 
-      board.move()
+      board.move
     end
 
-    it 'rejects c1 move for e1' do
+    it "rejects c1 move for e1" do
       expect { chess.send_move(movement) }
         .to raise_error
     end

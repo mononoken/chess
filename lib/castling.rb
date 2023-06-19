@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './nil_object'
+require_relative "./nil_object"
 
 # NilObject for Movement
 class NilMovement < NilObject; end
@@ -102,7 +102,7 @@ module Castling
   # first_move_taken? rename to inverse and shorten name?
   def castling_pieces_unmoved?(castling_algebraic, piece, board)
     !castling_king_origin(piece,
-                          board).piece.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic]).piece.first_move_taken?
+      board).piece.first_move_taken? && !board.positions.position(CASTLING_ROOK_ORIGINS[castling_algebraic]).piece.first_move_taken?
   end
 
   def castling_king_origin(piece, board)

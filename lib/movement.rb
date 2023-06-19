@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './path'
-require_relative './castling'
-require_relative './en_passant'
+require_relative "./path"
+require_relative "./castling"
+require_relative "./en_passant"
 
 # List all valid destination positions on a board for an origin (with a piece).
 # Note that in this project 'movement' is used as a noun and 'move' as a verb.

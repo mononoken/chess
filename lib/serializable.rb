@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require "yaml"
 
 module SaveConstants
-  SAVE_DIR = 'saves'
+  SAVE_DIR = "saves"
 end
 
 # Allow game to save games and load from these saved games.
@@ -21,22 +21,22 @@ module Serializable
       return if Dir.glob("#{SAVE_DIR}/*").empty?
 
       puts "Type 'L' to load. Otherwise enter any key to start a new game."
-      gets.chomp.downcase == 'l'
+      gets.chomp.downcase == "l"
     end
 
     def load_game
       LoadName.list_saves
-      YAML.unsafe_load(File.open(LoadName.new.save_path, 'r'))
+      YAML.unsafe_load(File.open(LoadName.new.save_path, "r"))
     end
   end
 
   def save_game
     Dir.mkdir(SAVE_DIR) unless Dir.exist?(SAVE_DIR)
 
-    File.open(SaveName.new.save_path, 'w') do |file|
+    File.open(SaveName.new.save_path, "w") do |file|
       file.puts YAML.dump(self)
     end
-    abort 'Game saved'
+    abort "Game saved"
   end
 end
 
@@ -57,7 +57,7 @@ class SaveName
   end
 
   def self.acceptable_chars
-    ('a'..'z').to_a + ('0'..'9').to_a + ['_']
+    ("a".."z").to_a + ("0".."9").to_a + ["_"]
   end
 
   def self.previous_saves
@@ -70,7 +70,7 @@ class SaveName
   end
 
   def valid_chars?(name)
-    name.split('').all? { |letter| self.class.acceptable_chars.include? letter }
+    name.chars.all? { |letter| self.class.acceptable_chars.include? letter }
   end
 
   def valid_name?(name)
@@ -86,7 +86,7 @@ class SaveName
     return if available_name?(name)
 
     puts save_exists_error(name)
-    gets.chomp.downcase == 'y'
+    gets.chomp.downcase == "y"
   end
 
   def save_exists_error(name)
@@ -111,14 +111,14 @@ class LoadName < SaveName
   end
 
   def self.list_saves
-    puts 'Current saves:'
-    self.previous_saves.each do |save_path|
-      puts save_path.gsub("#{SAVE_DIR}/", '').gsub('.yaml', '')
+    puts "Current saves:"
+    previous_saves.each do |save_path|
+      puts save_path.gsub("#{SAVE_DIR}/", "").gsub(".yaml", "")
     end
   end
 
   def request_name
-    puts 'Pick a save file. Type the save file name as shown in the list.'
+    puts "Pick a save file. Type the save file name as shown in the list."
     gets.chomp.downcase
   end
 

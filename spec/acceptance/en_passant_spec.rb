@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
-require_relative './../../lib/pieces/pawn'
+require_relative "./../../lib/chess"
+require_relative "./../../lib/pieces/pawn"
 
-RSpec.describe 'En Passant' do
-  context 'when enemy pawn advanced two squares on the last move' do
+RSpec.describe "En Passant" do
+  context "when enemy pawn advanced two squares on the last move" do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
     let(:wpawn) { Pawn.new(:white) }
@@ -24,12 +24,12 @@ RSpec.describe 'En Passant' do
       chess.send_move(Movement.new(board:, origin: a2, destination: a4))
     end
 
-    it 'allows en passant capture' do
+    it "allows en passant capture" do
       expect { chess.send_move(passant_movement) }
         .not_to raise_error
     end
 
-    it 'disallows en passant movement if non-sequential' do
+    it "disallows en passant movement if non-sequential" do
       wpawn2 = Pawn.new(:white)
       bpawn2 = Pawn.new(:black)
 

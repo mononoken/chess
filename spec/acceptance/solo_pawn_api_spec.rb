@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
-require_relative './../../lib/pieces/pawn'
+require_relative "./../../lib/chess"
+require_relative "./../../lib/pieces/pawn"
 
-RSpec.describe 'Solo Pawn API' do
-  context 'when enemy piece can be taken by pawn on one side' do
+RSpec.describe "Solo Pawn API" do
+  context "when enemy piece can be taken by pawn on one side" do
     let(:board) { Board.new }
     let(:chess) { Chess.new(board:) }
     let(:pawn) { Pawn.new(:white) }
@@ -24,23 +24,23 @@ RSpec.describe 'Solo Pawn API' do
       board.populate(bpiece, c4)
     end
 
-    it 'allows pawn to take piece' do
+    it "allows pawn to take piece" do
       expect { chess.send_move(valid_take) }
         .not_to raise_error
     end
 
-    it 'does not allow pawn to make take movement to empty square' do
+    it "does not allow pawn to make take movement to empty square" do
       expect { chess.send_move(invalid_movement) }
         .to raise_error
     end
 
-    it 'allows pawn to make normal step' do
+    it "allows pawn to make normal step" do
       expect { chess.send_move(normal_movement) }
         .not_to raise_error
     end
   end
 
-  it 'accepts special start move' do
+  it "accepts special start move" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -59,7 +59,7 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error
   end
 
-  it 'moves pawn in the right direction based on color' do
+  it "moves pawn in the right direction based on color" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -74,7 +74,7 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error(Chess::InvalidDestinationError)
   end
 
-  it 'only accepts valid pawn moves' do
+  it "only accepts valid pawn moves" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -100,7 +100,7 @@ RSpec.describe 'Solo Pawn API' do
       .not_to raise_error
   end
 
-  it 'moves pawn across board' do
+  it "moves pawn across board" do
     board = Board.new
 
     game = Chess.new(board:)

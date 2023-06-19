@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
+require_relative "./../../lib/chess"
 
-RSpec.describe 'Checkmate Game API' do
+RSpec.describe "Checkmate Game API" do
   context "when game is in Fool's mate" do
     let(:board) { Board.new(piece_types:) }
 
@@ -21,7 +21,7 @@ RSpec.describe 'Checkmate Game API' do
       movements.each { |movement| chess.send_move(movement) }
     end
 
-    it 'returns true to checkmate?' do
+    it "returns true to checkmate?" do
       result = board.checkmate?(:white)
 
       expect(result).to be(true)

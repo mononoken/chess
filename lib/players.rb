@@ -9,11 +9,11 @@ class Players
   end
 
   def other
-    current == :white ? :black : :white
+    (current == :white) ? :black : :white
   end
 
   def swap
-    self.current = current == :white ? :black : :white
+    self.current = (current == :white) ? :black : :white
   end
 
   private

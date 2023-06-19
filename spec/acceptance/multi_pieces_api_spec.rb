@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
-require_relative './../../lib/pieces/bishop'
-require_relative './../../lib/pieces/king'
-require_relative './../../lib/pieces/knight'
-require_relative './../../lib/pieces/queen'
-require_relative './../../lib/pieces/rook'
+require_relative "./../../lib/chess"
+require_relative "./../../lib/pieces/bishop"
+require_relative "./../../lib/pieces/king"
+require_relative "./../../lib/pieces/knight"
+require_relative "./../../lib/pieces/queen"
+require_relative "./../../lib/pieces/rook"
 
-RSpec.describe 'Multiple (Single Player) Pieces API' do
-  it 'populates multiple pieces on board' do
+RSpec.describe "Multiple (Single Player) Pieces API" do
+  it "populates multiple pieces on board" do
     board = Board.new
 
     bishop = Bishop.new
@@ -17,26 +17,26 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     queen = Queen.new
     rook = Rook.new
 
-    bishop_position =       board.position(:c1)
-    king_position =         board.position(:e1)
-    knight_position =       board.position(:b1)
-    queen_position =        board.position(:d1)
-    rook_position =         board.position(:a1)
+    bishop_position = board.position(:c1)
+    king_position = board.position(:e1)
+    knight_position = board.position(:b1)
+    queen_position = board.position(:d1)
+    rook_position = board.position(:a1)
 
-    board.populate(bishop,  bishop_position)
-    board.populate(king,    king_position)
-    board.populate(knight,  knight_position)
-    board.populate(queen,   queen_position)
-    board.populate(rook,    rook_position)
+    board.populate(bishop, bishop_position)
+    board.populate(king, king_position)
+    board.populate(knight, knight_position)
+    board.populate(queen, queen_position)
+    board.populate(rook, rook_position)
 
-    expect(bishop_position.piece).to  eq(bishop)
-    expect(king_position.piece).to    eq(king)
-    expect(knight_position.piece).to  eq(knight)
-    expect(queen_position.piece).to   eq(queen)
-    expect(rook_position.piece).to    eq(rook)
+    expect(bishop_position.piece).to eq(bishop)
+    expect(king_position.piece).to eq(king)
+    expect(knight_position.piece).to eq(knight)
+    expect(queen_position.piece).to eq(queen)
+    expect(rook_position.piece).to eq(rook)
   end
 
-  it 'raises error if piece tries to move to occupied square of same color/player' do
+  it "raises error if piece tries to move to occupied square of same color/player" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -63,7 +63,7 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
       .not_to raise_error
   end
 
-  it 'raises error if piece tries to move past an occupied square' do
+  it "raises error if piece tries to move past an occupied square" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -71,10 +71,10 @@ RSpec.describe 'Multiple (Single Player) Pieces API' do
     bishop = Bishop.new
     rook = Rook.new
 
-    bishop_position =     board.position(:c1)
-    rook_position =       board.position(:a1)
+    bishop_position = board.position(:c1)
+    rook_position = board.position(:a1)
     invalid_destination = board.position(:h1)
-    valid_destination =   board.position(:a8)
+    valid_destination = board.position(:a8)
 
     board.populate(bishop, bishop_position)
     board.populate(rook, rook_position)

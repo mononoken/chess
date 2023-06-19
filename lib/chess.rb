@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative './chess_errors'
-require_relative './board'
-require_relative './pieces/pieces'
-require_relative './players'
-require_relative './movement'
-require_relative './serializable'
+require_relative "./chess_errors"
+require_relative "./board"
+require_relative "./pieces/pieces"
+require_relative "./players"
+require_relative "./movement"
+require_relative "./serializable"
 
 # Runs game of chess until end condition is met.
 class Chess
@@ -69,30 +69,30 @@ class Chess
   end
 
   def player_origin
-    puts 'Enter origin using algebraic coordinates (e.g. d2)'
+    puts "Enter origin using algebraic coordinates (e.g. d2)"
     puts "Or enter 's' to save game."
     loop do
       input = gets.chomp.downcase
 
-      return save_game if input == 's'
+      return save_game if input == "s"
 
       origin = board.positions.position(input.to_sym)
 
       return origin if origin.valid_origin?(players.current, board)
 
-      puts 'Invalid origin! Please enter a valid origin:'
+      puts "Invalid origin! Please enter a valid origin:"
     end
   end
 
   def player_destination(origin)
-    puts 'Enter destination using algebraic coordinates (e.g. d4)'
+    puts "Enter destination using algebraic coordinates (e.g. d4)"
     loop do
       input = gets.chomp
       destination = board.positions.position(input.to_sym)
 
       return destination if destination.valid_destination?(origin, board)
 
-      puts 'Invalid destination! Please enter a valid destination:'
+      puts "Invalid destination! Please enter a valid destination:"
     end
   end
 
@@ -100,10 +100,10 @@ class Chess
     puts board
 
     result = if board.checkmate?(players.current)
-               checkmate_message
-             elsif board.stalemate?(players.current)
-               stalemate_message
-             end
+      checkmate_message
+    elsif board.stalemate?(players.current)
+      stalemate_message
+    end
 
     puts result
   end

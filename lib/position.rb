@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './colorable_string'
-require_relative './chess_errors'
-require_relative './nil_object'
-require_relative './pieces/piece'
+require_relative "./colorable_string"
+require_relative "./chess_errors"
+require_relative "./nil_object"
+require_relative "./pieces/piece"
 
 # NilObject for Position
 class NilPosition < NilObject
@@ -39,7 +39,7 @@ module Originable
   end
 end
 
-require_relative './movement'
+require_relative "./movement"
 
 # Check if object meets the valid_destination? requirement.
 module Destinationable

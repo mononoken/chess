@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative './piece'
-require_relative './pieces'
-require_relative '../en_passant'
+require_relative "./piece"
+require_relative "./pieces"
+require_relative "../en_passant"
 
 module Promotable
   # FIX_ME this file requires pieces.rb but pieces.rb also requires it.
   def promotion_choice(pieces_class = Pieces)
     loop do
-      puts 'Pick promotion piece: Q(ueen) (K)N(ight) B(ishop) R(ook)'
+      puts "Pick promotion piece: Q(ueen) (K)N(ight) B(ishop) R(ook)"
       choice = gets.chomp.upcase.to_sym
 
       return pieces_class.piece_class(choice) if pieces_class.pawn_promotion_option?(choice)

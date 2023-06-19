@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './piece'
+require_relative "./piece"
 
 class King < Piece
   def self.start_positions
@@ -11,7 +11,7 @@ class King < Piece
   end
 
   def castling_rights?
-    first_move_taken? ? false : true
+    !first_move_taken?
   end
 
   def self.algebraic

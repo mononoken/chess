@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative './../../lib/chess'
-require_relative './../../lib/pieces/king'
+require_relative "./../../lib/chess"
+require_relative "./../../lib/pieces/king"
 
-RSpec.describe 'Solo King API' do
-  it 'only accepts valid king moves' do
+RSpec.describe "Solo King API" do
+  it "only accepts valid king moves" do
     board = Board.new
 
     game = Chess.new(board:)
@@ -30,7 +30,7 @@ RSpec.describe 'Solo King API' do
       .not_to raise_error
   end
 
-  it 'moves king across board' do
+  it "moves king across board" do
     board = Board.new
 
     game = Chess.new(board:)

@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative '.././colorable_string'
-require_relative '../en_passant'
+require_relative ".././colorable_string"
+require_relative "../en_passant"
 
 # Store start positions with their matching color.
 StartPosition = Struct.new(:position, :algebraic, :color, keyword_init: true)
 
 class NilPiece < NilObject
   def to_s
-    ' '
+    " "
   end
 end
 
@@ -89,7 +89,8 @@ class Piece
     skin.fg_color(color)
   end
 
-  def post_initialize; end
+  def post_initialize
+  end
 
   private
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './chess_errors'
-require_relative './check_status'
-require_relative './positions'
-require_relative './en_passant'
+require_relative "./chess_errors"
+require_relative "./check_status"
+require_relative "./positions"
+require_relative "./en_passant"
 
 # Processes Movement objects to manipulate Positions.
 class Board
@@ -77,16 +77,16 @@ class Board
   end
 
   def to_s
-    "   a  b  c  d  e  f  g  h\n" +
-      "#{rank_to_s_with_label(ranks[7])}\n" +
-      "#{rank_to_s_with_label(ranks[6])}\n" +
-      "#{rank_to_s_with_label(ranks[5])}\n" +
-      "#{rank_to_s_with_label(ranks[4])}\n" +
-      "#{rank_to_s_with_label(ranks[3])}\n" +
-      "#{rank_to_s_with_label(ranks[2])}\n" +
-      "#{rank_to_s_with_label(ranks[1])}\n" +
-      "#{rank_to_s_with_label(ranks[0])}\n" +
-      '   a  b  c  d  e  f  g  h'
+    "   a  b  c  d  e  f  g  h\n" \
+      "#{rank_to_s_with_label(ranks[7])}\n" \
+      "#{rank_to_s_with_label(ranks[6])}\n" \
+      "#{rank_to_s_with_label(ranks[5])}\n" \
+      "#{rank_to_s_with_label(ranks[4])}\n" \
+      "#{rank_to_s_with_label(ranks[3])}\n" \
+      "#{rank_to_s_with_label(ranks[2])}\n" \
+      "#{rank_to_s_with_label(ranks[1])}\n" \
+      "#{rank_to_s_with_label(ranks[0])}\n" \
+      "   a  b  c  d  e  f  g  h"
   end
 
   private
@@ -96,7 +96,7 @@ class Board
   end
 
   def rank_to_s(rank)
-    rank.reduce(+'') do |rank_s, position|
+    rank.reduce(+"") do |rank_s, position|
       rank_s << position.to_s
     end
   end

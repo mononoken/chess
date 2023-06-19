@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './colorable_string'
+require_relative "./colorable_string"
 
 # Stores piece/content.
 class Square
@@ -32,7 +32,7 @@ class Square
 
   def to_s(color = nil)
     if empty?
-      '   '
+      "   "
     else
       " #{content.to_s.chomp("\e[0m")} " # Removes early exit code for when BG color is included.
     end.bg_color(color)
