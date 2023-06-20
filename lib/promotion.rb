@@ -1,3 +1,8 @@
+require_relative "./pieces/bishop"
+require_relative "./pieces/knight"
+require_relative "./pieces/queen"
+require_relative "./pieces/rook"
+
 module Promotion
   module Promoter
     def promotion_action
@@ -13,13 +18,15 @@ module Promotion
   end
 
   module Promotable
-    # FIX_ME this file requires pieces.rb but pieces.rb also requires it.
-    def promotion_choice(pieces_class = Pieces)
+    PROMOTION_OPTIONS = %i[q n b r]
+    PROMOTION_CLASSES = [Bishop, Knight, Queen, Rook]
+
+    def promotion_choice
       loop do
         puts "Pick promotion piece: Q(ueen) (K)N(ight) B(ishop) R(ook)"
-        choice = gets.chomp.upcase.to_sym
+        choice = gets.chomp.downcase.to_sym
 
-        return pieces_class.piece_class(choice) if pieces_class.pawn_promotion_option?(choice)
+        return piece_class(choice) if PROMOTION_OPTIONS.any?(choice)
       end
     end
 
@@ -32,6 +39,10 @@ module Promotion
     end
 
     private
+
+    def piece_class(algebraic)
+      PROMOTION_CLASSES.find { |piece_class| piece_class.algebraic == algebraic }
+    end
 
     def promotion_positions
       case color

@@ -4,6 +4,7 @@ require_relative "./chess_errors"
 require_relative "./board"
 require_relative "./pieces/pieces"
 require_relative "./players"
+require_relative "./player_input"
 require_relative "./movement"
 require_relative "./serializable"
 
@@ -61,6 +62,10 @@ class Chess
 
   def player_movement
     build_movement(origin = player_origin, player_destination(origin))
+  end
+
+  def player_movement
+    build_movement(origin = PlayerInput.player_origin.input, PlayerInput.player_destination(origin, board))
   end
 
   def build_movement(origin, destination, movement_class = Movement)
