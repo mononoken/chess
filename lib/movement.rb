@@ -20,12 +20,6 @@ class Movement
     new(origin:, board:).paths_positions
   end
 
-  # FIX_ME Messy implementation but for some reason subbing valid_destinations
-  # for valid_destinations_for_origin was not working.
-  def self.valid_destinations_for_origin(origin, board)
-    new(origin:, board:).valid_destinations_for_origin
-  end
-
   include Castling
   include EnPassant::PassantMovement
   include Promotion::Promoter
@@ -58,28 +52,8 @@ class Movement
   end
 
   # Array of valid move destination positions for the piece of the origin.
-  # def valid_destinations
-  #   if piece.castling_rights?
-  #     valid_castling_positions(piece, board)
-  #   elsif passant_victim?
-  #     valid_passant_destinations(piece, board)
-  #   else
-  #     []
-  #   end.concat(filter_checks_own_king_positions(paths_positions))
-  # end
-
   def valid_destinations
-    filter_checks_own_king_positions(paths_positions)
-  end
-
-  def valid_destinations_for_origin
-    if piece.castling_rights?
-      valid_castling_positions(piece, board)
-    elsif passant_victim?
-      valid_passant_destinations(piece, board)
-    else
-      []
-    end.concat(filter_checks_own_king_positions(paths_positions))
+    filter_checks_own_king_positions(paths_positions).concat(special_destinations)
   end
 
   def paths_positions
@@ -110,6 +84,16 @@ class Movement
       populate(content.promotion_choice.new(content.color),
         movement.destination)
     }
+  end
+
+  def special_destinations
+    if piece.castling_rights?
+      valid_castling_positions(piece, board)
+    elsif passant_victim?
+      valid_passant_destinations(piece, board)
+    else
+      []
+    end
   end
 
   def destination_paths
