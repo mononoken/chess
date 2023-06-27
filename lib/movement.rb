@@ -36,19 +36,8 @@ class Movement
     @actions ||= default_actions.concat(special_actions)
   end
 
-  # Returns true if the provided destination exists in #destinations.
-  # def valid_destination?(destination)
-  #   valid_destinations.any?(destination)
-  # end
-
   def valid_destination?(destination)
-    if piece.castling_rights?
-      valid_destinations.any?(destination) || valid_castling_positions(piece, board).any?(destination)
-    elsif passant_victim?
-      valid_destinations.any?(destination) || valid_passant_destinations(piece, board).any?(destination)
-    else
-      valid_destinations.any?(destination)
-    end
+    valid_destinations.any?(destination)
   end
 
   # Array of valid move destination positions for the piece of the origin.
