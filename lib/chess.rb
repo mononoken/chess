@@ -60,9 +60,9 @@ class Chess
 
   private
 
-  def player_movement
-    build_movement(origin = player_origin, player_destination(origin))
-  end
+  # def player_movement
+  #   build_movement(origin = player_origin, player_destination(origin))
+  # end
 
   def player_movement
     build_movement(origin = PlayerInput.player_origin.input, PlayerInput.player_destination(origin, board))

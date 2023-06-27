@@ -2,9 +2,8 @@
 
 source "https://rubygems.org"
 
-gem "standard", "1.29.0"
-
 group :development do
+  gem "standard", "1.29.0"
   gem "rspec", "3.12"
   gem "coderay", "1.1.3"
   gem "pry", "0.14.2"
