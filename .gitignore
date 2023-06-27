@@ -1,4 +1,12 @@
+# Ignore solargraph config
 .solargraph.yml
+
+# Ignore notes
 PSEUDO.md
 LOG.md
+
+# Ignore SimpleCov output
 coverage
+
+# Ignore save files
+saves/*
