@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "./chess_errors"
-require_relative "./board"
-require_relative "./pieces/pieces"
-require_relative "./players"
-require_relative "./player_input"
-require_relative "./movement"
-require_relative "./serializable"
+require_relative "chess_errors"
+require_relative "board"
+require_relative "pieces/pieces"
+require_relative "players"
+require_relative "movement"
+require_relative "serializable"
 
 # Runs game of chess until end condition is met.
 class Chess
@@ -60,12 +59,8 @@ class Chess
 
   private
 
-  # def player_movement
-  #   build_movement(origin = player_origin, player_destination(origin))
-  # end
-
   def player_movement
-    build_movement(origin = PlayerInput.player_origin.input, PlayerInput.player_destination(origin, board))
+    build_movement(origin = player_origin, player_destination(origin))
   end
 
   def build_movement(origin, destination, movement_class = Movement)
