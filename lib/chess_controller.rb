@@ -5,6 +5,10 @@ require_relative "movement"
 
 # Chess CLI controller
 class ChessController
+  def self.play(chess)
+    new(chess).play
+  end
+
   def self.instructions
     <<~HEREDOC
       Welcome to Chess!

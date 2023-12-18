@@ -8,8 +8,10 @@ system("clear") || system("cls")
 
 puts ChessController.instructions
 
-if Chess.prompt_load
-  ChessController.new(Chess.load_game)
+chess = if Chess.prompt_load
+  Chess.load_game
 else
-  ChessController.new(Chess.new)
-end.play
+  Chess.new
+end
+
+ChessController.play(chess)
