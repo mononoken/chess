@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "./chess"
+require_relative "chess"
+require_relative "chess_controller"
 
-puts Chess.instructions
+puts ChessController.instructions
 
 if Chess.prompt_load
-  Chess.load_game
+  ChessController.new(Chess.load_game)
 else
-  Chess.new
+  ChessController.new(Chess.new)
 end.play
