@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/square"
-require_relative "./../../lib/pieces/piece"
+require_relative "../../lib/square"
+require_relative "../../lib/pieces/piece"
 
 RSpec.describe Square do
   subject(:square) { described_class.new }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./piece"
-require_relative "./pieces"
+require_relative "piece"
+require_relative "pieces"
 require_relative "../en_passant"
 require_relative "../promotion"
 

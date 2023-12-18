@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./position"
+require_relative "position"
 
 module EnPassant
   # Behavior for pieces that can be captured in En Passant.

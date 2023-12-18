@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/chess"
-require_relative "./../../lib/pieces/pawn"
+require_relative "../../lib/chess"
+require_relative "../../lib/pieces/pawn"
 
 RSpec.describe "En Passant" do
   context "when enemy pawn advanced two squares on the last move" do

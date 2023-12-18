@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/chess"
-require_relative "./../../lib/pieces/pawn"
+require_relative "../../lib/chess"
+require_relative "../../lib/pieces/pawn"
 
 RSpec.describe "Solo Pawn API" do
   context "when enemy piece can be taken by pawn on one side" do

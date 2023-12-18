@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/chess"
-require_relative "./../../lib/pieces/bishop"
-require_relative "./../../lib/pieces/king"
-require_relative "./../../lib/pieces/knight"
-require_relative "./../../lib/pieces/queen"
-require_relative "./../../lib/pieces/rook"
+require_relative "../../lib/chess"
+require_relative "../../lib/pieces/bishop"
+require_relative "../../lib/pieces/king"
+require_relative "../../lib/pieces/knight"
+require_relative "../../lib/pieces/queen"
+require_relative "../../lib/pieces/rook"
 
 RSpec.describe "Check Movement API" do
   context "when board is 3x3" do

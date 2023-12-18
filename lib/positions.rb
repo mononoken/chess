@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./position"
-require_relative "./pieces/piece"
+require_relative "position"
+require_relative "pieces/piece"
 
 require "forwardable"
 

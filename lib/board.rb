@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "./chess_errors"
-require_relative "./check_status"
-require_relative "./positions"
-require_relative "./en_passant"
+require_relative "chess_errors"
+require_relative "check_status"
+require_relative "positions"
+require_relative "en_passant"
 
 # Processes Movement objects to manipulate Positions.
 class Board

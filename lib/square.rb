@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./colorable_string"
+require_relative "colorable_string"
 
 # Stores piece/content.
 class Square

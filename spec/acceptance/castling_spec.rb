@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/chess"
-require_relative "./../../lib/pieces/pieces"
+require_relative "../../lib/chess"
+require_relative "../../lib/pieces/pieces"
 
 RSpec.describe "Castling API" do
   context "when Ra1 and Ke1 have not moved and e1 moves to c1" do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./../../lib/chess"
+require_relative "../../lib/chess"
 
 RSpec.describe "Checkmate Game API" do
   context "when game is in Fool's mate" do

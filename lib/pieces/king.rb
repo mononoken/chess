@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./piece"
+require_relative "piece"
 
 class King < Piece
   def self.start_positions

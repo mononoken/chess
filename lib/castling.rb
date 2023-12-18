@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "./nil_object"
+require_relative "nil_object"
 
 # NilObject for Movement
 class NilMovement < NilObject; end
