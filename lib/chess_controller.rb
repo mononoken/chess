@@ -33,6 +33,7 @@ class ChessController
   end
 
   def run_round
+    clear_term
     puts board
     puts "#{players.current.capitalize}'s turn."
 
@@ -88,15 +89,17 @@ class ChessController
   end
 
   def announce_results
+    clear_term
     puts board
+    puts result
+  end
 
-    result = if board.checkmate?(players.current)
+  def result
+    if board.checkmate?(players.current)
       checkmate_message
     elsif board.stalemate?(players.current)
       stalemate_message
     end
-
-    puts result
   end
 
   def checkmate_message
@@ -105,5 +108,9 @@ class ChessController
 
   def stalemate_message
     "#{players.current.capitalize} is in stalemate. Draw!"
+  end
+
+  def clear_term
+    system("clear") || system("cls")
   end
 end
