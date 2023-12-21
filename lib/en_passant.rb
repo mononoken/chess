@@ -53,9 +53,11 @@ module EnPassant
     # Returns array of valid passant destinations.
     # Note: This returns an array to match other destination array formats.
     def valid_passant_destinations(piece, board)
-      [
-        (passant_destination(piece, board) if piece_on_passanter_origin?(piece, board))
-      ]
+      if piece_on_passanter_origin?(piece, board)
+        [passant_destination(piece, board)]
+      else
+        []
+      end
     end
 
     def passant_victim?
